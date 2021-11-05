@@ -3,17 +3,20 @@ import { showMessageFromBackend } from "./services/example";
 import BootstrapComponent from "./components/bootstrap-component";
 
 const App = () => {
-  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    showMessageFromBackend().then((res) => setMessage(res.data.message));
+    showMessageFromBackend().then((res) => setMessages(res.data));
   }, []);
 
   return (
     <div>
-      {message}
+      {messages.map((message) => (
+          <div key={message.id}>{message.field}</div>
+      ))}
       <BootstrapComponent />
     </div>
+  );
   );
 };
 
