@@ -34,7 +34,7 @@ const HomeCarousel = () =>{
                     alt="real_time_data_update"
                 />
                 <Carousel.Caption>
-                    <h3 id="carousel_caption">Actualizare în timp real și securizată a datelor</h3>
+                    <h3 id="carousel_caption">Actualizare în timp real a datelor</h3>
                 </Carousel.Caption>
             </Carousel.Item>
         </Carousel>

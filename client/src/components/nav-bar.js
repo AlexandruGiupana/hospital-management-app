@@ -5,6 +5,7 @@ import {Container} from "react-bootstrap";
 import {NavDropdown} from "react-bootstrap";
 import {Nav} from "react-bootstrap"
 import {Button} from "react-bootstrap";
+
 import './home_page_style.css'
 const NavBar = ({ navBarItems }) => {
   return (
