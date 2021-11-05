@@ -1,0 +1,16 @@
+#navBarItem, #navBarButton{
+    font-family: "Yu Gothic Medium";
+    font-weight: bold;
+    font-size: 20px;
+}
+#navBarItem:hover{
+    color:white;
+}
+#carousel_caption{
+    font-size: 50px;
+    margin-bottom: 50px;
+    padding-bottom:30px;
+    font-family: "Roboto";
+    -webkit-text-stroke: 1.1px black;
+    font-weight: bold;
+}
