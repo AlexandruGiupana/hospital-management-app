@@ -12,11 +12,10 @@ const App = () => {
   return (
     <div>
       {messages.map((message) => (
-          <div key={message.id}>{message.field}</div>
+        <div key={message.id}>{message.field}</div>
       ))}
       <BootstrapComponent />
     </div>
-  );
   );
 };
 
