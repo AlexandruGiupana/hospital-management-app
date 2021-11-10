@@ -1,0 +1,12 @@
+{
+  "dbConfig": {
+    "databaseHost": "localhost",
+    "databasePassword": "",
+    "databaseUser": "root",
+    "databaseName": "hospital-management"
+  },
+  "server": {
+    "port": 8080
+  },
+  "jwtSecret": "this is the jwtSecret"
+}
