@@ -5,7 +5,8 @@ import NavBar from "./components/nav-bar";
 import HomeCarousel from "./components/home_carousel";
 import Home4Cols from "./components/home_4cols";
 import Footer from "./components/footer";
-
+import LoginForm from "./components/login";
+import RegisterForm from "./components/register";
 const App = () => {
   const [messages, setMessages] = useState([]);
 
@@ -25,7 +26,11 @@ const App = () => {
         <HomeCarousel />
         <Home4Cols />
         <Footer />
-
+        <LoginForm />
+      <br/>
+      <br/>
+      <hr/>
+        <RegisterForm />
 
     </>
   );
