@@ -1,0 +1,13 @@
+.footerTitle{
+    font-family: "Roboto Light";
+    font-size: x-large;
+}
+.footerItemHeader{
+    font-family: "Roboto Light";
+}
+.footerContainer{
+    background-color: #d3e6e2;
+}
+.footerAnchor{
+    color:black;
+}
