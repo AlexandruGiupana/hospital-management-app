@@ -4,10 +4,11 @@ import { User } from "../models/user.js";
 import bcrypt from "bcryptjs";
 import config from "config";
 import jsonWebToken from "jsonwebtoken"
+import cors from "cors";
 
 const router = express.Router();
 
-router.post("/", (req, res) => {
+router.post("/register", cors(), (req, res) => {
   const {
     name, email, password
   } = req.body;

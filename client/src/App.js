@@ -1,37 +1,67 @@
-import React, { useEffect, useState } from "react";
-import { showMessageFromBackend } from "./services/example";
-import BootstrapComponent from "./components/bootstrap-component";
-import NavBar from "./components/nav-bar";
-import HomeCarousel from "./components/home_carousel";
-import Home4Cols from "./components/home_4cols";
-import Footer from "./components/footer";
-import LoginForm from "./components/login";
-import RegisterForm from "./components/register";
+import React, {  useState } from "react";
+import NavBar from "./components/common-components/nav-bar";
+import Footer from "./components/common-components/footer";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import DashboardPage from "./components/pages/dashboard-page";
+import HomePage from "./components/pages/home-page";
+import { Doctor } from "./mokedUsers/doctor";
+import ProfilePage from "./components/pages/profile-page";
+import Modal from 'react-modal';
+import LoginForm from "./components/forms/login";
+
 const App = () => {
-  const [messages, setMessages] = useState([]);
+  console.log(localStorage.getItem('user'))
 
-  useEffect(() => {
-    //showMessageFromBackend().then((res) => setMessages(res.data));
-  }, []);
+  const [modalIsOpen, setIsOpen] = useState(false);
 
-  const navBarItems = ["Home Page", "Services", "Login", "About Us"];
-
+  const toggleModal = () => {
+    console.log("hello")
+    setIsOpen(!modalIsOpen);
+  }
+  const customStyles = {
+    content: {
+      top: '50%',
+      width: '70%',
+      height: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+    },
+  };
   return (
     <>
-      <NavBar navBarItems={navBarItems} />
-      {messages.map((message) => (
-        <div key={message.id}>{message.field}</div>
-      ))}
-
-        <HomeCarousel />
-        <Home4Cols />
-        <Footer />
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={toggleModal}
+        ariaHideApp={false}
+        style={customStyles}
+      >
+        <button onClick={toggleModal}>close</button>
         <LoginForm />
-      <br/>
-      <br/>
-      <hr/>
-        <RegisterForm />
-
+      </Modal>
+      <NavBar toggleModal={toggleModal}/>
+      <Router>
+        <Routes>
+          <Route
+            path="/"
+            exact
+            element={<HomePage />}
+          />
+          <Route
+            path="/dashboard"
+            exact
+            element={<DashboardPage user={Doctor}/>}
+          />
+          <Route
+            path="/profile"
+            exact
+            element={<ProfilePage user={Doctor}/>}
+          />
+        </Routes>
+      </Router>
+      <Footer />
     </>
   );
 };

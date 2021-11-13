@@ -9,7 +9,7 @@ import {
     faGoogle,
     faLinkedin
 } from "@fortawesome/free-brands-svg-icons";
-import './footer_style.css'
+import './styles/footer_style.css'
 
 const Footer = () =>{
     return(

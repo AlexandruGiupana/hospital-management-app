@@ -1,5 +1,5 @@
 import React from "react";
-import './register_page.css'
+import './styles/register_page.css'
 import {Form} from "react-bootstrap";
 import {FormGroup} from "react-bootstrap";
 import {Button} from "react-bootstrap";

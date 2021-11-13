@@ -2,7 +2,7 @@ import React from "react"
 import {Container} from "react-bootstrap";
 import {Row} from "react-bootstrap"
 import {Col} from "react-bootstrap"
-import './home_page_style.css'
+import './styles/home_page_style.css'
 const Home4Cols = () =>{
     return(
         <Container fluid>

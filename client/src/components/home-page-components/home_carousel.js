@@ -1,9 +1,9 @@
 import React from "react";
 import {Carousel} from "react-bootstrap";
-import analize_medicale from "./media_resources/home_carousel_images/analize_medicale.jpg";
-import consultatii from "./media_resources/home_carousel_images/consultatii.jpg";
-import real_time_data_update from "./media_resources/home_carousel_images/real-time-data-update.jpg";
-import './home_page_style.css'
+import analize_medicale from "../media_resources/home_carousel_images/analize_medicale.jpg";
+import consultatii from "../media_resources/home_carousel_images/consultatii.jpg";
+import real_time_data_update from "../media_resources/home_carousel_images/real-time-data-update.jpg";
+import './styles/home_page_style.css'
 const HomeCarousel = () =>{
     return(
         <Carousel>

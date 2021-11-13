@@ -14,11 +14,16 @@ con.connect((err) => {
   console.log("Connected to the database");
 });
 
+let corsOptions = {
+  origin: '*',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+
 app.use(express.json())
+app.use(cors(corsOptions));
 app.use("/message", exampleRoutes);
 app.use("/users", userRoutes)
 app.use("/auth", authRoutes)
-app.use(cors());
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);

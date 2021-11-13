@@ -6,8 +6,8 @@ import {NavDropdown} from "react-bootstrap";
 import {Nav} from "react-bootstrap"
 import {Button} from "react-bootstrap";
 
-import './home_page_style.css'
-const NavBar = ({ navBarItems }) => {
+import '../home-page-components/styles/home_page_style.css'
+const NavBar = ({ toggleModal }) => {
   return (
     <div>
       <Navbar collapseOnSelect expand="lg" bg="info" variant="dark" >
@@ -35,7 +35,7 @@ const NavBar = ({ navBarItems }) => {
               <Button variant="outline-light" id = "navBarButton">Sign up</Button>
               &nbsp;
               &nbsp;
-              <Button variant="outline-light" id = "navBarButton">Login</Button>
+              <Button variant="outline-light" id = "navBarButton" onClick={toggleModal}>Login</Button>
             </Nav>
           </Navbar.Collapse>
         </Container>

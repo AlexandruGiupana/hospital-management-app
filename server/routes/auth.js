@@ -5,10 +5,12 @@ import bcrypt from "bcryptjs";
 import config from "config";
 import jsonWebToken from "jsonwebtoken"
 import { auth } from "./middleware/auth.js";
+import cors from "cors";
 
 const router = express.Router();
 
-router.post("/", (req, res) => {
+
+router.post("/", cors(), (req, res) => {
   const {
     email, password
   } = req.body;
@@ -51,7 +53,7 @@ router.post("/", (req, res) => {
   })
 })
 
-router.get("/user", auth, (req, res) => {
+router.get("/user", cors(), auth, (req, res) => {
   let sql = "SELECT name, email FROM users WHERE id = ? ";
   con.query(sql, [req.user.id], (err, result) => {
     if (err) {
