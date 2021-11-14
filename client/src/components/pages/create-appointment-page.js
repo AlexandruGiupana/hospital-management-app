@@ -1,24 +1,22 @@
 import React from "react";
 import SideBar from "../user-components/side-bar/side-bar";
-
-import ProfilePageComponent from "../user-components/profile/profile-page-component";
 import { Container, ContentContainer, PageTitle } from "../user-components/common-styled-components";
+import CreateAppointmentComponent from "../user-components/appointments/create-appointment-component";
 
-const ProfilePage = ({ user }) => {
+const CreateAppointmentPage = ({ user }) => {
 
   return (
     <Container>
       <SideBar accountType={user.account_type}/>
       <ContentContainer>
         <PageTitle>
-          Profile
+          <div>Programeaza</div>
         </PageTitle>
         <hr />
-        <ProfilePageComponent user={user}/>
+        <CreateAppointmentComponent />
       </ContentContainer>
     </Container>
   )
 }
 
-
-export default ProfilePage
+export default CreateAppointmentPage

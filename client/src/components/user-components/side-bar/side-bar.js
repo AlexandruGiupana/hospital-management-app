@@ -16,8 +16,14 @@ const SideBar = ({ accountType }) => {
         >
           <SideBarOption>Profile</SideBarOption>
         </NavLink>
-        <SideBarOption>Programari</SideBarOption>
-        {accountType === 'doctor' && <SideBarOption>Programeaza</SideBarOption>}
+        <NavLink to="/appointments">
+          <SideBarOption>Programari</SideBarOption>
+        </NavLink>
+        {accountType === 'doctor' &&
+          <NavLink to="/create-appointment">
+            <SideBarOption>Programeaza</SideBarOption>
+          </NavLink>
+        }
         {accountType === 'patient' && <SideBarOption>Programeaza-ma</SideBarOption>}
       </SideBarOptionsContainer>
     </SideBarContainer>
@@ -25,13 +31,12 @@ const SideBar = ({ accountType }) => {
 }
 
 const SideBarContainer = styled.div`
-  position: fixed;
+  background: white;
+  border-right: 0.5px solid #e8e8e8;
   display: flex;
   justify-content: center;
   width: 280px;
-  height: 100%;
-  background: white;
-  border-right: 0.5px solid #e8e8e8;
+  overflow: hidden;
   @media(max-width: 910px) {
     width: 240px;
   }
@@ -43,11 +48,14 @@ const SideBarContainer = styled.div`
 `
 
 const SideBarOptionsContainer = styled.div`
+  position: fixed;
   display: flex;
+  justify-content: center;
   flex-direction: column;
   gap: 50px;
-  margin-top: 20%;
+  margin-top: 2%;
   @media(max-width: 655px) {
+    position: relative;
     flex-direction: row;
     margin-top: 0;
     align-items: center;

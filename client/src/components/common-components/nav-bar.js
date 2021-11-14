@@ -7,7 +7,7 @@ import {Nav} from "react-bootstrap"
 import {Button} from "react-bootstrap";
 
 import '../home-page-components/styles/home_page_style.css'
-const NavBar = ({ toggleModal }) => {
+const NavBar = ({ toggleModalLogIn, toggleModalRegister }) => {
   return (
     <div>
       <Navbar collapseOnSelect expand="lg" bg="info" variant="dark" >
@@ -32,10 +32,10 @@ const NavBar = ({ toggleModal }) => {
               */}
             </Nav>
             <Nav>
-              <Button variant="outline-light" id = "navBarButton">Sign up</Button>
+              <Button variant="outline-light" id = "navBarButton" onClick={toggleModalRegister}>Sign up</Button>
               &nbsp;
               &nbsp;
-              <Button variant="outline-light" id = "navBarButton" onClick={toggleModal}>Login</Button>
+              <Button variant="outline-light" id = "navBarButton" onClick={toggleModalLogIn}>Login</Button>
             </Nav>
           </Navbar.Collapse>
         </Container>

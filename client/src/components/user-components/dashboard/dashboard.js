@@ -1,22 +1,26 @@
 import React from "react";
 import DashboardItem from "./dash-board-item";
 import styled from "styled-components";
+import Chart from "./Chart";
 
 const Dashboard = ({ user }) => {
   return (
     <DashboardContainer>
       {user.account_type === 'doctor' &&
-      <DashboardItemsContainer>
-        <DashboardPairItems>
-          <DashboardItem title="Programari astazi" value={10} />
-          <DashboardItem title="Pacienti consultati astazi" value={3} />
-        </DashboardPairItems>
-        <DashboardPairItems>
-          <DashboardItem title="Urmatoarea programare" value="astazi, 12:30" />
-          <DashboardItem title="Pacienti consultati" value={30} />
-        </DashboardPairItems>
-      </DashboardItemsContainer>}
-      {/*<Graph />*/}
+      <>
+        <DashboardItemsContainer>
+          <DashboardPairItems>
+            <DashboardItem title="Programari astazi" value={10} />
+            <DashboardItem title="Pacienti consultati astazi" value={3} />
+          </DashboardPairItems>
+          <DashboardPairItems>
+            <DashboardItem title="Urmatoarea programare" value="astazi, 12:30" />
+            <DashboardItem title="Pacienti consultati" value={30} />
+          </DashboardPairItems>
+        </DashboardItemsContainer>
+        <Chart />
+      </>
+      }
   </DashboardContainer>
   )
 }

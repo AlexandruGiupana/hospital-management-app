@@ -8,16 +8,24 @@ import { Doctor } from "./mokedUsers/doctor";
 import ProfilePage from "./components/pages/profile-page";
 import Modal from 'react-modal';
 import LoginForm from "./components/forms/login";
+import CreateAppointmentPage from "./components/pages/create-appointment-page";
+import Appointments from "./components/pages/appointments";
+import RegisterForm from "./components/forms/register";
 
 const App = () => {
   console.log(localStorage.getItem('user'))
 
-  const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalLogInOpen, setLoginModalOpen] = useState(false);
+  const [modalRegisterOpen, setRegisterModalOpen] = useState(false);
 
-  const toggleModal = () => {
-    console.log("hello")
-    setIsOpen(!modalIsOpen);
+  const toggleModalLogIn = () => {
+    setLoginModalOpen(!modalLogInOpen);
   }
+
+  const toggleModalRegister = () => {
+    setRegisterModalOpen(!modalRegisterOpen);
+  }
+
   const customStyles = {
     content: {
       top: '50%',
@@ -30,18 +38,39 @@ const App = () => {
       transform: 'translate(-50%, -50%)',
     },
   };
+  const customStyles2 = {
+    content: {
+      top: '50%',
+      width: '70%',
+      height: '80%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+    },
+  };
   return (
     <>
       <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={toggleModal}
+        isOpen={modalLogInOpen}
+        onRequestClose={toggleModalLogIn}
         ariaHideApp={false}
         style={customStyles}
       >
-        <button onClick={toggleModal}>close</button>
+        <button onClick={toggleModalLogIn}>close</button>
         <LoginForm />
       </Modal>
-      <NavBar toggleModal={toggleModal}/>
+      <Modal
+        isOpen={modalRegisterOpen}
+        onRequestClose={toggleModalRegister}
+        ariaHideApp={false}
+        style={customStyles2}
+      >
+        <button onClick={toggleModalRegister}>close</button>
+        <RegisterForm />
+      </Modal>
+      <NavBar toggleModalLogIn={toggleModalLogIn} toggleModalRegister={toggleModalRegister}/>
       <Router>
         <Routes>
           <Route
@@ -58,6 +87,16 @@ const App = () => {
             path="/profile"
             exact
             element={<ProfilePage user={Doctor}/>}
+          />
+          <Route
+            path="/create-appointment"
+            exact
+            element={<CreateAppointmentPage user={Doctor}/>}
+          />
+          <Route
+            path="/appointments"
+            exact
+            element={<Appointments user={Doctor}/>}
           />
         </Routes>
       </Router>

@@ -9,7 +9,6 @@ const HomePage = () => {
     <>
     <HomeCarousel />
     <Home4Cols />
-    <RegisterForm />
     </>
   )
 }

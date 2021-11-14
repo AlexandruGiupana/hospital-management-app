@@ -20,7 +20,7 @@ const DashboardItemContainer = styled.div`
   background: white;
   border-radius: 10px;
   padding: 15px;
-  @media(max-width: 910px) {
+  @media(max-width: 912px) {
     width: 100%;
   }
 `
