@@ -21,7 +21,6 @@ const AppointmentComponent = () => {
     { name: 'name', title: 'Name' },
     { name: 'gender', title: 'Gender' },
     { name: 'city', title: 'City' },
-    { name: 'car', title: 'Car' },
   ]);
   const [rows, setRows] = useState(generateRows({
     columnValues: { id: ({ index }) => index, ...defaultColumnValues },
