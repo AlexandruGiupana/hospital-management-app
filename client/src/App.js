@@ -5,12 +5,14 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import DashboardPage from "./components/pages/dashboard-page";
 import HomePage from "./components/pages/home-page";
 import { Doctor } from "./mokedUsers/doctor";
+import { Manager } from "./mokedUsers/manager";
 import ProfilePage from "./components/pages/profile-page";
 import Modal from 'react-modal';
 import LoginForm from "./components/forms/login";
 import CreateAppointmentPage from "./components/pages/create-appointment-page";
 import Appointments from "./components/pages/appointments";
 import RegisterForm from "./components/forms/register";
+import HealthServices from "./components/pages/health-services";
 
 const App = () => {
   console.log(localStorage.getItem('user'))
@@ -98,6 +100,13 @@ const App = () => {
             exact
             element={<Appointments user={Doctor}/>}
           />
+
+          <Route
+              path="/health-services"
+              exact
+              element={<HealthServices user={Manager}/>}
+          />
+
         </Routes>
       </Router>
       <Footer />

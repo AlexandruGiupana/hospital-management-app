@@ -1,10 +1,21 @@
-#navBarItem, #navBarButton{
-    font-family: "Yu Gothic Medium";
+#navBarItem{
+    font-family: "Candara";
+    font-weight: bold;
+    font-size: 20px;
+    color:#1a1919;
+}
+#navBarButton{
+    font-family: "Candara Light";
     font-weight: bold;
     font-size: 20px;
 }
 #navBarItem:hover{
-    color:white;
+    color:#5c5b5b;
+}
+.navBarContainer{
+    background-color: #fcfcfc;
+    border-bottom-width: 1px;
+
 }
 #carousel_caption{
     font-size: 40px;

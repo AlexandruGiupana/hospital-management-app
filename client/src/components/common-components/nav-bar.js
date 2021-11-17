@@ -10,7 +10,7 @@ import '../home-page-components/styles/home_page_style.css'
 const NavBar = ({ toggleModalLogIn, toggleModalRegister }) => {
   return (
     <div>
-      <Navbar collapseOnSelect expand="lg" bg="info" variant="dark" >
+      <Navbar collapseOnSelect expand="lg" className="navBarContainer border-bottom border-dark">
         <Container>
           <Navbar.Brand href="#home">Mediplus</Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -32,10 +32,10 @@ const NavBar = ({ toggleModalLogIn, toggleModalRegister }) => {
               */}
             </Nav>
             <Nav>
-              <Button variant="outline-light" id = "navBarButton" onClick={toggleModalRegister}>Sign up</Button>
+              <Button variant="outline-dark" id = "navBarButton" onClick={toggleModalRegister}>Sign up</Button>
               &nbsp;
               &nbsp;
-              <Button variant="outline-light" id = "navBarButton" onClick={toggleModalLogIn}>Login</Button>
+              <Button variant="outline-dark" id = "navBarButton" onClick={toggleModalLogIn}>Login</Button>
             </Nav>
           </Navbar.Collapse>
         </Container>
