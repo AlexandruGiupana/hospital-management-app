@@ -8,23 +8,22 @@ import {
   TableEditRow,
   TableEditColumn,
 } from '@devexpress/dx-react-grid-material-ui';
-import { doctorAppointmentsTable } from "../../../demo-data/doctor-appointments-table";
 import { patientAppointmentsTable } from "../../../demo-data/patient-appointments";
-import {DOCTOR_ACCOUNT, MANAGER_ACCOUNT} from "../../../demo-data/account-types";
 
 const getRowId = row => row.id;
 
-const AppointmentComponent = () => {
-  const columns = [
-      {name: 'lastName', title: 'Nume'},
-      {name: 'firstName', title: 'Prenume'},
-      {name: 'information', title: 'Informatii aditionale'},
-      {name: 'startDate', title: 'Ora inceput'},
-      {name: 'endDate', title: 'Ora sfarsit'},
-      {name: 'phoneNumber', title: 'Numar telefon'}
-    ]
+const PatientAppointmentComponent = () => {
+  const columns =  [
+      { name: 'doctorFirstName', title: 'Nume Doctor' },
+      { name: 'doctorLastName', title: 'Prenume Doctor' },
+      { name: 'health-service', title: 'Serviciu'},
+      { name: 'information', title: 'Informatii aditionale' },
+      { name: 'startDate', title: 'Ora inceput'},
+      { name: 'endDate', title: 'Ora sfarsit'},
+      { name: 'doctorPhoneNumber', title: 'Contacteaza'}
+    ];
 
-  const [rows, setRows] = useState(doctorAppointmentsTable);
+  const [rows, setRows] = useState(patientAppointmentsTable);
 
   const commitChanges = ({ added, changed, deleted }) => {
     let changedRows;
@@ -49,26 +48,26 @@ const AppointmentComponent = () => {
   };
 
   return (
-    <Paper>
-      <Grid
-        rows={rows}
-        columns={columns}
-        getRowId={getRowId}
-      >
-        <EditingState
-          onCommitChanges={commitChanges}
-        />
-        <Table />
-        <TableHeaderRow />
-        <TableEditRow />
-        <TableEditColumn
-          showAddCommand
-          showEditCommand
-          showDeleteCommand
-        />
-      </Grid>
-    </Paper>
+      <Paper>
+        <Grid
+            rows={rows}
+            columns={columns}
+            getRowId={getRowId}
+        >
+          <EditingState
+              onCommitChanges={commitChanges}
+          />
+          <Table />
+          <TableHeaderRow />
+          <TableEditRow />
+          <TableEditColumn
+              showAddCommand
+              showEditCommand
+              showDeleteCommand
+          />
+        </Grid>
+      </Paper>
   );
 };
 
-export default AppointmentComponent;
+export default PatientAppointmentComponent;

@@ -8,7 +8,7 @@ import HealthServicesRepartitions from "../user-components/health-services/healt
 const  HealthServices = ({user}) => {
     return(
         <Container>
-            <SideBar accountType={user.account_type}/>
+            <SideBar accountType={user.accountType}/>
             <ContentContainer>
                 <PageTitle>
                     <div><h6 className="text-black display-6">Servicii medicale</h6></div>

@@ -8,6 +8,8 @@ export const ContentContainer = styled.div`
   margin-left: 360px;
   margin-right: 80px;
   padding-bottom: 35px;
+  position: relative;
+  min-height: 53vh;
   @media(max-width: 910px) {
     margin-left: 300px;
     margin-right: 50px;

@@ -6,7 +6,7 @@ import Chart from "./Chart";
 const Dashboard = ({ user }) => {
   return (
     <DashboardContainer>
-      {user.account_type === 'doctor' &&
+      {user.accountType === 'doctor' &&
       <>
         <DashboardItemsContainer>
           <DashboardPairItems>

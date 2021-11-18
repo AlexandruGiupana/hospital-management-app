@@ -1,30 +1,59 @@
 import React from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
+import {DOCTOR_ACCOUNT, MANAGER_ACCOUNT} from "../../../demo-data/account-types";
 
 const SideBar = ({ accountType }) => {
   return (
     <SideBarContainer>
       <SideBarOptionsContainer>
-        <NavLink
-          to={"/dashboard"}
+        <StyledNavLink
+            exact
+            to={"/dashboard"}
+            activeStyle={{ color:'red' }}
         >
-          <SideBarOption>Dashboard</SideBarOption>
-        </NavLink>
-        <NavLink
-          to={"/profile"}
-        >
+          {(accountType === MANAGER_ACCOUNT || accountType === DOCTOR_ACCOUNT) && <SideBarOption>Dashboard</SideBarOption>}
+        </StyledNavLink>
+        <StyledNavLink
+          activeStyle={{
+              color: "green",
+            }}
+            exact
+            to={"/profile"}
+          >
           <SideBarOption>Profile</SideBarOption>
-        </NavLink>
-        <NavLink to="/appointments">
+        </StyledNavLink>
+        <StyledNavLink
+            activeStyle={{
+              color: "green",
+            }}
+            exact
+            to={"/appointments"}
+        >
           <SideBarOption>Programari</SideBarOption>
-        </NavLink>
+        </StyledNavLink>
         {accountType === 'doctor' &&
-          <NavLink to="/create-appointment">
+          <StyledNavLink
+            activeStyle={{
+              color: "green",
+            }}
+            exact
+            to={"/create-appointment"}
+          >
             <SideBarOption>Programeaza</SideBarOption>
-          </NavLink>
+          </StyledNavLink>
         }
-        {accountType === 'patient' && <SideBarOption>Programeaza-ma</SideBarOption>}
+          {accountType === 'patient' &&
+            <StyledNavLink
+              activeStyle={{
+                color: "green",
+              }}
+              exact
+              to={"/create-appointment"}
+            >
+              <SideBarOption>Programeaza-ma</SideBarOption>
+            </StyledNavLink>
+        }
       </SideBarOptionsContainer>
     </SideBarContainer>
   )
@@ -73,5 +102,7 @@ const SideBarOption = styled.div`
     font-size: 13px;
   }
 `
-
+const StyledNavLink = styled(NavLink)`
+  text-decoration: none;
+`;
 export default SideBar

@@ -8,7 +8,7 @@ const ProfilePage = ({ user }) => {
 
   return (
     <Container>
-      <SideBar accountType={user.account_type}/>
+      <SideBar accountType={user.accountType}/>
       <ContentContainer>
         <PageTitle>
           Profile

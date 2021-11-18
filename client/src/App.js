@@ -10,9 +10,10 @@ import ProfilePage from "./components/pages/profile-page";
 import Modal from 'react-modal';
 import LoginForm from "./components/forms/login";
 import CreateAppointmentPage from "./components/pages/create-appointment-page";
-import Appointments from "./components/pages/appointments";
+import AppointmentsTablePage from "./components/pages/appointments-table-page";
 import RegisterForm from "./components/forms/register";
 import HealthServices from "./components/pages/health-services";
+import {Patient} from "./mokedUsers/patient";
 
 const App = () => {
   console.log(localStorage.getItem('user'))
@@ -52,6 +53,9 @@ const App = () => {
       transform: 'translate(-50%, -50%)',
     },
   };
+
+  const mockUser = Doctor;
+
   return (
     <>
       <Modal
@@ -83,30 +87,28 @@ const App = () => {
           <Route
             path="/dashboard"
             exact
-            element={<DashboardPage user={Doctor}/>}
+            element={<DashboardPage user={mockUser}/>}
           />
           <Route
             path="/profile"
             exact
-            element={<ProfilePage user={Doctor}/>}
+            element={<ProfilePage user={mockUser}/>}
           />
           <Route
             path="/create-appointment"
             exact
-            element={<CreateAppointmentPage user={Doctor}/>}
+            element={<CreateAppointmentPage user={mockUser}/>}
           />
           <Route
             path="/appointments"
             exact
-            element={<Appointments user={Doctor}/>}
+            element={<AppointmentsTablePage user={mockUser}/>}
           />
-
           <Route
-              path="/health-services"
-              exact
-              element={<HealthServices user={Manager}/>}
+            path="/health-services"
+            exact
+            element={<HealthServices user={Manager}/>}
           />
-
         </Routes>
       </Router>
       <Footer />

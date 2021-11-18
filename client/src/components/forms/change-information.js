@@ -1,47 +1,47 @@
 import React from "react"
 import styled from "styled-components";
-const ChangeInformationForm = () => {
+const ChangeInformationForm = ({ user }) => {
   return (
     <Form>
       <LabeledInput>
         <label>Email</label>
-        <BigInput type="email"/>
+        <BigInput type="email" value={user.email}/>
       </LabeledInput>
       <RowContainer>
         <LabeledInput>
           <label>Nume</label>
-          <SmallInput type="text"/>
+          <SmallInput type="text" value={user.firstName}/>
         </LabeledInput>
         <LabeledInput>
           <label>Prenume</label>
-          <SmallInput type="text"/>
+          <SmallInput type="text" value={user.lastName}/>
         </LabeledInput>
       </RowContainer>
       <LabeledInput>
         <label>Adresa</label>
-        <BigInput type="text"/>
+        <BigInput type="text" value={user.address}/>
       </LabeledInput>
       <RowContainer>
         <LabeledInput>
           <label>Localitate</label>
-          <SmallInput type="text"/>
+          <SmallInput type="text" value={user.city}/>
         </LabeledInput>
         <LabeledInput>
           <label>Judet</label>
-          <SmallInput type="text"/>
+          <SmallInput type="text" value={user.county}/>
         </LabeledInput>
         <LabeledInput>
           <label>Cod Postal</label>
-          <SmallInput type="text"/>
+          <SmallInput type="text" value={user.postCode}/>
         </LabeledInput>
       </RowContainer>
       <LabeledInput>
         <label>Numar telefon</label>
-        <BigInput type="phone"/>
+        <BigInput type="phone" value={user.phoneNumber}/>
       </LabeledInput>
       <LabeledInput>
         <label>Informatii aditionale</label>
-        <InformationAreaInput type="text"/>
+        <InformationAreaInput type="text" value={user.additionalInformation}/>
       </LabeledInput>
       <ButtonContainer>
         <SubmitButton type="submit">Salveaza</SubmitButton>
@@ -61,12 +61,14 @@ const SmallInput = styled.input`
   width: 98%;
   border:solid 1px #ccc;
   border-radius: 7px;
+  padding-left: 7px;
 `
 
 const BigInput = styled.input`
   width: 99%;
   border:solid 1px #ccc;
   border-radius: 7px;
+  padding-left: 7px;
 `
 
 const InformationAreaInput = styled.textarea`
@@ -75,6 +77,7 @@ const InformationAreaInput = styled.textarea`
   border:solid 1px #ccc;
   border-radius: 7px;
   resize: none;
+  padding-left: 7px;
 `
 
 const LabeledInput = styled.div`

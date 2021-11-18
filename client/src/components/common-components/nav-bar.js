@@ -12,15 +12,15 @@ const NavBar = ({ toggleModalLogIn, toggleModalRegister }) => {
     <div>
       <Navbar collapseOnSelect expand="lg" className="navBarContainer border-bottom border-dark">
         <Container>
-          <Navbar.Brand href="#home">Mediplus</Navbar.Brand>
+          <Navbar.Brand href="/">Mediplus</Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="#features" id = "navBarItem">Home</Nav.Link>
-              <Nav.Link href="#pricing" id = "navBarItem">Services & Prices</Nav.Link>
-              <Nav.Link href="#pricing" id = "navBarItem">News</Nav.Link>
-              <Nav.Link href="#pricing" id = "navBarItem">About</Nav.Link>
-              <Nav.Link href="#pricing" id = "navBarItem">Contact</Nav.Link>
+              <Nav.Link href="/" id = "navBarItem">Home</Nav.Link>
+              <Nav.Link href="/services" id = "navBarItem">Services & Prices</Nav.Link>
+              <Nav.Link href="/news" id = "navBarItem">News</Nav.Link>
+              <Nav.Link href="/about" id = "navBarItem">About</Nav.Link>
+              <Nav.Link href="/contact" id = "navBarItem">Contact</Nav.Link>
               {/*
               <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>

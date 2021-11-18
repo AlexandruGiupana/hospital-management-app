@@ -10,15 +10,15 @@ const ProfilePageComponent = ({ user }) => {
           <CoverImage />
           <ProfileImage />
           <NameContainer>
-            Ion Ionescu
+            {`${user.firstName} ${user.lastName}`}
           </NameContainer>
           <IdContainer>
-            ID cont #12345
+            ID cont {user.id}
           </IdContainer>
         </UserContainer>
       </UserInformationContainer>
       <ChangeInformationContainer>
-        <ChangeInformationForm>
+        <ChangeInformationForm user={user}>
         </ChangeInformationForm>
       </ChangeInformationContainer>
     </ProfileContainer>
