@@ -8,7 +8,7 @@ const  HealthServicesRepartitions = ({user}) => {
         <p className="text-black fs-4 ms-sm-3 pt-sm-1">Repartizarea servicii medicale</p>
         <Row className="g-2 ">
             <Col md>
-                <FloatingLabel controlId="floatingSelectGrid" label="Nume Prenume Doctor | Nume Serviciu">
+                <FloatingLabel controlId="floatingSelectGrid" label="Nume Serviciu | Nume Prenume Doctor">
                     <Form.Select aria-label="Floating label select example" >
                         <option>Zero</option>
                         <option value="1">One</option>

@@ -14,6 +14,9 @@ import AppointmentsTablePage from "./components/pages/appointments-table-page";
 import RegisterForm from "./components/forms/register";
 import HealthServices from "./components/pages/health-services";
 import {Patient} from "./mokedUsers/patient";
+import WardsManagement from "./components/pages/wards-management";
+import DepartmentsComponent from "./components/user-components/departments/DepartmentsComponent";
+import Departments from "./components/pages/departments";
 
 const App = () => {
   console.log(localStorage.getItem('user'))
@@ -108,6 +111,16 @@ const App = () => {
             path="/health-services"
             exact
             element={<HealthServices user={Manager}/>}
+          />
+          <Route
+              path="/wards-management"
+              exact
+              element={<WardsManagement user={Manager}/>}
+          />
+          <Route
+              path="/departments"
+              exact
+              element={<Departments user={Manager}/>}
           />
         </Routes>
       </Router>
