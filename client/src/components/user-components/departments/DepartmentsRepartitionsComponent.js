@@ -27,46 +27,46 @@ export default function DepartmentsRepartitionsComponent() {
                 <p className="text-black fs-4 ms-sm-3 pt-sm-1">Repartizare angajati pe departamente</p>
                 <Row className="g-2 ">
                     <Col md>
-                        <FloatingLabel controlId="floatingSelectGrid" label="Nume Departament | Nume Prenume Doctor">
-                            <Form.Select aria-label="Floating label select example" >
+
+                            <Form.Select aria-label="Floating label select example" className="ms-sm-3">
                                 <option>Zero</option>
                                 <option value="1">One</option>
                                 <option value="2">Two</option>
                                 <option value="3">Three</option>
                             </Form.Select>
-                        </FloatingLabel>
+
                     </Col>
                     &nbsp;
                     &nbsp;
                     <Col>
-                        <Button variant="danger" size="xxl">Eliminare</Button>
+                        <Button variant="danger" size="xxl" className="ms-sm-3">Eliminare</Button>
                     </Col>
                 </Row>
                 &nbsp;
                 &nbsp;
                 <Row className="g-3">
                     <Col>
-                        <FloatingLabel controlId="floatingSelectGrid" label="Nume Departament">
-                            <Form.Select className="Select">
+
+                            <Form.Select className="Select ms-sm-3">
                                 <option>Chirurgie</option>
                                 <option value="1">neurochirurgie</option>
                                 <option value="2">pediatrie</option>
                                 <option value="3">psihologie</option>
                             </Form.Select>
-                        </FloatingLabel>
+
                     </Col>
                     <Col>
-                        <FloatingLabel controlId="floatingSelectGrid" label="Nume medic" >
-                            <Form.Select className="Select">
+
+                            <Form.Select className="Select ms-sm-3">
                                 <option>Ion popescu</option>
                                 <option value="1">Marcel popescu</option>
                                 <option value="2">mara popescu</option>
                                 <option value="3">mara mara</option>
                             </Form.Select>
-                        </FloatingLabel>
+
                     </Col>
                     <Col>
-                        <Button variant="success">Adaugare</Button>
+                        <Button variant="success" className="ms-sm-3">Adaugare</Button>
                     </Col>
                 </Row>
 

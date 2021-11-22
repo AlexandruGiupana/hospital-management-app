@@ -8,46 +8,46 @@ const  HealthServicesRepartitions = ({user}) => {
         <p className="text-black fs-4 ms-sm-3 pt-sm-1">Repartizarea servicii medicale</p>
         <Row className="g-2 ">
             <Col md>
-                <FloatingLabel controlId="floatingSelectGrid" label="Nume Serviciu | Nume Prenume Doctor">
-                    <Form.Select aria-label="Floating label select example" >
-                        <option>Zero</option>
+
+                    <Form.Select aria-label="Floating label select example" className="ms-sm-3">
+                        <option>Control diabetic | Marcel Pop</option>
                         <option value="1">One</option>
                         <option value="2">Two</option>
                         <option value="3">Three</option>
                     </Form.Select>
-                </FloatingLabel>
+
             </Col>
             &nbsp;
             &nbsp;
             <Col>
-                <Button variant="danger" size="xxl">Eliminare</Button>
+                <Button variant="danger" size="xxl" className="ms-sm-3">Eliminare</Button>
             </Col>
         </Row>
         &nbsp;
         &nbsp;
         <Row className="g-3">
             <Col>
-                <FloatingLabel controlId="floatingSelectGrid" label="Nume Serviciu">
-                <Form.Select className="Select">
+
+                <Form.Select className="Select ms-sm-3">
                     <option>EEG</option>
                     <option value="1">Consult diabet</option>
                     <option value="2">Consult psihologic</option>
                     <option value="3">Consult angajare</option>
                 </Form.Select>
-                </FloatingLabel>
+
             </Col>
             <Col>
-                <FloatingLabel controlId="floatingSelectGrid" label="Nume medic" >
-                    <Form.Select className="Select">
-                        <option>X</option>
-                        <option value="1">Y</option>
-                        <option value="2">Z</option>
-                        <option value="3">Z1</option>
+
+                    <Form.Select className="Select ms-sm-3">
+                        <option>Medic 1</option>
+                        <option value="1">Medic 2</option>
+                        <option value="2">M3</option>
+                        <option value="3">M4</option>
                     </Form.Select>
-                </FloatingLabel>
+
             </Col>
             <Col>
-                <Button variant="success">Adaugare</Button>
+                <Button variant="success ms-sm-3">Adaugare</Button>
             </Col>
         </Row>
 

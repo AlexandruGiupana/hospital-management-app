@@ -17,6 +17,7 @@ import {Patient} from "./mokedUsers/patient";
 import WardsManagement from "./components/pages/wards-management";
 import DepartmentsComponent from "./components/user-components/departments/DepartmentsComponent";
 import Departments from "./components/pages/departments";
+import RoomsManagement from "./components/pages/rooms-management";
 
 const App = () => {
   console.log(localStorage.getItem('user'))
@@ -121,6 +122,11 @@ const App = () => {
               path="/departments"
               exact
               element={<Departments user={Manager}/>}
+          />
+          <Route
+              path="/rooms-management"
+              exact
+              element={<RoomsManagement user={Manager}/>}
           />
         </Routes>
       </Router>
