@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Paper from '@material-ui/core/Paper';
 import { EditingState } from '@devexpress/dx-react-grid';
 import {
@@ -8,23 +8,39 @@ import {
   TableEditRow,
   TableEditColumn,
 } from '@devexpress/dx-react-grid-material-ui';
-import { doctorAppointmentsTable } from "../../../demo-data/doctor-appointments-table";
-import { patientAppointmentsTable } from "../../../demo-data/patient-appointments";
-import {DOCTOR_ACCOUNT, MANAGER_ACCOUNT} from "../../../demo-data/account-types";
+import { getAllAppointments } from "../../../services/appointments-services";
 
 const getRowId = row => row.id;
 
 const AppointmentComponent = () => {
+
+  const [doctorAppointmentsTable, setDoctorAppointmentsTable] = useState([]);
+  const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const getAppointments = async () => {
+      const appointments = await getAllAppointments()
+      setDoctorAppointmentsTable(appointments.data)
+      setRows(appointments.data)
+      setLoading(false)
+    }
+    getAppointments()
+  }, [])
+
   const columns = [
-      {name: 'lastName', title: 'Nume'},
-      {name: 'firstName', title: 'Prenume'},
-      {name: 'information', title: 'Informatii aditionale'},
-      {name: 'startDate', title: 'Ora inceput'},
-      {name: 'endDate', title: 'Ora sfarsit'},
-      {name: 'phoneNumber', title: 'Numar telefon'}
+      // {name: 'lastName', title: 'Nume'},
+      // {name: 'firstName', title: 'Prenume'},
+      // {name: 'information', title: 'Informatii aditionale'},
+      // {name: 'startDate', title: 'Ora inceput'},
+      // {name: 'endDate', title: 'Ora sfarsit'},
+      // {name: 'phoneNumber', title: 'Numar telefon'}
+      {name: 'patient_id', title: 'id'},
+      {name: 'additional_information', title: 'Informatii aditionale'},
+      {name: 'start_date', title: 'Ora inceput'},
+      {name: 'end_date', title: 'Ora sfarsit'},
     ]
 
-  const [rows, setRows] = useState(doctorAppointmentsTable);
 
   const commitChanges = ({ added, changed, deleted }) => {
     let changedRows;
@@ -47,28 +63,35 @@ const AppointmentComponent = () => {
     }
     setRows(changedRows);
   };
+  if(loading) {
+    return (
+      <>Loading...</>
+    )
+  }
+  else {
+    return (
+      <Paper>
+        <Grid
+          rows={rows}
+          columns={columns}
+          getRowId={getRowId}
+        >
+          <EditingState
+            onCommitChanges={commitChanges}
+          />
+          <Table />
+          <TableHeaderRow />
+          <TableEditRow />
+          <TableEditColumn
+            showAddCommand
+            showEditCommand
+            showDeleteCommand
+          />
+        </Grid>
+      </Paper>
+    );
+  }
 
-  return (
-    <Paper>
-      <Grid
-        rows={rows}
-        columns={columns}
-        getRowId={getRowId}
-      >
-        <EditingState
-          onCommitChanges={commitChanges}
-        />
-        <Table />
-        <TableHeaderRow />
-        <TableEditRow />
-        <TableEditColumn
-          showAddCommand
-          showEditCommand
-          showDeleteCommand
-        />
-      </Grid>
-    </Paper>
-  );
 };
 
 export default AppointmentComponent;

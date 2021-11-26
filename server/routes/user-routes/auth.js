@@ -1,14 +1,13 @@
 import express from "express";
-import { con } from "../db_connection.js";
-import { User } from "../models/user.js";
+import { con } from "../../db_connection.js";
+import { User } from "../../models/user.js";
 import bcrypt from "bcryptjs";
 import config from "config";
 import jsonWebToken from "jsonwebtoken"
-import { auth } from "./middleware/auth.js";
+import { auth } from "../middleware/auth.js";
 import cors from "cors";
 
 const router = express.Router();
-
 
 router.post("/", cors(), (req, res) => {
   const {

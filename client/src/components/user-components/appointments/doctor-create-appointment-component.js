@@ -13,14 +13,45 @@ import {
   AppointmentForm,
   AppointmentTooltip,
   DragDropProvider,
+  Resources
 } from '@devexpress/dx-react-scheduler-material-ui';
 
-import { appointments } from "../../../demo-data/appointments";
+import { doctorAppointmentsTable } from "../../../demo-data/doctor-appointments-table";
+import { appointments, resourcesData, owners } from "../../../demo-data/doctor-appointments-table";
+import { useEffect, useState } from "react";
+import { getAppointmentsOfDoctor } from "../../../services/appointments-services";
 
 const currentDate = Date.now();
 
 export default () => {
-  const [data, setData] = React.useState(appointments);
+
+  const [appointmentsFromServer, setAppointmentsFromServer] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getAppointments = async () => {
+      const appointments = await getAppointmentsOfDoctor(11);
+      setAppointmentsFromServer(appointments.data);
+      setLoading(false)
+    }
+    getAppointments()
+  }, [])
+
+  const [data, setData] = React.useState(appointmentsFromServer);
+  const [resources, setResources] = useState([
+    {
+      fieldName: 'roomId',
+      title: 'Room',
+      instances: resourcesData,
+    },
+    {
+      fieldName: 'members',
+      title: 'Members',
+      instances: owners,
+      allowMultiple: true,
+    },
+  ])
+
   const editingOptions = {
     allowAdding: true,
     allowDeleting: true,
@@ -76,46 +107,58 @@ export default () => {
     () => allowResizing && allowUpdating,
     [allowResizing, allowUpdating],
   );
+  if(loading) {
+    return (
+      <>Loading...</>
+    )
+  } else {
+    return (
+      <React.Fragment>
+        <Paper>
+          <Scheduler
+            data={data}
+            height={600}
+          >
+            <ViewState
+              currentDate={currentDate}
+            />
+            <EditingState
+              onCommitChanges={onCommitChanges}
+              addedAppointment={addedAppointment}
+              onAddedAppointmentChange={onAddedAppointmentChange}
+            />
 
-  return (
-    <React.Fragment>
-      <Paper>
-        <Scheduler
-          data={data}
-          height={600}
-        >
-          <ViewState
-            currentDate={currentDate}
-          />
-          <EditingState
-            onCommitChanges={onCommitChanges}
-            addedAppointment={addedAppointment}
-            onAddedAppointmentChange={onAddedAppointmentChange}
-          />
+            <IntegratedEditing />
+            <WeekView
+              startDayHour={9}
+              endDayHour={19}
+              timeTableCellComponent={TimeTableCell}
+            />
 
-          <IntegratedEditing />
-          <WeekView
-            startDayHour={9}
-            endDayHour={19}
-            timeTableCellComponent={TimeTableCell}
-          />
+            <Appointments />
 
-          <Appointments />
+            <AppointmentTooltip
+              showOpenButton
+              showDeleteButton={allowDeleting}
+            />
+            <AppointmentForm
+              commandButtonComponent={CommandButton}
+              readOnly={isAppointmentBeingCreated ? false : !allowUpdating}
 
-          <AppointmentTooltip
-            showOpenButton
-            showDeleteButton={allowDeleting}
-          />
-          <AppointmentForm
-            commandButtonComponent={CommandButton}
-            readOnly={isAppointmentBeingCreated ? false : !allowUpdating}
-          />
-          <DragDropProvider
-            allowDrag={allowDrag}
-            allowResize={allowResize}
-          />
-        </Scheduler>
-      </Paper>
-    </React.Fragment>
-  );
+            />
+
+            <Resources
+              data={resources}
+              mainResourceName="roomId"
+            />
+
+            <DragDropProvider
+              allowDrag={allowDrag}
+              allowResize={allowResize}
+            />
+          </Scheduler>
+        </Paper>
+      </React.Fragment>
+    );
+  }
 };

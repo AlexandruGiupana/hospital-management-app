@@ -13,15 +13,31 @@ import {
   AppointmentForm,
   AppointmentTooltip,
   DragDropProvider,
+  Resources
 } from '@devexpress/dx-react-scheduler-material-ui';
 
-import { appointments } from "../../../demo-data/appointments";
-import styled from "styled-components";
+import { doctorAppointmentsTable } from "../../../demo-data/doctor-appointments-table";
+import { appointments, resourcesData, owners } from "../../../demo-data/doctor-appointments-table";
+import { useState } from "react";
 
 const currentDate = Date.now();
 
-const PatientCreateAppointments = () => {
-  const [data, setData] = React.useState(appointments);
+export default () => {
+  const [data, setData] = React.useState(doctorAppointmentsTable);
+  const [resources, setResources] = useState([
+    {
+      fieldName: 'roomId',
+      title: 'Room',
+      instances: resourcesData,
+    },
+    {
+      fieldName: 'members',
+      title: 'Members',
+      instances: owners,
+      allowMultiple: true,
+    },
+  ])
+
   const editingOptions = {
     allowAdding: true,
     allowDeleting: true,
@@ -43,7 +59,7 @@ const PatientCreateAppointments = () => {
     }
     if (changed) {
       setData(data.map(appointment => (
-          changed[appointment.id] ? { ...appointment, ...changed[appointment.id] } : appointment)));
+        changed[appointment.id] ? { ...appointment, ...changed[appointment.id] } : appointment)));
     }
     if (deleted !== undefined) {
       setData(data.filter(appointment => appointment.id !== deleted));
@@ -56,10 +72,10 @@ const PatientCreateAppointments = () => {
   });
 
   const TimeTableCell = React.useCallback(React.memo(({ onDoubleClick, ...restProps }) => (
-      <WeekView.TimeTableCell
-          {...restProps}
-          onDoubleClick={allowAdding ? onDoubleClick : undefined}
-      />
+    <WeekView.TimeTableCell
+      {...restProps}
+      onDoubleClick={allowAdding ? onDoubleClick : undefined}
+    />
   )), [allowAdding]);
 
   const CommandButton = React.useCallback(({ id, ...restProps }) => {
@@ -70,98 +86,59 @@ const PatientCreateAppointments = () => {
   }, [allowDeleting]);
 
   const allowDrag = React.useCallback(
-      () => allowDragging && allowUpdating,
-      [allowDragging, allowUpdating],
+    () => allowDragging && allowUpdating,
+    [allowDragging, allowUpdating],
   );
   const allowResize = React.useCallback(
-      () => allowResizing && allowUpdating,
-      [allowResizing, allowUpdating],
+    () => allowResizing && allowUpdating,
+    [allowResizing, allowUpdating],
   );
 
   return (
-      <React.Fragment>
-        <ServiceSelection>
-          <SelectionContainer>
-            <SelectionLabel>
-              Serviciu medical
-            </SelectionLabel>
-            <SelectBoxContainer>
-              <select>
-                <option>Consult</option>
-                <option>Consult ORL</option>
-              </select>
-            </SelectBoxContainer>
-          </SelectionContainer>
-          <SelectionContainer>
-            <SelectionLabel>
-              Doctor
-            </SelectionLabel>
-            <SelectBoxContainer>
-              <select>
-                <option>doctor 1</option>
-                <option>doctor 2</option>
-              </select>
-            </SelectBoxContainer>
-          </SelectionContainer>
-        </ServiceSelection>
-        <Paper>
-          <Scheduler
-              data={data}
-              height={600}
-          >
-            <ViewState
-                currentDate={currentDate}
-            />
-            <EditingState
-                onCommitChanges={onCommitChanges}
-                addedAppointment={addedAppointment}
-                onAddedAppointmentChange={onAddedAppointmentChange}
-            />
+    <React.Fragment>
+      <Paper>
+        <Scheduler
+          data={data}
+          height={600}
+        >
+          <ViewState
+            currentDate={currentDate}
+          />
+          <EditingState
+            onCommitChanges={onCommitChanges}
+            addedAppointment={addedAppointment}
+            onAddedAppointmentChange={onAddedAppointmentChange}
+          />
 
-            <IntegratedEditing />
-            <WeekView
-                startDayHour={9}
-                endDayHour={19}
-                timeTableCellComponent={TimeTableCell}
-            />
+          <IntegratedEditing />
+          <WeekView
+            startDayHour={9}
+            endDayHour={19}
+            timeTableCellComponent={TimeTableCell}
+          />
 
-            <Appointments />
+          <Appointments />
 
-            <AppointmentTooltip
-                showOpenButton
-                showDeleteButton={allowDeleting}
-            />
-            <AppointmentForm
-                commandButtonComponent={CommandButton}
-                readOnly={isAppointmentBeingCreated ? false : !allowUpdating}
-            />
-            <DragDropProvider
-                allowDrag={allowDrag}
-                allowResize={allowResize}
-            />
-          </Scheduler>
-        </Paper>
-      </React.Fragment>
+          <AppointmentTooltip
+            showOpenButton
+            showDeleteButton={allowDeleting}
+          />
+          <AppointmentForm
+            commandButtonComponent={CommandButton}
+            readOnly={isAppointmentBeingCreated ? false : !allowUpdating}
+          />
+
+          <Resources
+            data={resources}
+            mainResourceName="roomId"
+          />
+
+          <DragDropProvider
+            allowDrag={allowDrag}
+            allowResize={allowResize}
+          />
+        </Scheduler>
+      </Paper>
+    </React.Fragment>
   );
 };
-
-const ServiceSelection = styled.div`
-  padding-bottom: 15px;
-  display: flex;
-`
-
-const SelectionLabel = styled.div`
-  padding-right: 20px;
-`
-
-const SelectionContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  padding-right: 40px;
-`
-
-const SelectBoxContainer = styled.div`
-`
-
-export default PatientCreateAppointments;

@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "./components/common-components/nav-bar";
 import Footer from "./components/common-components/footer";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -18,6 +18,7 @@ import WardsManagement from "./components/pages/wards-management";
 import DepartmentsComponent from "./components/user-components/departments/DepartmentsComponent";
 import Departments from "./components/pages/departments";
 import RoomsManagement from "./components/pages/rooms-management";
+import { getAllAppointments, getAppointmentsOfDoctor } from "./services/appointments-services";
 
 const App = () => {
   console.log(localStorage.getItem('user'))
