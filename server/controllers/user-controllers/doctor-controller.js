@@ -1,7 +1,8 @@
 import { con } from "../../db_connection.js";
+import { SELECT_ALL_DOCTORS_QUERY } from "../../sql_queries/doctors-queries.js";
 
 export const getAllDoctors = async (req, res) => {
-  con.query("SELECT * FROM doctors", (err, result) => {
+  con.query(SELECT_ALL_DOCTORS_QUERY, (err, result) => {
     if (err) {
       throw err;
     }
@@ -11,9 +12,7 @@ export const getAllDoctors = async (req, res) => {
 };
 
 export const createDoctor = async (req, res) => {
-  const {
-    user_id, job_title
-  } = req.body;
+  const { user_id, job_title } = req.body;
   let sql = "INSERT INTO doctors (user_id, job_title) VALUES (?, ?)";
   con.query(sql, [user_id, job_title], (err, result) => {
     if (err) {
@@ -22,8 +21,8 @@ export const createDoctor = async (req, res) => {
     res.json({
       service: {
         user_id: user_id,
-        job_title: job_title
-      }
+        job_title: job_title,
+      },
     });
   });
-}
+};

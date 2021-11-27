@@ -1,60 +1,64 @@
-import React from "react";
-import {FloatingLabel, Form, Col, Row, Button} from "react-bootstrap";
-import HealthServicesComponent from "./health-services-component";
-import './health-services-style.css'
-const  HealthServicesRepartitions = ({user}) => {
-    return(
-    <Form className="healthServicesRepartitionsContainer">
-        <p className="text-black fs-4 ms-sm-3 pt-sm-1">Repartizarea servicii medicale</p>
-        <Row className="g-2 ">
-            <Col md>
+import React, { useEffect, useState } from "react";
+import {  Form, Col, Row, Button } from "react-bootstrap";
+import "./health-services-style.css";
+import {
+  getMedicalServices,
+} from "../../../services/health-services-services";
+import {
+  getAllRepartitions
+} from "../../../services/repartition-services"
+import { getAllDoctors } from "../../../services/doctors-services";
+import AddRepartitonForm from "./forms/add-repartion-form";
+import DeleteRepartitionForm from "./forms/delete-repartition-form";
 
-                    <Form.Select aria-label="Floating label select example" className="ms-sm-3">
-                        <option>Control diabetic | Marcel Pop</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </Form.Select>
+const HealthServicesRepartitions = ({ user, notify }) => {
 
-            </Col>
-            &nbsp;
-            &nbsp;
-            <Col>
-                <Button variant="danger" size="xxl" className="ms-sm-3">Eliminare</Button>
-            </Col>
-        </Row>
+  const [medicalServices, setMedicalServices] = useState([]);
+  const [doctors, setDoctors] = useState([]);
+  const [repartitions, setRepartitons] = useState([]);
+
+  const [loadingServicesData, setLoadingServicesData] = useState(true);
+  const [ladingDoctors, setLoadingDoctors] = useState(true);
+  const [loadingRepartitons, setLoadingRepartitons] = useState(true);
+
+  useEffect(() => {
+    const getDoctors = async () => {
+      const doctorsData = await getAllDoctors();
+      setDoctors(doctorsData.data);
+      setLoadingDoctors(false);
+    }
+    const getServices = async () => {
+      const services = await getMedicalServices();
+      setMedicalServices(services.data);
+      setLoadingServicesData(false);
+    };
+    const getRepartitons = async () => {
+      const repartitionData = await getAllRepartitions();
+      setRepartitons(repartitionData.data);
+      setLoadingRepartitons(false);
+    }
+    getRepartitons();
+    getServices();
+    getDoctors();
+  }, []);
+
+  if (loadingServicesData || ladingDoctors || loadingRepartitons) {
+    return <>Loading...</>;
+  }
+
+  return (
+    <>
+      <div className="healthServicesRepartitionsContainer">
+        <p className="text-black fs-4 ms-sm-3 pt-sm-1">
+          Repartizarea servicii medicale
+        </p>
+        <DeleteRepartitionForm notify={notify} repartitions={repartitions} setRepartitons={setRepartitons}/>
+        &nbsp; &nbsp;
+        <AddRepartitonForm notify={notify} doctors={doctors} medicalServices={medicalServices} repartitions={repartitions} setRepartitons={setRepartitons}/>
         &nbsp;
-        &nbsp;
-        <Row className="g-3">
-            <Col>
-
-                <Form.Select className="Select ms-sm-3">
-                    <option>EEG</option>
-                    <option value="1">Consult diabet</option>
-                    <option value="2">Consult psihologic</option>
-                    <option value="3">Consult angajare</option>
-                </Form.Select>
-
-            </Col>
-            <Col>
-
-                    <Form.Select className="Select ms-sm-3">
-                        <option>Medic 1</option>
-                        <option value="1">Medic 2</option>
-                        <option value="2">M3</option>
-                        <option value="3">M4</option>
-                    </Form.Select>
-
-            </Col>
-            <Col>
-                <Button variant="success ms-sm-3">Adaugare</Button>
-            </Col>
-        </Row>
-
-        &nbsp;
-
-    </Form>
-    )
-}
+      </div>
+    </>
+  );
+};
 
 export default HealthServicesRepartitions;

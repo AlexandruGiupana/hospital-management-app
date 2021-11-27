@@ -1,5 +1,17 @@
 export class User {
-  constructor(email, password, account_type, first_name, last_name, address, city, county, postal_code, phone_number, cnp) {
+  constructor(
+    email,
+    password,
+    account_type,
+    first_name,
+    last_name,
+    address,
+    city,
+    county,
+    postal_code,
+    phone_number,
+    cnp
+  ) {
     this.email = email;
     this.password = password;
     this.account_type = account_type;

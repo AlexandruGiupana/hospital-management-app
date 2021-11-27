@@ -6,15 +6,15 @@ export const getMedicalServices = async () => {
   } catch (err) {
     throw err;
   }
-}
+};
 
 export const createMedicalService = async (data) => {
   try {
-    await axios.post("http://localhost:8080/services/create", data);
+    return await axios.post("http://localhost:8080/services/create", data);
   } catch (err) {
     throw err;
   }
-}
+};
 
 export const updateMedicalService = async (data) => {
   try {
@@ -22,15 +22,17 @@ export const updateMedicalService = async (data) => {
   } catch (err) {
     throw err;
   }
-}
+};
 
 export const deleteMedicalService = async (data) => {
   try {
     const sentData = {
-      "id": data
-    }
-    await axios.delete("http://localhost:8080/services/delete", { data: sentData });
+      id: data,
+    };
+    await axios.delete("http://localhost:8080/services/delete", {
+      data: sentData,
+    });
   } catch (err) {
     throw err;
   }
-}
+};

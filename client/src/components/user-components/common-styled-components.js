@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   background: #f8f4ec;
-`
+`;
 
 export const ContentContainer = styled.div`
   margin-left: 360px;
@@ -10,19 +10,19 @@ export const ContentContainer = styled.div`
   padding-bottom: 35px;
   position: relative;
   min-height: 53vh;
-  @media(max-width: 910px) {
+  @media (max-width: 910px) {
     margin-left: 300px;
     margin-right: 50px;
   }
-  @media(max-width: 655px) {
+  @media (max-width: 655px) {
     margin-left: 50px;
     margin-right: 50px;
   }
-  @media(max-width: 462px) {
+  @media (max-width: 462px) {
     margin-left: 20px;
     margin-right: 20px;
   }
-`
+`;
 
 export const PageTitle = styled.div`
   display: flex;
@@ -31,4 +31,4 @@ export const PageTitle = styled.div`
   padding-top: 15px;
   font-size: 20px;
   color: #777c85;
-`
+`;

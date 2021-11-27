@@ -7,55 +7,58 @@ import HomePage from "./components/pages/home-page";
 import { Doctor } from "./mokedUsers/doctor";
 import { Manager } from "./mokedUsers/manager";
 import ProfilePage from "./components/pages/profile-page";
-import Modal from 'react-modal';
+import Modal from "react-modal";
 import LoginForm from "./components/forms/login";
 import CreateAppointmentPage from "./components/pages/create-appointment-page";
 import AppointmentsTablePage from "./components/pages/appointments-table-page";
 import RegisterForm from "./components/forms/register";
 import HealthServices from "./components/pages/health-services";
-import {Patient} from "./mokedUsers/patient";
+import { Patient } from "./mokedUsers/patient";
 import WardsManagement from "./components/pages/wards-management";
 import DepartmentsComponent from "./components/user-components/departments/DepartmentsComponent";
 import Departments from "./components/pages/departments";
 import RoomsManagement from "./components/pages/rooms-management";
-import { getAllAppointments, getAppointmentsOfDoctor } from "./services/appointments-services";
+import {
+  getAllAppointments,
+  getAppointmentsOfDoctor,
+} from "./services/appointments-services";
 
 const App = () => {
-  console.log(localStorage.getItem('user'))
+  console.log(localStorage.getItem("user"));
 
   const [modalLogInOpen, setLoginModalOpen] = useState(false);
   const [modalRegisterOpen, setRegisterModalOpen] = useState(false);
 
   const toggleModalLogIn = () => {
     setLoginModalOpen(!modalLogInOpen);
-  }
+  };
 
   const toggleModalRegister = () => {
     setRegisterModalOpen(!modalRegisterOpen);
-  }
+  };
 
   const customStyles = {
     content: {
-      top: '50%',
-      width: '70%',
-      height: '50%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      marginRight: '-50%',
-      transform: 'translate(-50%, -50%)',
+      top: "50%",
+      width: "70%",
+      height: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
     },
   };
   const customStyles2 = {
     content: {
-      top: '50%',
-      width: '70%',
-      height: '80%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      marginRight: '-50%',
-      transform: 'translate(-50%, -50%)',
+      top: "50%",
+      width: "70%",
+      height: "80%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
     },
   };
 
@@ -81,53 +84,52 @@ const App = () => {
         <button onClick={toggleModalRegister}>close</button>
         <RegisterForm />
       </Modal>
-      <NavBar toggleModalLogIn={toggleModalLogIn} toggleModalRegister={toggleModalRegister}/>
+      <NavBar
+        toggleModalLogIn={toggleModalLogIn}
+        toggleModalRegister={toggleModalRegister}
+      />
       <Router>
         <Routes>
-          <Route
-            path="/"
-            exact
-            element={<HomePage />}
-          />
+          <Route path="/" exact element={<HomePage />} />
           <Route
             path="/dashboard"
             exact
-            element={<DashboardPage user={mockUser}/>}
+            element={<DashboardPage user={mockUser} />}
           />
           <Route
             path="/profile"
             exact
-            element={<ProfilePage user={mockUser}/>}
+            element={<ProfilePage user={mockUser} />}
           />
           <Route
             path="/create-appointment"
             exact
-            element={<CreateAppointmentPage user={mockUser}/>}
+            element={<CreateAppointmentPage user={mockUser} />}
           />
           <Route
             path="/appointments"
             exact
-            element={<AppointmentsTablePage user={mockUser}/>}
+            element={<AppointmentsTablePage user={mockUser} />}
           />
           <Route
             path="/health-services"
             exact
-            element={<HealthServices user={Manager}/>}
+            element={<HealthServices user={Manager} />}
           />
           <Route
-              path="/wards-management"
-              exact
-              element={<WardsManagement user={Manager}/>}
+            path="/wards-management"
+            exact
+            element={<WardsManagement user={Manager} />}
           />
           <Route
-              path="/departments"
-              exact
-              element={<Departments user={Manager}/>}
+            path="/departments"
+            exact
+            element={<Departments user={Manager} />}
           />
           <Route
-              path="/rooms-management"
-              exact
-              element={<RoomsManagement user={Manager}/>}
+            path="/rooms-management"
+            exact
+            element={<RoomsManagement user={Manager} />}
           />
         </Routes>
       </Router>

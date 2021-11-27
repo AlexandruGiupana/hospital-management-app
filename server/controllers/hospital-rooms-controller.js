@@ -12,20 +12,18 @@ export const getHospitalRooms = async (req, res) => {
 };
 
 export const createHospitalRoom = async (req, res) => {
-    const {
-      type, room_number
-    } = req.body;
-    const newHospitalRoom = new HospitalRoom(type, room_number);
-    let sql = "INSERT INTO hospital_rooms (type, room_number) VALUES (?, ?)";
-    con.query(sql, [type, room_number], (err, result) => {
+  const { type, room_number } = req.body;
+  const newHospitalRoom = new HospitalRoom(type, room_number);
+  let sql = "INSERT INTO hospital_rooms (type, room_number) VALUES (?, ?)";
+  con.query(sql, [type, room_number], (err, result) => {
     if (err) {
       throw err;
     }
     res.json({
       hospital_room: {
         type: newHospitalRoom.type,
-        room_number: newHospitalRoom.roomNumber
-      }
+        room_number: newHospitalRoom.roomNumber,
+      },
     });
   });
-}
+};

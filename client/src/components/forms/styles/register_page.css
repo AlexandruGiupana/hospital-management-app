@@ -1,16 +1,16 @@
-.registerFormSubmitBtn{
-    font-family: "Roboto Condensed";
-    margin-top: 20px;
+.registerFormSubmitBtn {
+  font-family: "Roboto Condensed";
+  margin-top: 20px;
 }
 
-.registerLabel{
-    font-family: "Roboto Light";
-    font-size: 20px;
-    /*padding-left: 10px;*/
-    margin-top: 10px;
+.registerLabel {
+  font-family: "Roboto Light";
+  font-size: 20px;
+  /*padding-left: 10px;*/
+  margin-top: 10px;
 }
 
-.inputField{
-    width: 20%;
-    margin-top: 10px;
+.inputField {
+  width: 20%;
+  margin-top: 10px;
 }

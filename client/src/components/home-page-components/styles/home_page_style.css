@@ -1,45 +1,43 @@
-#navBarItem{
-    font-family: "Candara";
-    font-weight: bold;
-    font-size: 20px;
-    color:#1a1919;
+#navBarItem {
+  font-family: "Candara";
+  font-weight: bold;
+  font-size: 20px;
+  color: #1a1919;
 }
-#navBarButton{
-    font-family: "Candara Light";
-    font-weight: bold;
-    font-size: 20px;
+#navBarButton {
+  font-family: "Candara Light";
+  font-weight: bold;
+  font-size: 20px;
 }
-#navBarItem:hover{
-    color:#5c5b5b;
+#navBarItem:hover {
+  color: #5c5b5b;
 }
-.navBarContainer{
-    background-color: #fcfcfc;
-    border-bottom-width: 1px;
-
+.navBarContainer {
+  background-color: #fcfcfc;
+  border-bottom-width: 1px;
 }
-#carousel_caption{
-    font-size: 40px;
-    margin-bottom: 25px;
-    padding-bottom:30px;
-    font-family: "Roboto";
-    -webkit-text-stroke: 1.1px black;
-    font-weight: bold;
-}
-
-#home_4cols_col{
-    background-color: #a9c4c3;
+#carousel_caption {
+  font-size: 40px;
+  margin-bottom: 25px;
+  padding-bottom: 30px;
+  font-family: "Roboto";
+  -webkit-text-stroke: 1.1px black;
+  font-weight: bold;
 }
 
-#home_4cols_col:hover{
-    background-color: #85c9c7;
+#home_4cols_col {
+  background-color: #a9c4c3;
 }
 
-#home_4cols_col > h3{
-    font-family: "Trebuchet MS";
+#home_4cols_col:hover {
+  background-color: #85c9c7;
 }
 
-#home_4cols_col > p{
-    font-size: 20px;
-    text-align: center;
+#home_4cols_col > h3 {
+  font-family: "Trebuchet MS";
 }
 
+#home_4cols_col > p {
+  font-size: 20px;
+  text-align: center;
+}

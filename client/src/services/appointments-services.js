@@ -10,8 +10,10 @@ export const getAllAppointments = async () => {
 
 export const getAppointmentsOfDoctor = async (idDoctor) => {
   try {
-    return await axios.get(`http://localhost:8080/appointments/doctor/${idDoctor}`);
+    return await axios.get(
+      `http://localhost:8080/appointments/doctor/${idDoctor}`
+    );
   } catch (err) {
     throw err;
   }
-}
+};

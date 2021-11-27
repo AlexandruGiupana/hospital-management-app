@@ -1,22 +1,25 @@
 import React from "react";
 import Dashboard from "../user-components/dashboard/dashboard";
 import SideBar from "../user-components/side-bar/side-bar";
-import { Container, ContentContainer, PageTitle } from "../user-components/common-styled-components";
+import {
+  Container,
+  ContentContainer,
+  PageTitle,
+} from "../user-components/common-styled-components";
 
 const DashboardPage = ({ user }) => {
-
   return (
     <Container>
-      <SideBar accountType={user.accountType}/>
+      <SideBar accountType={user.accountType} />
       <ContentContainer>
         <PageTitle>
           <div>Dashboard</div>
         </PageTitle>
         <hr />
-        <Dashboard user={user}/>
+        <Dashboard user={user} />
       </ContentContainer>
     </Container>
-  )
-}
+  );
+};
 
-export default DashboardPage
+export default DashboardPage;

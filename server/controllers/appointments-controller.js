@@ -25,24 +25,42 @@ export const getAppointmentsOfDoctor = async (req, res) => {
 
 export const createAppointment = async (req, res) => {
   const {
-    patient_id, doctor_id, service_id, hospital_room_id, additional_information, start_date, end_date
+    patient_id,
+    doctor_id,
+    service_id,
+    hospital_room_id,
+    additional_information,
+    start_date,
+    end_date,
   } = req.body;
-  let sql = "INSERT INTO appointments (patient_id, doctor_id, service_id, hospital_room_id, additional_information, start_date, end_date) VALUES (?, ?, ?, ?, ?, ?, ?)";
-  con.query(sql, [patient_id, doctor_id, service_id, hospital_room_id, additional_information, start_date, end_date], (err, result) => {
-    if (err) {
-      throw err;
-    }
-    res.json({
-      appointment: {
-        patient_id: patient_id,
-        doctor_id: doctor_id,
-        service_id: service_id,
-        hospital_room_id: hospital_room_id,
-        additional_information: additional_information,
-        start_date: start_date,
-        end_date: end_date
+  let sql =
+    "INSERT INTO appointments (patient_id, doctor_id, service_id, hospital_room_id, additional_information, start_date, end_date) VALUES (?, ?, ?, ?, ?, ?, ?)";
+  con.query(
+    sql,
+    [
+      patient_id,
+      doctor_id,
+      service_id,
+      hospital_room_id,
+      additional_information,
+      start_date,
+      end_date,
+    ],
+    (err, result) => {
+      if (err) {
+        throw err;
       }
-    });
-  });
-}
-
+      res.json({
+        appointment: {
+          patient_id: patient_id,
+          doctor_id: doctor_id,
+          service_id: service_id,
+          hospital_room_id: hospital_room_id,
+          additional_information: additional_information,
+          start_date: start_date,
+          end_date: end_date,
+        },
+      });
+    }
+  );
+};

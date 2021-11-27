@@ -1,6 +1,5 @@
 import React from "react";
 
-
 const Login = () => {
   return (
     <>
@@ -12,8 +11,7 @@ const Login = () => {
         <input type="submit"></input>
       </form>
     </>
-  )
-}
-
+  );
+};
 
 export default Login;
