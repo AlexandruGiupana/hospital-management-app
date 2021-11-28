@@ -4,18 +4,10 @@ import {
   CREATE_NEW_ROOM_QUERY, DELETE_ROOM_QUERY, GET_ROOM_BY_ROOMNUMBER_OR_TYPE,
   GET_ROOMS_WITH_APPOINTMENTS,
   SELECT_ALL_ROOMS_QUERY
-} from "../../sql_queries/room-queries";
-import {validateNumberField} from "../../validation/general-validation";
-import {validateRoomType} from "../../validation/rooms-validation";
-import {
-  DELETE_MEDICAL_SERVICE_QUERY,
-  EDIT_MEDICAL_SERVICE_NAME_QUERY,
-  EDIT_MEDICAL_SERVICE_PRICE_QUERY,
-  EDIT_MEDICAL_SERVICE_QUERY,
-  SELECT_DOCTORS_THAT_OFFER_SERVICE_QUERY,
-  SELECT_SERVICE_BY_ID_QUERY
-} from "../../sql_queries/services_queries";
-import {validateServiceName} from "../../validation/medical-service-validation";
+} from "../../sql_queries/room-queries.js";
+import {validateNumberField} from "../../validation/general-validation.js";
+import {validateRoomType} from "../../validation/rooms-validation.js";
+
 
 export const getHospitalRooms = async (req, res) => {
   con.query(SELECT_ALL_ROOMS_QUERY, (err, result) => {

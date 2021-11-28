@@ -22,6 +22,7 @@ import {
   getAllAppointments,
   getAppointmentsOfDoctor,
 } from "./services/appointments-services";
+import PricesPage from "./components/common-components/services-page";
 
 const App = () => {
   console.log(localStorage.getItem("user"));
@@ -115,6 +116,11 @@ const App = () => {
             path="/health-services"
             exact
             element={<HealthServices user={Manager} />}
+          />
+          <Route
+              path="/services_page"
+              exact
+              element={< PricesPage />}
           />
           <Route
             path="/wards-management"
