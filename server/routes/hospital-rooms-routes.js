@@ -5,7 +5,7 @@ import {createHospitalRoom, editRoom, getHospitalRooms, deleteRoom} from "../con
 const router = express.Router();
 
 
-router.get("/rooms", cors(), getHospitalRooms);
+router.get("/", cors(), getHospitalRooms);
 router.post("/create", cors(), createHospitalRoom);
 router.put("/update", cors(), editRoom);
 router.delete("/delete", cors(), deleteRoom);

@@ -1,10 +1,5 @@
-import * as React from "react";
+import React, { useCallback } from "react";
 import Paper from "@material-ui/core/Paper";
-import FormGroup from "@material-ui/core/FormGroup";
-import Checkbox from "@material-ui/core/Checkbox";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Typography from "@material-ui/core/FormControl";
-import { makeStyles } from "@material-ui/core/styles";
 import {
   ViewState,
   EditingState,
@@ -18,45 +13,51 @@ import {
   AppointmentTooltip,
   DragDropProvider,
   Resources,
+  Toolbar,
+  DateNavigator,
+  TodayButton,
 } from "@devexpress/dx-react-scheduler-material-ui";
 
-import { doctorAppointmentsTable } from "../../../demo-data/doctor-appointments-table";
 import {
-  appointments,
-  resourcesData,
   owners,
 } from "../../../demo-data/doctor-appointments-table";
 import { useEffect, useState } from "react";
 import { getAppointmentsOfDoctor } from "../../../services/appointments-services";
 
-const currentDate = Date.now();
-
-export default () => {
+const DoctorCreateAppointmentTable = ({ chosenMedicalService, rooms }) => {
   const [appointmentsFromServer, setAppointmentsFromServer] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loadingAppointments, setLoadingAppointments] = useState(true);
+  const [currentDate, setCurrentDate] = useState(Date.now())
 
   useEffect(() => {
     const getAppointments = async () => {
-      const appointments = await getAppointmentsOfDoctor(11);
+      const appointments = await getAppointmentsOfDoctor(10); //todo change id when login is implemented
       setAppointmentsFromServer(appointments.data);
-      setLoading(false);
-    };
+      setData(appointments.data);
+      setLoadingAppointments(false);
+    }
     getAppointments();
   }, []);
 
-  const [data, setData] = React.useState(appointmentsFromServer);
+
+  const [data, setData] = React.useState([]);
   const [resources, setResources] = useState([
     {
-      fieldName: "roomId",
+      fieldName: "room_number",
       title: "Room",
-      instances: resourcesData,
+      instances: rooms,
     },
     {
       fieldName: "members",
-      title: "Members",
+      title: "Patient",
       instances: owners,
       allowMultiple: true,
     },
+    {
+      fieldName: "patient",
+      title: "Patient2",
+      editorType: 'dxTextBox',
+    }
   ]);
 
   const editingOptions = {
@@ -66,9 +67,12 @@ export default () => {
     allowDragging: true,
     allowResizing: true,
   };
-  const [addedAppointment, setAddedAppointment] = React.useState({});
-  const [isAppointmentBeingCreated, setIsAppointmentBeingCreated] =
-    React.useState(false);
+  const [addedAppointment, setAddedAppointment] = useState({});
+  const [isAppointmentBeingCreated, setIsAppointmentBeingCreated] = useState(false);
+
+  const handleDataChange = (newDate) => {
+    setCurrentDate(newDate);
+  };
 
   const {
     allowAdding,
@@ -132,52 +136,56 @@ export default () => {
     [allowDeleting]
   );
 
-  const allowDrag = React.useCallback(
+  const allowDrag = useCallback(
     () => allowDragging && allowUpdating,
     [allowDragging, allowUpdating]
   );
-  const allowResize = React.useCallback(
+  const allowResize = useCallback(
     () => allowResizing && allowUpdating,
     [allowResizing, allowUpdating]
   );
-  if (loading) {
+
+  if (loadingAppointments) {
     return <>Loading...</>;
-  } else {
-    return (
-      <React.Fragment>
-        <Paper>
-          <Scheduler data={data} height={600}>
-            <ViewState currentDate={currentDate} />
-            <EditingState
-              onCommitChanges={onCommitChanges}
-              addedAppointment={addedAppointment}
-              onAddedAppointmentChange={onAddedAppointmentChange}
-            />
-
-            <IntegratedEditing />
-            <WeekView
-              startDayHour={9}
-              endDayHour={19}
-              timeTableCellComponent={TimeTableCell}
-            />
-
-            <Appointments />
-
-            <AppointmentTooltip
-              showOpenButton
-              showDeleteButton={allowDeleting}
-            />
-            <AppointmentForm
-              commandButtonComponent={CommandButton}
-              readOnly={isAppointmentBeingCreated ? false : !allowUpdating}
-            />
-
-            <Resources data={resources} mainResourceName="roomId" />
-
-            <DragDropProvider allowDrag={allowDrag} allowResize={allowResize} />
-          </Scheduler>
-        </Paper>
-      </React.Fragment>
-    );
   }
-};
+
+  return (
+    <>
+      <Paper>
+        <Scheduler data={data} height={600}>
+          <ViewState
+            currentDate={currentDate}
+            onCurrentDateChange={(date) => handleDataChange(date)}
+          />
+          <EditingState
+            onCommitChanges={onCommitChanges}
+            addedAppointment={addedAppointment}
+            onAddedAppointmentChange={onAddedAppointmentChange}
+          />
+          <IntegratedEditing />
+          <WeekView
+            startDayHour={9}
+            endDayHour={19}
+            timeTableCellComponent={TimeTableCell}
+          />
+          <Toolbar />
+          <DateNavigator />
+          <TodayButton />
+          <Appointments />
+          <AppointmentTooltip
+            showOpenButton
+            showDeleteButton={allowDeleting}
+          />
+          <AppointmentForm
+            commandButtonComponent={CommandButton}
+            readOnly={isAppointmentBeingCreated ? false : !allowUpdating}
+          />
+          <Resources data={resources} mainResourceName="roomId" />
+          <DragDropProvider allowDrag={allowDrag} allowResize={allowResize} />
+        </Scheduler>
+      </Paper>
+    </>
+  );
+}
+
+export default DoctorCreateAppointmentTable;

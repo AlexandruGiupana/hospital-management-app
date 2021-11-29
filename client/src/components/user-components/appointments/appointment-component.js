@@ -8,19 +8,18 @@ import {
   TableEditRow,
   TableEditColumn,
 } from "@devexpress/dx-react-grid-material-ui";
-import { getAllAppointments } from "../../../services/appointments-services";
+import { getAppointmentsOfDoctor } from "../../../services/appointments-services";
 
 const getRowId = (row) => row.id;
 
 const AppointmentComponent = () => {
-  const [doctorAppointmentsTable, setDoctorAppointmentsTable] = useState([]);
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getAppointments = async () => {
-      const appointments = await getAllAppointments();
-      setDoctorAppointmentsTable(appointments.data);
+      const appointments = await getAppointmentsOfDoctor(10); //todo change to doctor id when login will be implemented
+      //todo format date
       setRows(appointments.data);
       setLoading(false);
     };
@@ -28,13 +27,9 @@ const AppointmentComponent = () => {
   }, []);
 
   const columns = [
-    // {name: 'lastName', title: 'Nume'},
-    // {name: 'firstName', title: 'Prenume'},
-    // {name: 'information', title: 'Informatii aditionale'},
-    // {name: 'startDate', title: 'Ora inceput'},
-    // {name: 'endDate', title: 'Ora sfarsit'},
-    // {name: 'phoneNumber', title: 'Numar telefon'}
-    { name: "patient_id", title: "id" },
+    { name: "patient_first_name", title: "Prenume" },
+    { name: "patient_last_name", title: "Nume" },
+    { name: "service_name", title: "Serviciu"},
     { name: "additional_information", title: "Informatii aditionale" },
     { name: "start_date", title: "Ora inceput" },
     { name: "end_date", title: "Ora sfarsit" },

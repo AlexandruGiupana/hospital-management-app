@@ -10,6 +10,14 @@ export const getMedicalServices = async () => {
   }
 };
 
+export const getMedicalServicesOfDoctor = async (idDoctor) => {
+  try {
+    return await axios.get(`http://localhost:8080/services/${idDoctor}`);
+  } catch (err) {
+    throw err;
+  }
+};
+
 export const createMedicalService = async (data) => {
   try {
     return await axios.post("http://localhost:8080/services/create", data);

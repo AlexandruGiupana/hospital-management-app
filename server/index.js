@@ -28,7 +28,7 @@ app.use(cors(corsOptions));
 app.use("/users", userRoutes);
 app.use("/auth", authRoutes);
 app.use("/appointments", appointmentsRoutes);
-app.use("/hospital-rooms", hospitalRoomsRoutes);
+app.use("/rooms", hospitalRoomsRoutes);
 app.use("/services", servicesRoutes);
 app.use("/doctors", doctorRoutes);
 app.use("/repartition", repartitionRoutes)

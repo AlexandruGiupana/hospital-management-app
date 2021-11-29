@@ -12,6 +12,7 @@ import {
   MANAGER_ACCOUNT,
   PATIENT_ACCOUNT,
 } from "../../demo-data/account-types";
+
 const AppointmentsTablePage = ({ user }) => {
   return (
     <Container>
@@ -22,7 +23,14 @@ const AppointmentsTablePage = ({ user }) => {
         </PageTitle>
         <hr />
         {(user.accountType === DOCTOR_ACCOUNT ||
-          user.accountType === MANAGER_ACCOUNT) && <AppointmentComponent />}
+          user.accountType === MANAGER_ACCOUNT) &&
+          <>
+            <>
+
+            </>
+            <AppointmentComponent />
+          </>
+        }
         {user.accountType === PATIENT_ACCOUNT && (
           <PatientAppointmentComponent />
         )}

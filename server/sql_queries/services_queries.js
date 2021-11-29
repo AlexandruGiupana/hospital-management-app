@@ -1,5 +1,12 @@
 export const SELECT_ALL_MEDICAL_SERVICES_QUERY =
   "SELECT * FROM health_services";
+export const SELECT_ALL_MEDICAL_SERVICES_OF_DOCTOR_QUERY =
+  "SELECT health_services.service_name, health_services.id" +
+  " FROM health_services_repartition" +
+  " INNER JOIN health_services" +
+  " ON health_services_repartition.health_service_id = health_services.id" +
+  " INNER JOIN users" +
+  " ON users.id = health_services_repartition.doctor_id";
 export const CREATE_NEW_MEDICAL_SERVICE_QUERY =
   "INSERT INTO health_services (service_name, price) VALUES (?, ?)";
 export const DELETE_MEDICAL_SERVICE_QUERY =

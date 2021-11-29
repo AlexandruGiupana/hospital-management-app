@@ -4,7 +4,7 @@ import {
   DELETE_MEDICAL_SERVICE_QUERY,
   EDIT_MEDICAL_SERVICE_NAME_QUERY,
   EDIT_MEDICAL_SERVICE_PRICE_QUERY,
-  EDIT_MEDICAL_SERVICE_QUERY,
+  EDIT_MEDICAL_SERVICE_QUERY, SELECT_ALL_MEDICAL_SERVICES_OF_DOCTOR_QUERY,
   SELECT_ALL_MEDICAL_SERVICES_QUERY, SELECT_DOCTORS_THAT_OFFER_SERVICE_QUERY, SELECT_SERVICE_BY_ID_QUERY
 } from "../sql_queries/services_queries.js";
 import { validateServiceName } from "../validation/medical-service-validation.js";
@@ -12,6 +12,17 @@ import { validateNumberField } from "../validation/general-validation.js";
 
 export const getMedicalServices = async (req, res) => {
   con.query(SELECT_ALL_MEDICAL_SERVICES_QUERY, (err, result) => {
+    if (err) {
+      throw err;
+    }
+    let resultArray = Object.values(JSON.parse(JSON.stringify(result)));
+    res.json(resultArray);
+  });
+};
+
+export const getMedicalServicesOfDoctor = async (req, res) => {
+  const doctor_id = req.params.id;
+  con.query(SELECT_ALL_MEDICAL_SERVICES_OF_DOCTOR_QUERY, [doctor_id], (err, result) => {
     if (err) {
       throw err;
     }
