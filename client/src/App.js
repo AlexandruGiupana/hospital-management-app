@@ -23,6 +23,7 @@ import {
   getAppointmentsOfDoctor,
 } from "./services/appointments-services";
 import PricesPage from "./components/common-components/services-page";
+import AboutPage from "./components/common-components/about-page";
 
 const App = () => {
   console.log(localStorage.getItem("user"));
@@ -121,6 +122,11 @@ const App = () => {
               path="/services_page"
               exact
               element={< PricesPage />}
+          />
+          <Route
+              path="/about-page"
+              exact
+              element={< AboutPage />}
           />
           <Route
             path="/wards-management"

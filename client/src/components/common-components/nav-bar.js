@@ -29,7 +29,7 @@ const NavBar = ({ toggleModalLogIn, toggleModalRegister }) => {
               <Nav.Link href="/news" id="navBarItem">
                 News
               </Nav.Link>
-              <Nav.Link href="/about" id="navBarItem">
+              <Nav.Link href="/about-page" id="navBarItem">
                 About
               </Nav.Link>
               <Nav.Link href="/contact" id="navBarItem">
