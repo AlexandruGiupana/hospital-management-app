@@ -1,12 +1,12 @@
 export const validateNumberField = (repartitionField) => {
-  if(repartitionField === null) {
+  if (repartitionField === null) {
     return false;
   }
-  if(repartitionField === undefined) {
+  if (repartitionField === undefined) {
     return false;
   }
-  if(isNaN(repartitionField)) {
+  if (isNaN(repartitionField)) {
     return false;
   }
   return true;
-}
+};

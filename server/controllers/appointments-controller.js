@@ -1,8 +1,9 @@
 import { con } from "../db_connection.js";
 import {
   INSERT_APPOINTMENT_QUERY,
+  SELECT_ALL_APPOINTMENTS_OF_PATIENT,
   SELECT_ALL_APPOINTMENTS_QUERY,
-  SELECT_APPOINTMENTS_DATA_OF_DOCTOR_QUERY
+  SELECT_APPOINTMENTS_DATA_OF_DOCTOR_QUERY,
 } from "../sql_queries/appointments-queries.js";
 
 export const getAppointments = async (req, res) => {
@@ -17,7 +18,22 @@ export const getAppointments = async (req, res) => {
 
 export const getAppointmentsOfDoctor = async (req, res) => {
   const doctor_id = req.params.id;
-  con.query(SELECT_APPOINTMENTS_DATA_OF_DOCTOR_QUERY, [doctor_id], (err, result) => {
+  con.query(
+    SELECT_APPOINTMENTS_DATA_OF_DOCTOR_QUERY,
+    [doctor_id],
+    (err, result) => {
+      if (err) {
+        throw err;
+      }
+      let resultArray = Object.values(JSON.parse(JSON.stringify(result)));
+      res.json(resultArray);
+    }
+  );
+};
+
+export const getAppointmentsOfPatient = async (req, res) => {
+  const patient_id = req.params.id;
+  con.query(SELECT_ALL_APPOINTMENTS_OF_PATIENT, [patient_id], (err, result) => {
     if (err) {
       throw err;
     }
@@ -35,6 +51,9 @@ export const createAppointment = async (req, res) => {
     start_date,
     end_date,
   } = req.body;
+
+  //todo validate
+
   con.query(
     INSERT_APPOINTMENT_QUERY,
     [

@@ -8,7 +8,7 @@ import {
   TableEditRow,
   TableHeaderRow,
 } from "@devexpress/dx-react-grid-material-ui";
-import { patientAppointmentsTable } from "../../../demo-data/patient-appointments";
+import { patientAppointmentsTable } from "../../../../demo-data/patient-appointments";
 
 const getRowId = (row) => row.id;
 

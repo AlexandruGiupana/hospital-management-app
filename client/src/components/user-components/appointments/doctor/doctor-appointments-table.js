@@ -8,11 +8,11 @@ import {
   TableEditRow,
   TableEditColumn,
 } from "@devexpress/dx-react-grid-material-ui";
-import { getAppointmentsOfDoctor } from "../../../services/appointments-services";
+import { getAppointmentsOfDoctor } from "../../../../services/appointments-services";
 
 const getRowId = (row) => row.id;
 
-const AppointmentComponent = () => {
+const DoctorAppointmentsTable = () => {
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -29,7 +29,7 @@ const AppointmentComponent = () => {
   const columns = [
     { name: "patient_first_name", title: "Prenume" },
     { name: "patient_last_name", title: "Nume" },
-    { name: "service_name", title: "Serviciu"},
+    { name: "service_name", title: "Serviciu" },
     { name: "additional_information", title: "Informatii aditionale" },
     { name: "start_date", title: "Ora inceput" },
     { name: "end_date", title: "Ora sfarsit" },
@@ -76,4 +76,4 @@ const AppointmentComponent = () => {
   }
 };
 
-export default AppointmentComponent;
+export default DoctorAppointmentsTable;

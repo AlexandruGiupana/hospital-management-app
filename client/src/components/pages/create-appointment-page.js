@@ -5,20 +5,19 @@ import {
   ContentContainer,
   PageTitle,
 } from "../user-components/common-styled-components";
-import CreateAppointmentComponent from "../user-components/appointments/doctor-create-appointment-table";
+import CreateAppointmentComponent from "../user-components/appointments/doctor/doctor-schedule-appointment";
 import {
   DOCTOR_ACCOUNT,
   MANAGER_ACCOUNT,
   PATIENT_ACCOUNT,
 } from "../../demo-data/account-types";
-import PatientCreateAppointments from "../user-components/appointments/patient-create-appointment";
+import PatientCreateAppointments from "../user-components/appointments/patient/patient-create-appointment";
 import { getAppointmentsOfDoctor } from "../../services/appointments-services";
 import { getMedicalServicesOfDoctor } from "../../services/health-services-services";
-import DoctorCreateAppointmentPageComponents
-  from "../user-components/appointments/doctor-create-appointment-page-components";
+import DoctorScheduleAppointmentComponents from "../user-components/appointments/doctor/doctor-schedule-appointment-components";
+import PatientScheduleAppointmentComponent from "../user-components/appointments/patient/patient-schedule-appointment-component";
 
 const CreateAppointmentPage = ({ user }) => {
-
   return (
     <Container>
       <SideBar accountType={user.accountType} />
@@ -29,9 +28,11 @@ const CreateAppointmentPage = ({ user }) => {
         <hr />
         {(user.accountType === DOCTOR_ACCOUNT ||
           user.accountType === MANAGER_ACCOUNT) && (
-          <DoctorCreateAppointmentPageComponents />
+          <DoctorScheduleAppointmentComponents />
         )}
-        {user.accountType === PATIENT_ACCOUNT && <PatientCreateAppointments />}
+        {user.accountType === PATIENT_ACCOUNT && (
+          <PatientScheduleAppointmentComponent />
+        )}
       </ContentContainer>
     </Container>
   );

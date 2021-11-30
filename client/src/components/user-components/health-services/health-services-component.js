@@ -16,9 +16,11 @@ import {
 } from "../../../services/health-services-services";
 import { TableColumnVisibility } from "@devexpress/dx-react-grid";
 import {
-  SUCCESSFUL_DELETION, SUCCESSFUL_EDIT, SUCCESSFUL_SERVICE_CREATION,
+  SUCCESSFUL_DELETION,
+  SUCCESSFUL_EDIT,
+  SUCCESSFUL_SERVICE_CREATION,
   UNSUCCESSFUL_DELETION,
-  UNSUCCESSFUL_SERVICE_CREATION
+  UNSUCCESSFUL_SERVICE_CREATION,
 } from "../../../notification-messages/notifications";
 
 const getRowId = (row) => row.id;
@@ -59,9 +61,9 @@ const HealthServicesComponent = ({ notify }) => {
           ];
           setRows(changedRows);
         })
-      .catch((err) => {
-        notify(UNSUCCESSFUL_SERVICE_CREATION)
-      })
+        .catch((err) => {
+          notify(UNSUCCESSFUL_SERVICE_CREATION);
+        });
     }
     if (changed) {
       updateMedicalService(changed)
@@ -73,19 +75,19 @@ const HealthServicesComponent = ({ notify }) => {
           setRows(changedRows);
         })
         .catch((err) => {
-          notify(UNSUCCESSFUL_SERVICE_CREATION)
+          notify(UNSUCCESSFUL_SERVICE_CREATION);
         });
     }
     if (deleted) {
       deleteMedicalService(deleted[0])
-        .then(data => {
+        .then((data) => {
           notify(SUCCESSFUL_DELETION);
           const deletedSet = new Set(deleted);
           changedRows = rows.filter((row) => !deletedSet.has(row.id));
           setRows(changedRows);
         })
-        .catch(err => {
-          notify(UNSUCCESSFUL_DELETION)
+        .catch((err) => {
+          notify(UNSUCCESSFUL_DELETION);
         });
     }
   };

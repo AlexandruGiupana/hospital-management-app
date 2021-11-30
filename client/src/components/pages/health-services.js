@@ -9,13 +9,12 @@ import HealthServicesComponent from "../user-components/health-services/health-s
 import styled from "styled-components";
 import HealthServicesRepartitions from "../user-components/health-services/health-services-repartitions";
 import { toast, ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 const HealthServices = ({ user }) => {
-
   const notify = (notificationText) => {
     toast(notificationText);
-  }
+  };
 
   return (
     <Container>
@@ -38,9 +37,9 @@ const HealthServices = ({ user }) => {
           </div>
         </PageTitle>
         <hr />
-        <HealthServicesRepartitions notify={notify}/>
+        <HealthServicesRepartitions notify={notify} />
         &nbsp; &nbsp;
-        <HealthServicesComponent notify={notify}/>
+        <HealthServicesComponent notify={notify} />
       </ContentContainer>
     </Container>
   );

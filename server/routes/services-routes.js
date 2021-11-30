@@ -3,7 +3,8 @@ import {
   createMedicalService,
   deleteMedicalService,
   editMedicalService,
-  getMedicalServices, getMedicalServicesOfDoctor
+  getMedicalServices,
+  getMedicalServicesOfDoctor,
 } from "../controllers/services-controller.js";
 import cors from "cors";
 import { auth } from "./middleware/auth.js";

@@ -6,7 +6,7 @@ export const assignServiceToDoctor = async (data) => {
   } catch (err) {
     throw err;
   }
-}
+};
 
 export const getAllRepartitions = async () => {
   try {
@@ -14,7 +14,7 @@ export const getAllRepartitions = async () => {
   } catch (err) {
     throw err;
   }
-}
+};
 
 export const deleteRepartition = async (data) => {
   try {
@@ -24,4 +24,14 @@ export const deleteRepartition = async (data) => {
   } catch (err) {
     throw err;
   }
-}
+};
+
+export const getIdOfRepartiton = async (serviceId, doctorId) => {
+  try {
+    return await axios.get(
+      `http://localhost:8080/repartition/id/${serviceId}/${doctorId}`
+    );
+  } catch (err) {
+    throw err;
+  }
+};

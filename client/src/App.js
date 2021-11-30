@@ -64,7 +64,7 @@ const App = () => {
     },
   };
 
-  const mockUser = Doctor;
+  const mockUser = Patient;
 
   return (
     <>
@@ -118,11 +118,7 @@ const App = () => {
             exact
             element={<HealthServices user={Manager} />}
           />
-          <Route
-              path="/services_page"
-              exact
-              element={< PricesPage />}
-          />
+          <Route path="/services_page" exact element={<PricesPage />} />
           <Route
               path="/about-page"
               exact

@@ -1,13 +1,22 @@
 import React from "react";
-import { assignServiceToDoctor, getAllRepartitions } from "../../../../services/repartition-services";
 import {
-  SUCCESSFUL_REPARTITION, UNSUCCESSFUL_REPARTITION
+  assignServiceToDoctor,
+  getAllRepartitions,
+} from "../../../../services/repartition-services";
+import {
+  SUCCESSFUL_REPARTITION,
+  UNSUCCESSFUL_REPARTITION,
 } from "../../../../notification-messages/notifications";
 import { useForm } from "react-hook-form";
 import { Button, Col, Form, Row } from "react-bootstrap";
 
-const AddRepartitonForm = ({ notify, doctors, medicalServices, repartitions, setRepartitons }) => {
-
+const AddRepartitonForm = ({
+  notify,
+  doctors,
+  medicalServices,
+  repartitions,
+  setRepartitons,
+}) => {
   const {
     register,
     handleSubmit,
@@ -15,23 +24,26 @@ const AddRepartitonForm = ({ notify, doctors, medicalServices, repartitions, set
   } = useForm();
 
   const onSubmitCreateRepartition = (data) => {
-    const serviceData = JSON.parse(data['service']);
-    const doctorData = JSON.parse(data['doctor']);
-    setRepartitons([...repartitions, {
-      "first_name": doctorData.first_name,
-      "last_name": doctorData.last_name,
-      "service_name": serviceData.service_name
-    }]);
+    const serviceData = JSON.parse(data["service"]);
+    const doctorData = JSON.parse(data["doctor"]);
+    setRepartitons([
+      ...repartitions,
+      {
+        first_name: doctorData.first_name,
+        last_name: doctorData.last_name,
+        service_name: serviceData.service_name,
+      },
+    ]);
     const sentData = {
-      "service_id": serviceData.id,
-      "doctor_id": doctorData.id
-    }
+      service_id: serviceData.id,
+      doctor_id: doctorData.id,
+    };
     assignServiceToDoctor(sentData)
       .then((data) => {
-        notify(SUCCESSFUL_REPARTITION)
+        notify(SUCCESSFUL_REPARTITION);
       })
       .catch((err) => {
-        notify(UNSUCCESSFUL_REPARTITION)
+        notify(UNSUCCESSFUL_REPARTITION);
       });
   };
 
@@ -39,11 +51,8 @@ const AddRepartitonForm = ({ notify, doctors, medicalServices, repartitions, set
     <form onSubmit={handleSubmit(onSubmitCreateRepartition)}>
       <Row className="g-3">
         <Col>
-          <Form.Select
-            className="Select ms-sm-3"
-            {...register("service")}
-          >
-            {medicalServices.map(service => (
+          <Form.Select className="Select ms-sm-3" {...register("service")}>
+            {medicalServices.map((service) => (
               <option key={service.id} value={JSON.stringify(service)}>
                 {service.service_name}
               </option>
@@ -51,11 +60,8 @@ const AddRepartitonForm = ({ notify, doctors, medicalServices, repartitions, set
           </Form.Select>
         </Col>
         <Col>
-          <Form.Select
-            className="Select ms-sm-3"
-            {...register("doctor")}
-          >
-            {doctors.map(doctor => (
+          <Form.Select className="Select ms-sm-3" {...register("doctor")}>
+            {doctors.map((doctor) => (
               <option key={doctor.id} value={JSON.stringify(doctor)}>
                 {`${doctor.first_name} ${doctor.last_name}`}
               </option>
@@ -63,10 +69,12 @@ const AddRepartitonForm = ({ notify, doctors, medicalServices, repartitions, set
           </Form.Select>
         </Col>
         <Col>
-          <Button type="submit" variant="success ms-sm-3">Adaugare</Button>
+          <Button type="submit" variant="success ms-sm-3">
+            Adaugare
+          </Button>
         </Col>
       </Row>
     </form>
   );
-}
+};
 export default AddRepartitonForm;

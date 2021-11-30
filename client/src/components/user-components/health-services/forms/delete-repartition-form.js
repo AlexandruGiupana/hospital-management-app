@@ -5,7 +5,6 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import { deleteRepartition } from "../../../../services/repartition-services";
 
 const DeleteRepartitionForm = ({ notify, repartitions, setRepartitons }) => {
-
   const {
     register,
     handleSubmit,
@@ -14,7 +13,11 @@ const DeleteRepartitionForm = ({ notify, repartitions, setRepartitons }) => {
 
   const onSubmitDeleteRepartition = (data) => {
     notify(SUCCESSFUL_REPARTITION_DELETION);
-    setRepartitons(repartitions.filter(repartition => parseInt(repartition.id) !== parseInt(data.id)));
+    setRepartitons(
+      repartitions.filter(
+        (repartition) => parseInt(repartition.id) !== parseInt(data.id)
+      )
+    );
     deleteRepartition(data);
   };
 
@@ -27,7 +30,7 @@ const DeleteRepartitionForm = ({ notify, repartitions, setRepartitons }) => {
             className="ms-sm-3"
             {...register("id")}
           >
-            {repartitions.map(repartition => (
+            {repartitions.map((repartition) => (
               <option key={repartition.id} value={repartition.id}>
                 {`${repartition.first_name} ${repartition.last_name} | ${repartition.service_name}`}
               </option>
@@ -43,6 +46,6 @@ const DeleteRepartitionForm = ({ notify, repartitions, setRepartitons }) => {
       </Row>
     </form>
   );
-}
+};
 
 export default DeleteRepartitionForm;

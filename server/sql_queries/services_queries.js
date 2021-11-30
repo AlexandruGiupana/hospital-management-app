@@ -17,6 +17,9 @@ export const EDIT_MEDICAL_SERVICE_PRICE_QUERY =
   "UPDATE health_services SET price = ? WHERE id = ?";
 export const EDIT_MEDICAL_SERVICE_NAME_QUERY =
   "UPDATE health_services SET service_name = ? WHERE id = ?";
-export const ADD_NEW_REPARTITION_QUERY = "INSERT INTO health_services_repartition (health_service_id, doctor_id) VALUES (?, ?)";
-export const SELECT_SERVICE_BY_ID_QUERY = "SELECT * FROM health_services WHERE id = ?";
-export const SELECT_DOCTORS_THAT_OFFER_SERVICE_QUERY = "SELECT * FROM health_services INNER JOIN health_services_repartition on health_services.id = health_services_repartition.health_service_id WHERE health_services.id = ?";
+export const ADD_NEW_REPARTITION_QUERY =
+  "INSERT INTO health_services_repartition (health_service_id, doctor_id) VALUES (?, ?)";
+export const SELECT_SERVICE_BY_ID_QUERY =
+  "SELECT * FROM health_services WHERE id = ?";
+export const SELECT_DOCTORS_THAT_OFFER_SERVICE_QUERY =
+  "SELECT * FROM health_services INNER JOIN health_services_repartition on health_services.id = health_services_repartition.health_service_id WHERE health_services.id = ?";

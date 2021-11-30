@@ -17,3 +17,21 @@ export const getAppointmentsOfDoctor = async (idDoctor) => {
     throw err;
   }
 };
+
+export const getAppointmentsOfPatient = async (idPatient) => {
+  try {
+    return await axios.get(
+      `http://localhost:8080/appointments/patient/${idPatient}`
+    );
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const createAppointment = async (data) => {
+  try {
+    return await axios.post(`http://localhost:8080/appointments/create`, data);
+  } catch (err) {
+    throw err;
+  }
+};

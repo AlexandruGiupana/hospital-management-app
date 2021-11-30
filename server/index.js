@@ -5,7 +5,7 @@ import appointmentsRoutes from "./routes/appointments-routes.js";
 import hospitalRoomsRoutes from "./routes/hospital-rooms-routes.js";
 import servicesRoutes from "./routes/services-routes.js";
 import doctorRoutes from "./routes/user-routes/doctor-routes.js";
-import repartitionRoutes from "./routes/repartition-routes.js"
+import repartitionRoutes from "./routes/repartition-routes.js";
 import cors from "cors";
 import { con } from "./db_connection.js";
 import config from "config";
@@ -31,7 +31,7 @@ app.use("/appointments", appointmentsRoutes);
 app.use("/rooms", hospitalRoomsRoutes);
 app.use("/services", servicesRoutes);
 app.use("/doctors", doctorRoutes);
-app.use("/repartition", repartitionRoutes)
+app.use("/repartition", repartitionRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);

@@ -5,8 +5,8 @@ import {
   ContentContainer,
   PageTitle,
 } from "../user-components/common-styled-components";
-import AppointmentComponent from "../user-components/appointments/appointment-component";
-import PatientAppointmentComponent from "../user-components/appointments/patient-appointments-table";
+import DoctorAppointmentsTable from "../user-components/appointments/doctor/doctor-appointments-table";
+import PatientAppointmentComponent from "../user-components/appointments/patient/patient-appointments-table";
 import {
   DOCTOR_ACCOUNT,
   MANAGER_ACCOUNT,
@@ -23,14 +23,12 @@ const AppointmentsTablePage = ({ user }) => {
         </PageTitle>
         <hr />
         {(user.accountType === DOCTOR_ACCOUNT ||
-          user.accountType === MANAGER_ACCOUNT) &&
+          user.accountType === MANAGER_ACCOUNT) && (
           <>
-            <>
-
-            </>
-            <AppointmentComponent />
+            <></>
+            <DoctorAppointmentsTable />
           </>
-        }
+        )}
         {user.accountType === PATIENT_ACCOUNT && (
           <PatientAppointmentComponent />
         )}

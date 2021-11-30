@@ -1,7 +1,5 @@
 import axios from "axios";
 
-
-
 export const getMedicalServices = async () => {
   try {
     return await axios.get("http://localhost:8080/services");

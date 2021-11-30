@@ -9,15 +9,15 @@ import {
 } from "@material-ui/core/colors";
 
 export const doctorAppointmentsTable = [
-  // {
-  //   "title": "consult",
-  //   "firstName": "George",
-  //   "lastName": "Georgica",
-  //   "information": "informatii aditionale",
-  //   "startDate": "2021-11-23T10:30",
-  //   "endDate": "2021-11-23T11:30",
-  //   "phoneNumber": "0725478215"
-  // }
+  {
+    title: "consult",
+    firstName: "George",
+    lastName: "Georgica",
+    information: "informatii aditionale",
+    startDate: "2021-12-01T10:30",
+    endDate: "2021-12-01T11:30",
+    phoneNumber: "0725478215",
+  },
 ];
 
 export const resourcesData = [
