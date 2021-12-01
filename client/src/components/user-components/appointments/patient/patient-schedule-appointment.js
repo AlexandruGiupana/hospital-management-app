@@ -18,23 +18,34 @@ import {
   AppointmentTooltip,
   DragDropProvider,
   Resources,
+  DateNavigator,
+  TodayButton,
+  Toolbar,
 } from "@devexpress/dx-react-scheduler-material-ui";
-
-import { doctorAppointmentsTable } from "../../../../demo-data/doctor-appointments-table";
+import { useCallback, useState } from "react";
 import {
+  createAppointment,
+  deleteAppointment,
+  updateAppointment,
+} from "../../../../services/appointments-services";
+import {
+  SUCCESSFUL_CREATION_APPOINTMENT,
+  SUCCESSFUL_DELETE_APPOINTMENT,
+  SUCCESSFUL_EDIT_APPOINTMENT,
+  UNSUCCESSFUL_CREATION_APPOINTMENT,
+  UNSUCCESSFUL_DELETE_APPOINTMENT,
+  UNSUCCESSFUL_EDIT_APPOINTMENT,
+} from "../../../../notification-messages/notifications";
+import PatientChooseServiceAndDoctor from "./patient-choose-service-and-doctor";
+
+const PatientScheduleAppointment = ({
+  rooms,
   appointments,
-  resourcesData,
-  owners,
-} from "../../../../demo-data/doctor-appointments-table";
-import { useCallback, useEffect, useState } from "react";
-import { createAppointment } from "../../../../services/appointments-services";
-import { getIdOfRepartiton } from "../../../../services/repartition-services";
-
-const currentDate = Date.now();
-
-const PatientCreateAppointment = ({ repartitonId, rooms, appointments }) => {
-  // console.log(repartitonId)
-
+  notify,
+  repartitions,
+}) => {
+  const [currentDate, setCurrentDate] = useState(Date.now());
+  const [repartitonId, setRepartitonId] = useState(repartitions[0].id);
   const [data, setData] = React.useState(appointments);
   const [resources, setResources] = useState([
     {
@@ -43,7 +54,6 @@ const PatientCreateAppointment = ({ repartitonId, rooms, appointments }) => {
       instances: rooms,
     },
   ]);
-
   const editingOptions = {
     allowAdding: true,
     allowDeleting: true,
@@ -63,8 +73,6 @@ const PatientCreateAppointment = ({ repartitonId, rooms, appointments }) => {
     allowDragging,
   } = editingOptions;
 
-  // console.log(repartitonId)
-
   const onCommitChanges = useCallback(
     ({ added, changed, deleted }) => {
       if (added) {
@@ -79,25 +87,57 @@ const PatientCreateAppointment = ({ repartitonId, rooms, appointments }) => {
           start_date: added.startDate,
           end_date: added.endDate,
         };
-        createAppointment(appointmentData);
-        console.log(added);
+        createAppointment(appointmentData)
+          .then((data) => {
+            notify(SUCCESSFUL_CREATION_APPOINTMENT);
+          })
+          .catch((err) => {
+            notify(UNSUCCESSFUL_CREATION_APPOINTMENT);
+          });
       }
       if (changed) {
-        setData(
-          data.map((appointment) =>
-            changed[appointment.id]
-              ? { ...appointment, ...changed[appointment.id] }
-              : appointment
-          )
+        const newAppointments = data.map((appointment) =>
+          changed[appointment.id]
+            ? { ...appointment, ...changed[appointment.id] }
+            : appointment
         );
+        newAppointments.map((appointment) => {
+          if (parseInt(appointment.id) === parseInt(Object.keys(changed)[0])) {
+            const translatedAppointment = {
+              appointment_id: appointment.id,
+              hospital_room_id: appointment.roomId,
+              additional_information: appointment.notes,
+              start_date: appointment.startDate,
+              end_date: appointment.endDate,
+            };
+            updateAppointment(translatedAppointment)
+              .then((data) => {
+                notify(SUCCESSFUL_EDIT_APPOINTMENT);
+              })
+              .catch((err) => {
+                console.log(err);
+                notify(UNSUCCESSFUL_EDIT_APPOINTMENT);
+              });
+          }
+        });
+        setData(newAppointments);
       }
       if (deleted !== undefined) {
         setData(data.filter((appointment) => appointment.id !== deleted));
+        deleteAppointment(deleted)
+          .then((data) => {
+            notify(SUCCESSFUL_DELETE_APPOINTMENT);
+          })
+          .catch((err) => {
+            console.log(err.message);
+            notify(UNSUCCESSFUL_DELETE_APPOINTMENT);
+          });
       }
       setIsAppointmentBeingCreated(false);
     },
     [setData, setIsAppointmentBeingCreated, data]
   );
+
   const onAddedAppointmentChange = useCallback((appointment) => {
     setAddedAppointment(appointment);
     setIsAppointmentBeingCreated(true);
@@ -138,43 +178,49 @@ const PatientCreateAppointment = ({ repartitonId, rooms, appointments }) => {
     [allowResizing, allowUpdating]
   );
 
-  // if (repartitonId === undefined || repartitonId === -1) {
-  //   return <>Loading...</>
-  // }
+  const handleDataChange = (newDate) => {
+    setCurrentDate(newDate);
+  };
 
   return (
-    <React.Fragment>
+    <>
+      <PatientChooseServiceAndDoctor
+        repartitions={repartitions}
+        setRepartitonId={setRepartitonId}
+      />
+      <br />
       <Paper>
         <Scheduler data={data} height={600}>
-          <ViewState currentDate={currentDate} />
+          <ViewState
+            currentDate={currentDate}
+            onCurrentDateChange={(date) => handleDataChange(date)}
+          />
           <EditingState
             onCommitChanges={onCommitChanges}
             addedAppointment={addedAppointment}
             onAddedAppointmentChange={onAddedAppointmentChange}
           />
-
           <IntegratedEditing />
           <WeekView
-            startDayHour={9}
-            endDayHour={19}
+            startDayHour={8}
+            endDayHour={17}
             timeTableCellComponent={TimeTableCell}
           />
-
           <Appointments />
-
           <AppointmentTooltip showOpenButton showDeleteButton={allowDeleting} />
+          <Toolbar />
+          <DateNavigator />
+          <TodayButton />
           <AppointmentForm
             commandButtonComponent={CommandButton}
             readOnly={isAppointmentBeingCreated ? false : !allowUpdating}
           />
-
           <Resources data={resources} mainResourceName="roomId" />
-
           <DragDropProvider allowDrag={allowDrag} allowResize={allowResize} />
         </Scheduler>
       </Paper>
-    </React.Fragment>
+    </>
   );
 };
 
-export default PatientCreateAppointment;
+export default PatientScheduleAppointment;

@@ -19,3 +19,14 @@ export const UNSUCCESSFUL_EDIT_ROOM = "🙌 Failed to edit room";
 export const SUCCESSFUL_DELETION_ROOM = "🙌 Room was deleted successfully.";
 export const UNSUCCESSFUL_DELETION_ROOM =
   "⚠ We were unable to delete the record. There are still appointments scheduled to this room.";
+export const SUCCESSFUL_CREATION_APPOINTMENT =
+  "🙌 Appointment was created successfully.";
+export const UNSUCCESSFUL_CREATION_APPOINTMENT =
+  "⚠ There was an error with your input.";
+export const SUCCESSFUL_EDIT_APPOINTMENT =
+  "🙌 Appointment was edited successfully.";
+export const UNSUCCESSFUL_EDIT_APPOINTMENT =
+  "⚠ There was an error with your input.";
+export const SUCCESSFUL_DELETE_APPOINTMENT =
+  "🙌 Appointment was deleted successfully.";
+export const UNSUCCESSFUL_DELETE_APPOINTMENT = "⚠ Appointment was not deleted.";

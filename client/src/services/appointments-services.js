@@ -35,3 +35,29 @@ export const createAppointment = async (data) => {
     throw err;
   }
 };
+
+export const createAppointmentDoctor = async (data) => {
+  try {
+    return await axios.post(`http://localhost:8080/appointments/create/doctor`, data);
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const updateAppointment = async (data) => {
+  try {
+    return await axios.put(`http://localhost:8080/appointments/update`, data);
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const deleteAppointment = async (id) => {
+  try {
+    return await axios.delete(
+      `http://localhost:8080/appointments/delete/${id}`
+    );
+  } catch (err) {
+    throw err;
+  }
+};

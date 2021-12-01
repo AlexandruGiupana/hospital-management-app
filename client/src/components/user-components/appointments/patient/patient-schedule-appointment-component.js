@@ -1,23 +1,17 @@
 import React, { useEffect, useState } from "react";
-import PatientCreateAppointment from "./patient-create-appointment";
+import PatientScheduleAppointment from "./patient-schedule-appointment";
 import PatientChooseServiceAndDoctor from "./patient-choose-service-and-doctor";
 import { getAppointmentsOfPatient } from "../../../../services/appointments-services";
-import { getAllDoctors } from "../../../../services/doctors-services";
-import { getMedicalServices } from "../../../../services/health-services-services";
-import {
-  getAllRepartitions,
-  getIdOfRepartiotion,
-  getIdOfRepartiton,
-} from "../../../../services/repartition-services";
+import { getAllRepartitions } from "../../../../services/repartition-services";
 import { getRooms } from "../../../../services/rooms-services";
-import { forEach } from "react-bootstrap/ElementChildren";
+import { toast, ToastContainer } from "react-toastify";
+
 const PatientScheduleAppointmentComponent = () => {
   const [appointments, setAppointments] = useState([]);
   const [repartitions, setRepartitons] = useState([]);
   const [rooms, setRooms] = useState([]);
-  const [repartitonId, setRepartitonId] = useState();
 
-  const [chosenServiceAndDoctor, setChosenServiceAndDoctor] = useState(-1);
+  const [appointmentsOfDoctor, setAppointmentsOfDoctor] = useState([]);
 
   const [loadingAppointments, setLoadingAppointments] = useState(true);
   const [loadingRepartitions, setLoadingRepartitions] = useState(true);
@@ -26,14 +20,14 @@ const PatientScheduleAppointmentComponent = () => {
   useEffect(() => {
     const getAppointments = async () => {
       const appointmentsData = (await getAppointmentsOfPatient(15)).data; //todo replace when login is implemented
-      console.log(appointmentsData);
       let translatedAppointments = [];
       appointmentsData.forEach((appointment) => {
         let translatedAppointment = {
-          title: appointment.service_name,
+          id: appointment.appointment_id,
+          title: `${appointment.service_name} - ${appointment.doctor_first_name} ${appointment.doctor_last_name}`,
           startDate: appointment.start_date,
           endDate: appointment.end_date,
-          notes: `Nume: ${appointment.patient_first_name}\nPrenume: ${appointment.patient_last_name}`,
+          notes: appointment.additional_information,
           roomId: appointment.room_id,
         };
         translatedAppointments.push(translatedAppointment);
@@ -52,7 +46,6 @@ const PatientScheduleAppointmentComponent = () => {
     const getRepartitions = async () => {
       const repartitionData = await getAllRepartitions();
       setRepartitons(repartitionData.data);
-      setRepartitonId(repartitionData.data[0].id);
       setLoadingRepartitions(false);
     };
     getRoomsData();
@@ -60,21 +53,22 @@ const PatientScheduleAppointmentComponent = () => {
     getRepartitions();
   }, []);
 
+  const notify = (notificationText) => {
+    toast(notificationText);
+  };
+
   if (loadingRepartitions || loadingAppointments || loadingRooms) {
     return <>Loading...</>;
   }
 
   return (
     <>
-      <PatientChooseServiceAndDoctor
+      <ToastContainer />
+      <PatientScheduleAppointment
         repartitions={repartitions}
-        setChosenServiceAndDoctor={setChosenServiceAndDoctor}
-      />
-      <br />
-      <PatientCreateAppointment
-        repartitonId={repartitonId}
         rooms={rooms}
         appointments={appointments}
+        notify={notify}
       />
     </>
   );

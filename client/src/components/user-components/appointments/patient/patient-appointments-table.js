@@ -1,66 +1,80 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Paper from "@material-ui/core/Paper";
 import { EditingState } from "@devexpress/dx-react-grid";
 import {
   Grid,
   Table,
-  TableEditColumn,
-  TableEditRow,
   TableHeaderRow,
+  TableEditRow,
+  TableEditColumn,
 } from "@devexpress/dx-react-grid-material-ui";
-import { patientAppointmentsTable } from "../../../../demo-data/patient-appointments";
+import {
+  deleteAppointment,
+  getAppointmentsOfPatient,
+} from "../../../../services/appointments-services";
+import { toast, ToastContainer } from "react-toastify";
+import {
+  SUCCESSFUL_DELETE_APPOINTMENT,
+  UNSUCCESSFUL_DELETE_APPOINTMENT,
+} from "../../../../notification-messages/notifications";
 
-const getRowId = (row) => row.id;
+const getRowId = (row) => row.appointment_id;
 
 const PatientAppointmentComponent = () => {
+  const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getAppointments = async () => {
+      const appointments = await getAppointmentsOfPatient(15); //todo change to doctor id when login will be implemented
+      //todo format date
+      setRows(appointments.data);
+      setLoading(false);
+    };
+    getAppointments();
+  }, []);
+
   const columns = [
-    { name: "doctorFirstName", title: "Nume Doctor" },
-    { name: "doctorLastName", title: "Prenume Doctor" },
-    { name: "health-service", title: "Serviciu" },
-    { name: "information", title: "Informatii aditionale" },
-    { name: "startDate", title: "Ora inceput" },
-    { name: "endDate", title: "Ora sfarsit" },
-    { name: "doctorPhoneNumber", title: "Contacteaza" },
+    { name: "doctor_first_name", title: "Prenume Doctor" },
+    { name: "doctor_last_name", title: "Nume Doctor" },
+    { name: "service_name", title: "Serviciu" },
+    { name: "additional_information", title: "Informatii aditionale" },
+    { name: "start_date", title: "Ora inceput" },
+    { name: "end_date", title: "Ora sfarsit" },
   ];
 
-  const [rows, setRows] = useState(patientAppointmentsTable);
-
-  const commitChanges = ({ added, changed, deleted }) => {
+  const commitChanges = ({ deleted }) => {
     let changedRows;
-    if (added) {
-      const startingAddedId =
-        rows.length > 0 ? rows[rows.length - 1].id + 1 : 0;
-      changedRows = [
-        ...rows,
-        ...added.map((row, index) => ({
-          id: startingAddedId + index,
-          ...row,
-        })),
-      ];
-    }
-    if (changed) {
-      changedRows = rows.map((row) =>
-        changed[row.id] ? { ...row, ...changed[row.id] } : row
-      );
-    }
     if (deleted) {
       const deletedSet = new Set(deleted);
-      changedRows = rows.filter((row) => !deletedSet.has(row.id));
+      deleteAppointment(deleted[0])
+        .then((data) => {
+          toast(SUCCESSFUL_DELETE_APPOINTMENT);
+        })
+        .catch((err) => {
+          console.log(err.message);
+          toast(UNSUCCESSFUL_DELETE_APPOINTMENT);
+        });
+      changedRows = rows.filter((row) => !deletedSet.has(row.appointment_id));
     }
     setRows(changedRows);
   };
-
-  return (
-    <Paper>
-      <Grid rows={rows} columns={columns} getRowId={getRowId}>
-        <EditingState onCommitChanges={commitChanges} />
-        <Table />
-        <TableHeaderRow />
-        <TableEditRow />
-        <TableEditColumn showAddCommand showEditCommand showDeleteCommand />
-      </Grid>
-    </Paper>
-  );
+  if (loading) {
+    return <>Loading...</>;
+  } else {
+    return (
+      <Paper>
+        <ToastContainer />
+        <Grid rows={rows} columns={columns} getRowId={getRowId}>
+          <EditingState onCommitChanges={commitChanges} />
+          <Table />
+          <TableHeaderRow />
+          <TableEditRow />
+          <TableEditColumn showDeleteCommand />
+        </Grid>
+      </Paper>
+    );
+  }
 };
 
 export default PatientAppointmentComponent;

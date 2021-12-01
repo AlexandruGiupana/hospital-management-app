@@ -1,10 +1,10 @@
 export const MAXIMUM_CHARACTER_COUNT_FOR_SERVICE_NAME = 255;
 
 export const validateServiceName = (serviceName) => {
-  serviceName = serviceName.trim();
   if (serviceName === undefined) {
     return false;
   }
+  serviceName = serviceName.trim();
   if (serviceName === null) {
     return false;
   }

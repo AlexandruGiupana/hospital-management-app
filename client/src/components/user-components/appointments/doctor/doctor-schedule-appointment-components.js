@@ -3,20 +3,24 @@ import DoctorScheduleAppointment from "./doctor-schedule-appointment";
 import { getMedicalServicesOfDoctor } from "../../../../services/health-services-services";
 import DoctorChooseService from "./doctor-choose-service";
 import { getRooms } from "../../../../services/rooms-services";
+import { getAppointmentsOfDoctor } from "../../../../services/appointments-services";
+import { toast, ToastContainer } from "react-toastify";
+import { getAllRepartitions, getRepartitionOfDoctor } from "../../../../services/repartition-services";
 
 const DoctorScheduleAppointmentComponents = () => {
-  const [medicalServices, setMedicalServices] = useState([]);
+  const [repartitions, setRepartitons] = useState([]);
   const [rooms, setRooms] = useState([]);
-  const [chosenMedicalService, setChosenMedicalService] = useState(-1);
-  const [loadingServices, setLoadingServices] = useState(true);
+  const [appointments, setAppointments] = useState([]);
+
+  const [loadingAppointments, setLoadingAppointments] = useState(true);
+  const [loadingRepartitions, setLoadingRepartitions] = useState(true);
   const [loadingRooms, setLoadingRooms] = useState(true);
 
   useEffect(() => {
-    const getServices = async () => {
-      const services = await getMedicalServicesOfDoctor(10); //todo change id when login is implemented
-      setMedicalServices(services.data);
-      setChosenMedicalService(services.data[0].id);
-      setLoadingServices(false);
+    const getRepartitions = async () => {
+      const repartitionData = await getRepartitionOfDoctor(10); //todo change id
+      setRepartitons(repartitionData.data);
+      setLoadingRepartitions(false);
     };
     const getRoomsData = async () => {
       const rooms = (await getRooms()).data;
@@ -26,24 +30,58 @@ const DoctorScheduleAppointmentComponents = () => {
       setRooms(rooms);
       setLoadingRooms(false);
     };
-    getServices();
+    const getAppointments = async () => {
+      const appointments = (await getAppointmentsOfDoctor(10)).data; //todo change id when login is implemented
+      console.log(appointments)
+      let translatedAppointments = [];
+      appointments.forEach((appointment) => {
+        let translatedAppointment = {};
+        if(appointment.patient_first_name !== null) {
+          translatedAppointment = {
+            id: appointment.appointment_id,
+            title: `${appointment.service_name}`,
+            startDate: appointment.start_date,
+            endDate: appointment.end_date,
+            notes: `Nume: ${appointment.patient_first_name} ${appointment.patient_last_name}\nInformatii:\n${appointment.additional_information}`,
+            roomId: appointment.room_id,
+          };
+        } else {
+          translatedAppointment = {
+            id: appointment.appointment_id,
+            title: `${appointment.service_name}`,
+            startDate: appointment.start_date,
+            endDate: appointment.end_date,
+            notes: `Informatii:${appointment.additional_information}`,
+            roomId: appointment.room_id,
+          };
+        }
+        translatedAppointments.push(translatedAppointment);
+      });
+
+      setAppointments(translatedAppointments);
+      setLoadingAppointments(false);
+    };
+    getRepartitions();
+    getAppointments();
     getRoomsData();
   }, []);
 
-  if (loadingServices || loadingRooms) {
+  if (loadingRepartitions || loadingRooms || loadingAppointments) {
     return <>Loading...</>;
   }
 
+  const notify = (notificationText) => {
+    toast(notificationText);
+  };
+
   return (
     <>
-      <DoctorChooseService
-        medicalServices={medicalServices}
-        setChosenMedicalService={setChosenMedicalService}
-      />
-      <br />
+      <ToastContainer />
       <DoctorScheduleAppointment
-        chosenMedicalService={chosenMedicalService}
+        notify={notify}
+        repartitions={repartitions}
         rooms={rooms}
+        appointments={appointments}
       />
     </>
   );

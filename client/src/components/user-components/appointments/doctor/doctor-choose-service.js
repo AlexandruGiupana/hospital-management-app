@@ -1,22 +1,27 @@
 import React from "react";
-import { Form } from "react-bootstrap";
+import { Col, Form, Row } from "react-bootstrap";
 
-const DoctorChooseService = ({ medicalServices, setChosenMedicalService }) => {
-  const handleChange = (e) => {
-    setChosenMedicalService(e.target.value);
+const DoctorChooseService = ({ repartitions, setRepartitonId }) => {
+
+  const handleServiceChange = (e) => {
+    setRepartitonId(e.target.value);
   };
 
   return (
     <>
-      <Form.Select className="Select" onChange={handleChange}>
-        {medicalServices.map((service) => (
-          <option key={service.id} value={service.id}>
-            {service.service_name}
-          </option>
-        ))}
-      </Form.Select>
+      <Row>
+        <Col>
+          <Form.Select className="Select" onChange={handleServiceChange}>
+            {repartitions.map((repartition) => (
+              <option key={repartition.id} value={repartition.id}>
+                {`${repartition.service_name}`}
+              </option>
+            ))}
+          </Form.Select>
+        </Col>
+      </Row>
     </>
   );
-};
+}
 
 export default DoctorChooseService;

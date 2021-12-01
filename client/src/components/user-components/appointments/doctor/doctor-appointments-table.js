@@ -8,9 +8,14 @@ import {
   TableEditRow,
   TableEditColumn,
 } from "@devexpress/dx-react-grid-material-ui";
-import { getAppointmentsOfDoctor } from "../../../../services/appointments-services";
+import { deleteAppointment, getAppointmentsOfDoctor } from "../../../../services/appointments-services";
+import { toast, ToastContainer } from "react-toastify";
+import {
+  SUCCESSFUL_DELETE_APPOINTMENT,
+  UNSUCCESSFUL_DELETE_APPOINTMENT
+} from "../../../../notification-messages/notifications";
 
-const getRowId = (row) => row.id;
+const getRowId = (row) => row.appointment_id;
 
 const DoctorAppointmentsTable = () => {
   const [rows, setRows] = useState([]);
@@ -35,27 +40,19 @@ const DoctorAppointmentsTable = () => {
     { name: "end_date", title: "Ora sfarsit" },
   ];
 
-  const commitChanges = ({ added, changed, deleted }) => {
+  const commitChanges = ({ deleted }) => {
     let changedRows;
-    if (added) {
-      const startingAddedId =
-        rows.length > 0 ? rows[rows.length - 1].id + 1 : 0;
-      changedRows = [
-        ...rows,
-        ...added.map((row, index) => ({
-          id: startingAddedId + index,
-          ...row,
-        })),
-      ];
-    }
-    if (changed) {
-      changedRows = rows.map((row) =>
-        changed[row.id] ? { ...row, ...changed[row.id] } : row
-      );
-    }
     if (deleted) {
       const deletedSet = new Set(deleted);
-      changedRows = rows.filter((row) => !deletedSet.has(row.id));
+      deleteAppointment(deleted[0])
+        .then((data) => {
+          toast(SUCCESSFUL_DELETE_APPOINTMENT);
+        })
+        .catch((err) => {
+          console.log(err.message);
+          toast(UNSUCCESSFUL_DELETE_APPOINTMENT);
+        });
+      changedRows = rows.filter((row) => !deletedSet.has(row.appointment_id));
     }
     setRows(changedRows);
   };
@@ -64,12 +61,13 @@ const DoctorAppointmentsTable = () => {
   } else {
     return (
       <Paper>
+        <ToastContainer />
         <Grid rows={rows} columns={columns} getRowId={getRowId}>
           <EditingState onCommitChanges={commitChanges} />
           <Table />
           <TableHeaderRow />
           <TableEditRow />
-          <TableEditColumn showAddCommand showEditCommand showDeleteCommand />
+          <TableEditColumn showDeleteCommand />
         </Grid>
       </Paper>
     );

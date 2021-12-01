@@ -82,11 +82,9 @@ export const editRoom = async (req, res) => {
 
   con.query(GET_ROOMS_WITH_APPOINTMENTS, [room_number], (err, result) => {
     if (result.length > 0) {
-      return res
-        .status(404)
-        .json({
-          msg: "Error! There are still scheduled appointments in this room",
-        });
+      return res.status(404).json({
+        msg: "Error! There are still scheduled appointments in this room",
+      });
     }
   });
 

@@ -12,3 +12,5 @@ export const GET_ROOMS_WITH_APPOINTMENTS =
   "SELECT hospital_room_id FROM appointments WHERE hospital_room_id = ?";
 export const GET_ROOM_BY_ROOMNUMBER_OR_TYPE =
   "SELECT room_number FROM hospital_rooms WHERE room_number = ? OR type = ?";
+export const SELECT_ROOM_BY_ID_QUERY =
+  "SELECT * FROM hospital_rooms WHERE id = ?";

@@ -35,3 +35,13 @@ export const getIdOfRepartiton = async (serviceId, doctorId) => {
     throw err;
   }
 };
+
+export const getRepartitionOfDoctor = async (doctorId) => {
+  try {
+    return await axios.get(
+      `http://localhost:8080/repartition/${doctorId}`
+    )
+  } catch (err) {
+    throw err;
+  }
+}
