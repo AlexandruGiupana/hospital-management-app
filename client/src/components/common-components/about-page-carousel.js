@@ -1,28 +1,55 @@
 import React from "react";
 import { Carousel } from "react-bootstrap";
 import { Card } from "react-bootstrap";
+import poza_medic1 from "../media_resources/about_page_images/poza-medic1.png"
+import poza_medic2 from "../media_resources/about_page_images/poza-medic2.png"
+import poza_medic3 from "../media_resources/about_page_images/poza-medic3.png"
+import "./styles/about_page_style.css";
+import {
+    faQuoteLeft,
+    faQuoteRight
+} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 const AboutPageCarousel = () => {
   return (
-    <Carousel>
-      <Carousel.Item interval={1500}>
-        <Card style={{ width: "20rem" }}>
-          <Card.Body>
-            <Card.Title>Card Title</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">
-              Card Subtitle
-            </Card.Subtitle>
-            <Card.Text>
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </Card.Text>
-            <Card.Link href="#">Card Link</Card.Link>
-            <Card.Link href="#">Another Link</Card.Link>
-          </Card.Body>
-        </Card>
+      <Carousel  variant="dark" id="aboutPageCarousel">
+        <Carousel.Item interval={1900} >
+          <img
+              style={{ maxWidth: "15rem", maxHeight: "15rem", marginLeft:"auto",marginRight:"auto" }}
+              className="d-flex"
+              src={poza_medic3}
+              alt="medic1"
+          />
+          <h5 className="text-black text-center">Dr. oncolog Mihaela Miclea</h5>
+            <p className="text-center text-black mb-lg-5 fs-4 font-italic lead">
+            <i>„Mediplus inseamna pur si simplu profesionalism.“</i>
+            </p>
+        </Carousel.Item>
+        <Carousel.Item interval={1900} >
+          <img
+              style={{ maxWidth: "15rem", maxHeight: "15rem", marginLeft:"auto",marginRight:"auto" }}
+              className="d-flex"
+              src={poza_medic2}
+              alt="medic2"
+          />
+          <h5 className="text-black text-center">Dr. oftalmolog Virgil Marinescu</h5>
+            <p className="text-center text-black mb-lg-5 fs-4 font-italic lead">
+            <i>„Mediplus ofera solutii foarte bune pentru planificarea si desfasurarea eficienta a activitatilor interne din spital.“</i>
+            </p>
+        </Carousel.Item>
+        <Carousel.Item interval={1900} >
+          <img
+              style={{ maxWidth: "15rem", maxHeight: "15rem", marginLeft:"auto",marginRight:"auto" }}
+              className="d-flex"
+              src={poza_medic1}
+        alt="medic3"
+        />
+        <h5 className="text-black text-center">Dr. cardiolog Cosmin Popov</h5>
+        <p className="text-center text-black mb-lg-5 fs-4 font-italic lead">
+            <i>„Functionalitatile oferite de Mediplus imbunatatesc extrem de mult managementul spitalului“</i>
+        </p>
       </Carousel.Item>
-      <Carousel.Item interval={1500}></Carousel.Item>
-      <Carousel.Item interval={1500}></Carousel.Item>
-    </Carousel>
+      </Carousel>
   );
 };
 
