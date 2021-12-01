@@ -18,7 +18,7 @@ export const createRoom = async (data) => {
 
 export const updateRoom = async (data) => {
   try {
-    await axios.put("http://localhost:8080/rooms/update", data);
+    return await axios.put("http://localhost:8080/rooms/update", data);
   } catch (err) {
     throw err;
   }

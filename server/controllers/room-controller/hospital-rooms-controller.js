@@ -2,10 +2,10 @@ import { con } from "../../db_connection.js";
 import { HospitalRoom } from "../../models/hospital_room.js";
 import {
   CREATE_NEW_ROOM_QUERY,
-  DELETE_ROOM_QUERY,
+  DELETE_ROOM_QUERY, EDIT_ROOM_NUMBER_QUERY, EDIT_ROOM_QUERY, EDIT_ROOM_TYPE_QUERY,
   GET_ROOM_BY_ROOMNUMBER_OR_TYPE,
   GET_ROOMS_WITH_APPOINTMENTS,
-  SELECT_ALL_ROOMS_QUERY,
+  SELECT_ALL_ROOMS_QUERY
 } from "../../sql_queries/room-queries.js";
 import { validateNumberField } from "../../validation/general-validation.js";
 import { validateRoomType } from "../../validation/rooms-validation.js";
@@ -24,7 +24,7 @@ export const createHospitalRoom = async (req, res) => {
   const { type, room_number } = req.body;
   const newHospitalRoom = new HospitalRoom(type, room_number);
   let sql = CREATE_NEW_ROOM_QUERY;
-
+  console.log(req.body);
   if (!validateNumberField(room_number)) {
     return res.status(400).json({ msg: "Invalid value for room type" });
   }
@@ -79,25 +79,58 @@ export const editRoom = async (req, res) => {
   if (!validateNumberField(id)) {
     return res.status(400).json({ msg: "Invalid value for id" });
   }
-
   con.query(GET_ROOMS_WITH_APPOINTMENTS, [room_number], (err, result) => {
     if (result.length > 0) {
       return res.status(404).json({
         msg: "Error! There are still scheduled appointments in this room",
       });
-    }
-  });
-
-  con.query(
-    GET_ROOM_BY_ROOMNUMBER_OR_TYPE,
-    [room_number],
-    [type],
-    (err, result) => {
-      if (result.length > 0) {
-        return res
-          .status(404)
-          .json({ msg: "Error! Already exists a room with given number" });
+    } else {
+      con.query(
+        GET_ROOM_BY_ROOMNUMBER_OR_TYPE,
+        [room_number, type],
+        (err, result) => {
+          if (result.length > 0) {
+            return res
+              .status(404)
+              .json({ msg: "Error! Already exists a room with given number" });
+          } else {
+            if (!type && room_number) {
+              con.query(EDIT_ROOM_NUMBER_QUERY, [room_number, id], (err, result) => {
+                if (err) {
+                  throw err;
+                }
+                return res.json({
+                  room: {
+                    room_number: room_number,
+                  },
+                })
+              });
+            } else if (!room_number && type) {
+              con.query(EDIT_ROOM_TYPE_QUERY, [type, id], (err, result) => {
+                if (err) {
+                  throw err;
+                }
+                return res.json({
+                  room: {
+                    type: type,
+                  },
+                })
+              });
+            } else {
+              con.query(EDIT_ROOM_QUERY, [type, room_number, id], (err, result) => {
+                if (err) {
+                  throw err;
+                }
+                return res.json({
+                  room: {
+                    room_number: room_number,
+                    type: type,
+                  },
+                })
+              })
+            }
+          }
+        })
       }
-    }
-  );
-};
+  })
+}
