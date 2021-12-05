@@ -10,11 +10,14 @@ import styled from "styled-components";
 import HealthServicesRepartitions from "../user-components/health-services/health-services-repartitions";
 import DepartmentsComponent from "../user-components/departments/DepartmentsComponent";
 import DepartmentsRepartitionsComponent from "../user-components/departments/DepartmentsRepartitionsComponent";
+import { getUserData } from "../../services/local-storage-services";
 
-const Departments = ({ user }) => {
+const Departments = () => {
+  const connectedUser = getUserData();
+
   return (
     <Container>
-      <SideBar accountType={user.accountType} />
+      <SideBar accountType={connectedUser.data.user.accountType} />
       <ContentContainer>
         <PageTitle>
           <div>

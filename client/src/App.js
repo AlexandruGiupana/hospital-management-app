@@ -22,12 +22,16 @@ import {
   getAllAppointments,
   getAppointmentsOfDoctor,
 } from "./services/appointments-services";
-import PricesPage from "./components/common-components/services-page";
+import PricesPage from "./components/pages/services-page";
 import AboutPage from "./components/common-components/about-page";
+import axios from "axios";
+import {
+  getUserData,
+  isUserData,
+  saveUserData,
+} from "./services/local-storage-services";
 
 const App = () => {
-  console.log(localStorage.getItem("user"));
-
   const [modalLogInOpen, setLoginModalOpen] = useState(false);
   const [modalRegisterOpen, setRegisterModalOpen] = useState(false);
 
@@ -41,9 +45,10 @@ const App = () => {
 
   const customStyles = {
     content: {
-      top: "50%",
-      width: "70%",
+      width: "450px",
+      overflow: "hidden",
       height: "50%",
+      top: "50%",
       left: "50%",
       right: "auto",
       bottom: "auto",
@@ -64,77 +69,85 @@ const App = () => {
     },
   };
 
-  const mockUser = Doctor;
+  const [connectedUser, setConnectedUser] = useState(null);
+
+  const setData = (data) => {
+    setConnectedUser(data.data.user);
+    saveUserData(data);
+  };
+
+  const getCSRFToken = async () => {
+    const { data } = await axios
+      .get("http://localhost:8080/users/csrfToken")
+      .catch((err) => console.log(err));
+    axios.defaults.headers.post["csrf-token"] = data.csrfToken;
+    axios.defaults.headers.delete["csrf-token"] = data.csrfToken;
+    axios.defaults.headers.put["csrf-token"] = data.csrfToken;
+  };
+
+  useEffect(() => {
+    getCSRFToken();
+    if (isUserData()) {
+      const userData = getUserData();
+      setConnectedUser(userData);
+    }
+  }, []);
+
+  console.log(getUserData());
 
   return (
     <>
-      <Modal
-        isOpen={modalLogInOpen}
-        onRequestClose={toggleModalLogIn}
-        ariaHideApp={false}
-        style={customStyles}
-      >
-        <button onClick={toggleModalLogIn}>close</button>
-        <LoginForm />
-      </Modal>
-      <Modal
-        isOpen={modalRegisterOpen}
-        onRequestClose={toggleModalRegister}
-        ariaHideApp={false}
-        style={customStyles2}
-      >
-        <button onClick={toggleModalRegister}>close</button>
-        <RegisterForm />
-      </Modal>
-      <NavBar
-        toggleModalLogIn={toggleModalLogIn}
-        toggleModalRegister={toggleModalRegister}
-      />
       <Router>
+        <NavBar
+          toggleModalLogIn={toggleModalLogIn}
+          toggleModalRegister={toggleModalRegister}
+          connectedUser={connectedUser}
+        />
+        <Modal
+          isOpen={modalLogInOpen}
+          onRequestClose={toggleModalLogIn}
+          ariaHideApp={false}
+          style={customStyles}
+        >
+          <LoginForm
+            setData={setData}
+            getCSRFToken={getCSRFToken}
+            toggleModalLogIn={toggleModalLogIn}
+          />
+        </Modal>
+        <Modal
+          isOpen={modalRegisterOpen}
+          onRequestClose={toggleModalRegister}
+          ariaHideApp={false}
+          style={customStyles2}
+        >
+          <button onClick={toggleModalRegister}>close</button>
+          <RegisterForm />
+        </Modal>
         <Routes>
           <Route path="/" exact element={<HomePage />} />
-          <Route
-            path="/dashboard"
-            exact
-            element={<DashboardPage user={mockUser} />}
-          />
+          <Route path="/dashboard" exact element={<DashboardPage />} />
           <Route
             path="/profile"
             exact
-            element={<ProfilePage user={mockUser} />}
+            element={<ProfilePage user={Patient} />}
           />
           <Route
             path="/create-appointment"
             exact
-            element={<CreateAppointmentPage user={mockUser} />}
+            element={<CreateAppointmentPage />}
           />
           <Route
             path="/appointments"
             exact
-            element={<AppointmentsTablePage user={mockUser} />}
+            element={<AppointmentsTablePage />}
           />
-          <Route
-            path="/health-services"
-            exact
-            element={<HealthServices user={Manager} />}
-          />
+          <Route path="/health-services" exact element={<HealthServices />} />
           <Route path="/services_page" exact element={<PricesPage />} />
           <Route path="/about-page" exact element={<AboutPage />} />
-          <Route
-            path="/wards-management"
-            exact
-            element={<WardsManagement user={Manager} />}
-          />
-          <Route
-            path="/departments"
-            exact
-            element={<Departments user={Manager} />}
-          />
-          <Route
-            path="/rooms-management"
-            exact
-            element={<RoomsManagement user={Manager} />}
-          />
+          <Route path="/wards-management" exact element={<WardsManagement />} />
+          <Route path="/departments" exact element={<Departments />} />
+          <Route path="/rooms-management" exact element={<RoomsManagement />} />
         </Routes>
       </Router>
       <Footer />

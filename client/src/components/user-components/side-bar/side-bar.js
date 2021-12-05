@@ -11,8 +11,7 @@ const SideBar = ({ accountType }) => {
     <SideBarContainer>
       <SideBarOptionsContainer>
         <StyledNavLink exact to={"/dashboard"} activeStyle={{ color: "red" }}>
-          {(accountType === MANAGER_ACCOUNT ||
-            accountType === DOCTOR_ACCOUNT) && (
+          {accountType === DOCTOR_ACCOUNT && (
             <SideBarOption>Dashboard</SideBarOption>
           )}
         </StyledNavLink>
@@ -55,6 +54,28 @@ const SideBar = ({ accountType }) => {
           >
             <SideBarOption>Programeaza-ma</SideBarOption>
           </StyledNavLink>
+        )}
+        {accountType === MANAGER_ACCOUNT && (
+          <>
+            <StyledNavLink
+              activeStyle={{
+                color: "green",
+              }}
+              exact
+              to={"/health-services"}
+            >
+              <SideBarOption>Servicii medicale</SideBarOption>
+            </StyledNavLink>
+            <StyledNavLink
+              activeStyle={{
+                color: "green",
+              }}
+              exact
+              to={"/rooms-management"}
+            >
+              <SideBarOption>Optiuni camere</SideBarOption>
+            </StyledNavLink>
+          </>
         )}
       </SideBarOptionsContainer>
     </SideBarContainer>

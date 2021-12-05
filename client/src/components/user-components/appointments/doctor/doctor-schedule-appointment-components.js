@@ -5,7 +5,11 @@ import DoctorChooseService from "./doctor-choose-service";
 import { getRooms } from "../../../../services/rooms-services";
 import { getAppointmentsOfDoctor } from "../../../../services/appointments-services";
 import { toast, ToastContainer } from "react-toastify";
-import { getAllRepartitions, getRepartitionOfDoctor } from "../../../../services/repartition-services";
+import {
+  getAllRepartitions,
+  getRepartitionOfDoctor,
+} from "../../../../services/repartition-services";
+import { getUserData } from "../../../../services/local-storage-services";
 
 const DoctorScheduleAppointmentComponents = () => {
   const [repartitions, setRepartitons] = useState([]);
@@ -18,7 +22,9 @@ const DoctorScheduleAppointmentComponents = () => {
 
   useEffect(() => {
     const getRepartitions = async () => {
-      const repartitionData = await getRepartitionOfDoctor(10); //todo change id
+      const repartitionData = await getRepartitionOfDoctor(
+        getUserData().data.user.id
+      );
       setRepartitons(repartitionData.data);
       setLoadingRepartitions(false);
     };
@@ -31,12 +37,14 @@ const DoctorScheduleAppointmentComponents = () => {
       setLoadingRooms(false);
     };
     const getAppointments = async () => {
-      const appointments = (await getAppointmentsOfDoctor(10)).data; //todo change id when login is implemented
-      console.log(appointments)
+      const appointments = (
+        await getAppointmentsOfDoctor(getUserData().data.user.id)
+      ).data;
+      console.log(appointments);
       let translatedAppointments = [];
       appointments.forEach((appointment) => {
         let translatedAppointment = {};
-        if(appointment.patient_first_name !== null) {
+        if (appointment.patient_first_name !== null) {
           translatedAppointment = {
             id: appointment.appointment_id,
             title: `${appointment.service_name}`,

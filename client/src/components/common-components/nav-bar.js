@@ -5,9 +5,19 @@ import { Container } from "react-bootstrap";
 import { NavDropdown } from "react-bootstrap";
 import { Nav } from "react-bootstrap";
 import { Button } from "react-bootstrap";
+import { logout } from "../../services/auth-services";
+import { useNavigate } from "react-router-dom";
 
 import "../home-page-components/styles/home_page_style.css";
+import { clearUser, isUserData } from "../../services/local-storage-services";
 const NavBar = ({ toggleModalLogIn, toggleModalRegister }) => {
+  let navigate = useNavigate();
+  const handleLogOut = () => {
+    logout().then((res) => {
+      clearUser();
+      navigate("/");
+    });
+  };
   return (
     <div>
       <Navbar
@@ -35,33 +45,42 @@ const NavBar = ({ toggleModalLogIn, toggleModalRegister }) => {
               <Nav.Link href="/contact" id="navBarItem">
                 Contact
               </Nav.Link>
-              {/*
-              <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-              </NavDropdown>
-              */}
+              {isUserData() && (
+                <Nav.Link href="/profile" id="navBarItem">
+                  Profile
+                </Nav.Link>
+              )}
             </Nav>
-            <Nav>
-              <Button
-                variant="outline-dark"
-                id="navBarButton"
-                onClick={toggleModalRegister}
-              >
-                Sign up
-              </Button>
-              &nbsp; &nbsp;
-              <Button
-                variant="outline-dark"
-                id="navBarButton"
-                onClick={toggleModalLogIn}
-              >
-                Login
-              </Button>
-            </Nav>
+
+            {!isUserData() ? (
+              <Nav>
+                <Button
+                  variant="outline-dark"
+                  id="navBarButton"
+                  onClick={toggleModalRegister}
+                >
+                  Sign up
+                </Button>
+                &nbsp; &nbsp;
+                <Button
+                  variant="outline-dark"
+                  id="navBarButton"
+                  onClick={toggleModalLogIn}
+                >
+                  Login
+                </Button>
+              </Nav>
+            ) : (
+              <Nav>
+                <Button
+                  variant="outline-dark"
+                  id="navBarButton"
+                  onClick={handleLogOut}
+                >
+                  Log Out
+                </Button>
+              </Nav>
+            )}
           </Navbar.Collapse>
         </Container>
       </Navbar>

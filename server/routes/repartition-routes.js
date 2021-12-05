@@ -5,14 +5,15 @@ import {
   assignMedicalServiceToDoctor,
   deleteRepartition,
   getAllRepartitions,
-  getIdOfRepartition, getRepartitionsOfDoctor
+  getIdOfRepartition,
+  getRepartitionsOfDoctor,
 } from "../controllers/repartititon-controller.js";
 const router = express.Router();
 
-router.get("/", cors(), getAllRepartitions);
-router.get("/id/:doctor_id/:health_service_id", cors(), getIdOfRepartition);
-router.get("/:doctor_id", cors(), getRepartitionsOfDoctor);
-router.post("/assign", cors(), assignMedicalServiceToDoctor);
-router.delete("/delete", cors(), deleteRepartition);
+router.get("/", auth, getAllRepartitions);
+router.get("/id/:doctor_id/:health_service_id", auth, getIdOfRepartition);
+router.get("/:doctor_id", auth, getRepartitionsOfDoctor);
+router.post("/assign", auth, assignMedicalServiceToDoctor);
+router.delete("/delete", auth, deleteRepartition);
 
 export default router;

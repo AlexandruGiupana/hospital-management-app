@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getMedicalServices } from "../../services/health-services-services";
-import "./styles/services_prices_style.css";
+import "../common-components/styles/services_prices_style.css";
 import Container from "react-bootstrap/Container";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
@@ -10,6 +10,7 @@ import { TableCell } from "@material-ui/core";
 import TableBody from "@mui/material/TableBody";
 import Paper from "@material-ui/core/Paper";
 import styled from "styled-components";
+import { logout } from "../../services/auth-services";
 const PricesPage = () => {
   const [medicalServices, setMedicalServices] = useState([]);
   const [loadingServicesData, setLoadingServicesData] = useState(true);
@@ -61,7 +62,7 @@ const PricesPage = () => {
               <TableBody>
                 {medicalServices.map((row) => (
                   <TableRow
-                    key={row}
+                    key={row.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell align="left" component="th" scope="row">

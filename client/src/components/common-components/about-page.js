@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import "./styles/services_prices_style.css";
 import Container from "react-bootstrap/Container";
 import TableContainer from "@mui/material/TableContainer";
@@ -18,36 +18,28 @@ import sf_maria from "../media_resources/about_page_images/sf-maria.png";
 import AboutPageCarousel from "./about-page-carousel";
 
 const AboutPage = () => {
-
-    useEffect( () => {
-        const counters = document.querySelectorAll('.count');
-        counters.forEach((counter) => {
-            const updateCount = () => {
-                const target = parseInt(counter.getAttribute('data-target'));
-                const count = parseInt(counter.innerText);
-                let increment = 0;
-                if(target == 800)
-                    increment = 20;
-                if(target == 600)
-                    increment = 15
-                if(target == 14000)
-                    increment = 350
-                if(target<= 10)
-                    increment = 1;
-                if (count < target) {
-                        counter.innerText = count + increment;
-                    if(target <= 10)
-                        setTimeout(updateCount, 250);
-                    else
-                        setTimeout(updateCount, 18);
-                } else {
-                    counter.innerText = target;
-                }
-            };
-            updateCount();
-        });
-    } )
-
+  useEffect(() => {
+    const counters = document.querySelectorAll(".count");
+    counters.forEach((counter) => {
+      const updateCount = () => {
+        const target = parseInt(counter.getAttribute("data-target"));
+        const count = parseInt(counter.innerText);
+        let increment = 0;
+        if (target == 800) increment = 20;
+        if (target == 600) increment = 15;
+        if (target == 14000) increment = 350;
+        if (target <= 10) increment = 1;
+        if (count < target) {
+          counter.innerText = count + increment;
+          if (target <= 10) setTimeout(updateCount, 250);
+          else setTimeout(updateCount, 18);
+        } else {
+          counter.innerText = target;
+        }
+      };
+      updateCount();
+    });
+  });
 
   return (
     <Container>
@@ -66,8 +58,8 @@ const AboutPage = () => {
             Functionalitatile oferite de aplicatie sunt destinate in principal
             personalului medical din interiorul institutiilor medicale, dar sunt
             oferite functionalitati care pot fi folosite direct de catre
-            pacienti, fara sa fie nevoie de interventia obligatorie a unui medic.{" "}
-            <br /> <br /> In prezent aplicatia este folosita de mai multe
+            pacienti, fara sa fie nevoie de interventia obligatorie a unui
+            medic. <br /> <br /> In prezent aplicatia este folosita de mai multe
             spitale din Romania, majoritatea fiind spitale mari in care se
             desfasoara zilnic un numar mare de procese - operatii, consultatii,
             internari si externari din saloane, precum si altele.{" "}
@@ -84,29 +76,39 @@ const AboutPage = () => {
       </Row>
       <br />
       <div className="container">
-        <h5 className="text-center display-6 mb-lg-3 mt-lg-3">Mediplus in cifre:</h5>
+        <h5 className="text-center display-6 mb-lg-3 mt-lg-3">
+          Mediplus in cifre:
+        </h5>
         <Row>
           <Col>
-              <h3 data-target="4" className="count text-center">0</h3>
-              <h6 className="text-center">spitale</h6>
+            <h3 data-target="4" className="count text-center">
+              0
+            </h3>
+            <h6 className="text-center">spitale</h6>
           </Col>
           <Col>
-              <h3 data-target="800" className="count text-center">0</h3>
-              <h6 className="text-center">medici</h6>
+            <h3 data-target="800" className="count text-center">
+              0
+            </h3>
+            <h6 className="text-center">medici</h6>
           </Col>
           <Col>
-              <h3 data-target="600" className="count text-center">0</h3>
-              <h6 className="text-center">procese zilnice</h6>
+            <h3 data-target="600" className="count text-center">
+              0
+            </h3>
+            <h6 className="text-center">procese zilnice</h6>
           </Col>
-            <Col>
-                <h3 data-target="14000" className="count text-center">0</h3>
-                <h6 className="text-center">procese saptamanale</h6>
-            </Col>
+          <Col>
+            <h3 data-target="14000" className="count text-center">
+              0
+            </h3>
+            <h6 className="text-center">procese saptamanale</h6>
+          </Col>
         </Row>
       </div>
-        <br/>
-        <br/>
-        <br/>
+      <br />
+      <br />
+      <br />
       <h5 className="text-black text-center display-6">
         Recomandat cu incredere de partenerii nostri:
       </h5>
@@ -156,13 +158,12 @@ const AboutPage = () => {
         </Col>
       </Row>
 
-      <br/>
-      <br/>
-      <br/>
+      <br />
+      <br />
+      <br />
 
       <AboutPageCarousel />
     </Container>
-
   );
 };
 

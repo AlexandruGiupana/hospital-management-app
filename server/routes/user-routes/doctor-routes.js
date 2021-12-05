@@ -8,8 +8,7 @@ import { auth } from "../middleware/auth.js";
 
 const router = express.Router();
 
-// router.get("/", auth, cors(), getAppointments);
-router.get("/", cors(), getAllDoctors);
-router.post("/create", cors(), createDoctor);
+router.get("/", auth, getAllDoctors);
+router.post("/create", auth, createDoctor);
 
 export default router;

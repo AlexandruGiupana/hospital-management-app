@@ -2,7 +2,6 @@ import React from "react";
 import { Col, Form, Row } from "react-bootstrap";
 
 const DoctorChooseService = ({ repartitions, setRepartitonId }) => {
-
   const handleServiceChange = (e) => {
     setRepartitonId(e.target.value);
   };
@@ -22,6 +21,6 @@ const DoctorChooseService = ({ repartitions, setRepartitonId }) => {
       </Row>
     </>
   );
-}
+};
 
 export default DoctorChooseService;

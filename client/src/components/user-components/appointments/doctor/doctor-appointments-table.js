@@ -8,12 +8,16 @@ import {
   TableEditRow,
   TableEditColumn,
 } from "@devexpress/dx-react-grid-material-ui";
-import { deleteAppointment, getAppointmentsOfDoctor } from "../../../../services/appointments-services";
+import {
+  deleteAppointment,
+  getAppointmentsOfDoctor,
+} from "../../../../services/appointments-services";
 import { toast, ToastContainer } from "react-toastify";
 import {
   SUCCESSFUL_DELETE_APPOINTMENT,
-  UNSUCCESSFUL_DELETE_APPOINTMENT
+  UNSUCCESSFUL_DELETE_APPOINTMENT,
 } from "../../../../notification-messages/notifications";
+import { getUserData } from "../../../../services/local-storage-services";
 
 const getRowId = (row) => row.appointment_id;
 
@@ -23,7 +27,9 @@ const DoctorAppointmentsTable = () => {
 
   useEffect(() => {
     const getAppointments = async () => {
-      const appointments = await getAppointmentsOfDoctor(10); //todo change to doctor id when login will be implemented
+      const appointments = await getAppointmentsOfDoctor(
+        getUserData().data.user.id
+      );
       //todo format date
       setRows(appointments.data);
       setLoading(false);

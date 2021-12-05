@@ -2,11 +2,12 @@ import React from "react";
 import DashboardItem from "./dash-board-item";
 import styled from "styled-components";
 import Chart from "./Chart";
+import { DOCTOR_ACCOUNT } from "../../../demo-data/account-types";
 
-const Dashboard = ({ user }) => {
+const Dashboard = ({ accountType }) => {
   return (
     <DashboardContainer>
-      {user.accountType === "doctor" && (
+      {accountType === DOCTOR_ACCOUNT && (
         <>
           <DashboardItemsContainer>
             <DashboardPairItems>

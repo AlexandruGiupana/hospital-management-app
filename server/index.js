@@ -1,6 +1,5 @@
 import express from "express";
 import userRoutes from "./routes/user-routes/user-routes.js";
-import authRoutes from "./routes/user-routes/auth.js";
 import appointmentsRoutes from "./routes/appointments-routes.js";
 import hospitalRoomsRoutes from "./routes/hospital-rooms-routes.js";
 import servicesRoutes from "./routes/services-routes.js";
@@ -9,6 +8,7 @@ import repartitionRoutes from "./routes/repartition-routes.js";
 import cors from "cors";
 import { con } from "./db_connection.js";
 import config from "config";
+import cookieParser from "cookie-parser";
 
 const PORT = config.get("server.port");
 const app = express();
@@ -24,9 +24,14 @@ let corsOptions = {
 };
 
 app.use(express.json());
-app.use(cors(corsOptions));
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
 app.use("/users", userRoutes);
-app.use("/auth", authRoutes);
 app.use("/appointments", appointmentsRoutes);
 app.use("/rooms", hospitalRoomsRoutes);
 app.use("/services", servicesRoutes);

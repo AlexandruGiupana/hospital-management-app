@@ -6,17 +6,20 @@ import {
   ContentContainer,
   PageTitle,
 } from "../user-components/common-styled-components";
+import { getUserData } from "../../services/local-storage-services";
 
-const DashboardPage = ({ user }) => {
+const DashboardPage = () => {
+  const connectedUser = getUserData();
+
   return (
     <Container>
-      <SideBar accountType={user.accountType} />
+      <SideBar accountType={connectedUser.data.user.account_type} />
       <ContentContainer>
         <PageTitle>
           <div>Dashboard</div>
         </PageTitle>
         <hr />
-        <Dashboard user={user} />
+        <Dashboard accountType={connectedUser.data.user.account_type} />
       </ContentContainer>
     </Container>
   );

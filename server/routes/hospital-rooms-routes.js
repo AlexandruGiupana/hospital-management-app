@@ -1,17 +1,17 @@
 import express from "express";
 
-import cors from "cors";
 import {
   createHospitalRoom,
   editRoom,
   getHospitalRooms,
   deleteRoom,
 } from "../controllers/room-controller/hospital-rooms-controller.js";
+import { auth } from "./middleware/auth.js";
 const router = express.Router();
 
-router.get("/", cors(), getHospitalRooms);
-router.post("/create", cors(), createHospitalRoom);
-router.put("/update", cors(), editRoom);
-router.delete("/delete", cors(), deleteRoom);
+router.get("/", auth, getHospitalRooms);
+router.post("/create", auth, createHospitalRoom);
+router.put("/update", auth, editRoom);
+router.delete("/delete/:id", auth, deleteRoom);
 
 export default router;

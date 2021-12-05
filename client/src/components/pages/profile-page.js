@@ -7,11 +7,14 @@ import {
   ContentContainer,
   PageTitle,
 } from "../user-components/common-styled-components";
+import { getUserData } from "../../services/local-storage-services";
 
 const ProfilePage = ({ user }) => {
+  const connectedUser = getUserData();
+
   return (
     <Container>
-      <SideBar accountType={user.accountType} />
+      <SideBar accountType={connectedUser?.data?.user?.account_type} />
       <ContentContainer>
         <PageTitle>Profile</PageTitle>
         <hr />

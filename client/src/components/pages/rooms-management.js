@@ -9,11 +9,14 @@ import HealthServicesComponent from "../user-components/health-services/health-s
 import styled from "styled-components";
 import HealthServicesRepartitions from "../user-components/health-services/health-services-repartitions";
 import RoomsManagementComponent from "../user-components/wards-rooms/rooms-management-component";
+import { getUserData } from "../../services/local-storage-services";
 
-const RoomsManagement = ({ user }) => {
+const RoomsManagement = () => {
+  const connectedUser = getUserData();
+
   return (
     <Container>
-      <SideBar accountType={user.accountType} />
+      <SideBar accountType={connectedUser.data.user.account_type} />
       <ContentContainer>
         <PageTitle>
           <div>

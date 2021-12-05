@@ -1,12 +1,13 @@
 import { con } from "../db_connection.js";
 import {
-  DELETE_APPOINTMENT_QUERY, INSERT_APPOINTMENT_DOCTOR_QUERY,
+  DELETE_APPOINTMENT_QUERY,
+  INSERT_APPOINTMENT_DOCTOR_QUERY,
   INSERT_APPOINTMENT_QUERY,
   SELECT_ALL_APPOINTMENTS_OF_PATIENT,
   SELECT_ALL_APPOINTMENTS_QUERY,
   SELECT_APPOINTMENT_BY_ID_QUERY,
   SELECT_APPOINTMENTS_DATA_OF_DOCTOR_QUERY,
-  UPDATE_APPOINTMENT_QUERY
+  UPDATE_APPOINTMENT_QUERY,
 } from "../sql_queries/appointments-queries.js";
 import { validateNumberField } from "../validation/general-validation.js";
 import { SELECT_DOCTOR_BY_ID_QUERY } from "../sql_queries/doctors-queries.js";
@@ -175,7 +176,7 @@ export const createAppointmentDoctor = async (req, res) => {
     start_date,
     end_date,
   } = req.body;
-  console.log(req.body)
+  console.log(req.body);
   if (!validateNumberField(service_rep_id)) {
     return res
       .status(400)

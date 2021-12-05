@@ -2,7 +2,9 @@ import axios from "axios";
 
 export const assignServiceToDoctor = async (data) => {
   try {
-    await axios.post("http://localhost:8080/repartition/assign", data);
+    await axios.post("http://localhost:8080/repartition/assign", data, {
+      withCredentials: true,
+    });
   } catch (err) {
     throw err;
   }
@@ -10,7 +12,9 @@ export const assignServiceToDoctor = async (data) => {
 
 export const getAllRepartitions = async () => {
   try {
-    return await axios.get("http://localhost:8080/repartition");
+    return await axios.get("http://localhost:8080/repartition", {
+      withCredentials: true,
+    });
   } catch (err) {
     throw err;
   }
@@ -29,7 +33,8 @@ export const deleteRepartition = async (data) => {
 export const getIdOfRepartiton = async (serviceId, doctorId) => {
   try {
     return await axios.get(
-      `http://localhost:8080/repartition/id/${serviceId}/${doctorId}`
+      `http://localhost:8080/repartition/id/${serviceId}/${doctorId}`,
+      { withCredentials: true }
     );
   } catch (err) {
     throw err;
@@ -38,10 +43,10 @@ export const getIdOfRepartiton = async (serviceId, doctorId) => {
 
 export const getRepartitionOfDoctor = async (doctorId) => {
   try {
-    return await axios.get(
-      `http://localhost:8080/repartition/${doctorId}`
-    )
+    return await axios.get(`http://localhost:8080/repartition/${doctorId}`, {
+      withCredentials: true,
+    });
   } catch (err) {
     throw err;
   }
-}
+};

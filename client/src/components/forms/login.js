@@ -1,76 +1,111 @@
 import React from "react";
 import "./styles/register_page.css";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Button, CloseButton } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { login } from "../../services/auth-services";
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
-const LoginForm = () => {
+const LoginForm = ({ setData, getCSRFToken, toggleModalLogIn }) => {
   const {
     register,
     handleSubmit,
-    watch,
+    setError,
     formState: { errors },
   } = useForm();
 
+  let navigate = useNavigate();
+
   const onSubmit = (data) => {
-    login(data);
+    login(data)
+      .then((res) => {
+        setData(res);
+        toggleModalLogIn();
+        navigate("/profile");
+      })
+      .catch((err) => {
+        setError("invalidCredentialError", { message: "Invalid Credentials" });
+      });
   };
 
   return (
-    <div className="d-flex justify-content-center">
-      <Form className="w-100" onSubmit={handleSubmit(onSubmit)}>
-        <h3 className="text-center display-4 mb-5">Login</h3>
-        <Form.Group
-          as={Row}
-          className="mb-3 d-flex justify-content-center"
-          controlId="formBasicEmail"
-        >
-          <Form.Label column sm="2">
-            Email:
-          </Form.Label>
-          <Col sm="3">
-            <Form.Control
-              type="email"
-              placeholder="Email"
-              {...register("email")}
-            />
-          </Col>
-        </Form.Group>
-        <Form.Group
-          as={Row}
-          className="mb-3 d-flex justify-content-center"
-          controlId="formBasicEmail"
-        >
-          <Form.Label column sm="2">
-            Parola:
-          </Form.Label>
-          <Col sm="3">
-            <Form.Control
-              type="password"
-              placeholder="Parola"
-              {...register("password")}
-            />
-          </Col>
-        </Form.Group>
-        <Form.Group
-          as={Row}
-          className="mb-3 d-flex justify-content-center"
-          controlId="formBasicEmail"
-        >
-          <Col sm="5">
-            <div className="">
-              <Button
-                className="btn btn-primary registerFormSubmitBtn"
-                type="submit"
-              >
-                Trimite
-              </Button>
-            </div>
-          </Col>
-        </Form.Group>
-      </Form>
-    </div>
+    <FormContainer>
+      <CloseButtonContainer>
+        <CloseButton onClick={toggleModalLogIn} />
+      </CloseButtonContainer>
+      <TitleForm>Log in</TitleForm>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <InputContainer>
+          <FieldContainer>
+            <Label>Email: </Label>
+            <InputField type="text" {...register("email")} />
+          </FieldContainer>
+          <FieldContainer>
+            <Label>Password: </Label>
+            <InputField type="password" {...register("password")} />
+            {errors.invalidCredentialError && (
+              <ErrorMessage>
+                {errors.invalidCredentialError?.message}
+              </ErrorMessage>
+            )}
+          </FieldContainer>
+        </InputContainer>
+        <Button className="btn btn-primary registerFormSubmitBtn" type="submit">
+          Log in
+        </Button>
+      </form>
+    </FormContainer>
   );
 };
+
+const FormContainer = styled.div`
+  padding-top: 80px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const FieldContainer = styled.div`
+  justify-content: center;
+  align-items: center;
+`;
+
+const Label = styled.div`
+  width: 100px;
+`;
+
+const InputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const InputField = styled.input`
+  width: 100%;
+  border: solid 1px #ccc;
+  border-radius: 7px;
+  padding-left: 7px;
+`;
+
+const TitleForm = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  top: 25px;
+`;
+
+const CloseButtonContainer = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+`;
+
+const ErrorMessage = styled.p`
+  color: red;
+`;
 
 export default LoginForm;

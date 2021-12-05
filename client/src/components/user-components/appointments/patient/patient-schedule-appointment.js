@@ -37,6 +37,7 @@ import {
   UNSUCCESSFUL_EDIT_APPOINTMENT,
 } from "../../../../notification-messages/notifications";
 import PatientChooseServiceAndDoctor from "./patient-choose-service-and-doctor";
+import { getUserData } from "../../../../services/local-storage-services";
 
 const PatientScheduleAppointment = ({
   rooms,
@@ -80,7 +81,7 @@ const PatientScheduleAppointment = ({
           data.length > 0 ? data[data.length - 1].id + 1 : 0;
         setData([...data, { id: startingAddedId, ...added }]);
         const appointmentData = {
-          patient_id: 15, //todo change when login is implemented
+          patient_id: getUserData().data.user.id,
           service_rep_id: repartitonId,
           hospital_room_id: added.roomId,
           additional_information: added.notes,

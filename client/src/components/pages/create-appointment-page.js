@@ -16,21 +16,24 @@ import { getAppointmentsOfDoctor } from "../../services/appointments-services";
 import { getMedicalServicesOfDoctor } from "../../services/health-services-services";
 import DoctorScheduleAppointmentComponents from "../user-components/appointments/doctor/doctor-schedule-appointment-components";
 import PatientScheduleAppointmentComponent from "../user-components/appointments/patient/patient-schedule-appointment-component";
+import { getUserData } from "../../services/local-storage-services";
 
-const CreateAppointmentPage = ({ user }) => {
+const CreateAppointmentPage = () => {
+  const connectedUser = getUserData();
+
   return (
     <Container>
-      <SideBar accountType={user.accountType} />
+      <SideBar accountType={connectedUser.data.user.account_type} />
       <ContentContainer>
         <PageTitle>
           <div>Programeaza</div>
         </PageTitle>
         <hr />
-        {(user.accountType === DOCTOR_ACCOUNT ||
-          user.accountType === MANAGER_ACCOUNT) && (
+        {(connectedUser.data.user.account_type === DOCTOR_ACCOUNT ||
+          connectedUser.data.user.account_type === MANAGER_ACCOUNT) && (
           <DoctorScheduleAppointmentComponents />
         )}
-        {user.accountType === PATIENT_ACCOUNT && (
+        {connectedUser.data.user.account_type === PATIENT_ACCOUNT && (
           <PatientScheduleAppointmentComponent />
         )}
       </ContentContainer>

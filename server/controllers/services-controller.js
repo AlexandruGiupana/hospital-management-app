@@ -64,7 +64,7 @@ export const createMedicalService = async (req, res) => {
 };
 
 export const deleteMedicalService = async (req, res) => {
-  const { id } = req.body;
+  const id = req.params.id;
   if (!validateNumberField(id)) {
     return res.status(400).json({ msg: "Invalid value for id" });
   }

@@ -19,12 +19,18 @@ import {
 } from "@devexpress/dx-react-scheduler-material-ui";
 
 import {
-  createAppointmentDoctor, deleteAppointment, updateAppointment
+  createAppointmentDoctor,
+  deleteAppointment,
+  updateAppointment,
 } from "../../../../services/appointments-services";
 import DoctorChooseService from "./doctor-choose-service";
 import {
-  SUCCESSFUL_CREATION_APPOINTMENT, SUCCESSFUL_DELETE_APPOINTMENT, SUCCESSFUL_EDIT_APPOINTMENT,
-  UNSUCCESSFUL_CREATION_APPOINTMENT, UNSUCCESSFUL_DELETE_APPOINTMENT, UNSUCCESSFUL_EDIT_APPOINTMENT
+  SUCCESSFUL_CREATION_APPOINTMENT,
+  SUCCESSFUL_DELETE_APPOINTMENT,
+  SUCCESSFUL_EDIT_APPOINTMENT,
+  UNSUCCESSFUL_CREATION_APPOINTMENT,
+  UNSUCCESSFUL_DELETE_APPOINTMENT,
+  UNSUCCESSFUL_EDIT_APPOINTMENT,
 } from "../../../../notification-messages/notifications";
 
 const DoctorScheduleAppointment = ({
@@ -33,7 +39,6 @@ const DoctorScheduleAppointment = ({
   appointments,
   notify,
 }) => {
-
   const [repartitonId, setRepartitonId] = useState(repartitions[0].id);
   const [currentDate, setCurrentDate] = useState(Date.now());
 
@@ -87,7 +92,7 @@ const DoctorScheduleAppointment = ({
             notify(SUCCESSFUL_CREATION_APPOINTMENT);
           })
           .catch((err) => {
-            console.log(err)
+            console.log(err);
             notify(UNSUCCESSFUL_CREATION_APPOINTMENT);
           });
         setData([...data, { id: startingAddedId, ...added }]);
@@ -116,7 +121,7 @@ const DoctorScheduleAppointment = ({
                 notify(UNSUCCESSFUL_EDIT_APPOINTMENT);
               });
           }
-        })
+        });
       }
       if (deleted !== undefined) {
         setData(data.filter((appointment) => appointment.id !== deleted));

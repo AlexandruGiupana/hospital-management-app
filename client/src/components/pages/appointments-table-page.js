@@ -12,24 +12,27 @@ import {
   MANAGER_ACCOUNT,
   PATIENT_ACCOUNT,
 } from "../../demo-data/account-types";
+import { getUserData } from "../../services/local-storage-services";
 
-const AppointmentsTablePage = ({ user }) => {
+const AppointmentsTablePage = () => {
+  const connectedUser = getUserData();
+
   return (
     <Container>
-      <SideBar accountType={user.accountType} />
+      <SideBar accountType={connectedUser.data.user.account_type} />
       <ContentContainer>
         <PageTitle>
           <div>Programari</div>
         </PageTitle>
         <hr />
-        {(user.accountType === DOCTOR_ACCOUNT ||
-          user.accountType === MANAGER_ACCOUNT) && (
+        {(connectedUser.data.user.account_type === DOCTOR_ACCOUNT ||
+          connectedUser.data.user.account_type === MANAGER_ACCOUNT) && (
           <>
             <></>
             <DoctorAppointmentsTable />
           </>
         )}
-        {user.accountType === PATIENT_ACCOUNT && (
+        {connectedUser.data.user.account_type === PATIENT_ACCOUNT && (
           <PatientAppointmentComponent />
         )}
       </ContentContainer>

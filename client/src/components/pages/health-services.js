@@ -10,11 +10,14 @@ import styled from "styled-components";
 import HealthServicesRepartitions from "../user-components/health-services/health-services-repartitions";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getUserData } from "../../services/local-storage-services";
 
-const HealthServices = ({ user }) => {
+const HealthServices = () => {
   const notify = (notificationText) => {
     toast(notificationText);
   };
+
+  const connectedUser = getUserData();
 
   return (
     <Container>
@@ -29,7 +32,7 @@ const HealthServices = ({ user }) => {
         draggable
         pauseOnHover
       />
-      <SideBar accountType={user.accountType} />
+      <SideBar accountType={connectedUser.data.user.account_type} />
       <ContentContainer>
         <PageTitle>
           <div>

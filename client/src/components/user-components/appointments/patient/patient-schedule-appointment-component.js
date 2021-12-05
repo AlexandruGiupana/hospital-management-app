@@ -5,8 +5,9 @@ import { getAppointmentsOfPatient } from "../../../../services/appointments-serv
 import { getAllRepartitions } from "../../../../services/repartition-services";
 import { getRooms } from "../../../../services/rooms-services";
 import { toast, ToastContainer } from "react-toastify";
+import { getUserData } from "../../../../services/local-storage-services";
 
-const PatientScheduleAppointmentComponent = () => {
+const PatientScheduleAppointmentComponent = ({ id }) => {
   const [appointments, setAppointments] = useState([]);
   const [repartitions, setRepartitons] = useState([]);
   const [rooms, setRooms] = useState([]);
@@ -19,7 +20,10 @@ const PatientScheduleAppointmentComponent = () => {
 
   useEffect(() => {
     const getAppointments = async () => {
-      const appointmentsData = (await getAppointmentsOfPatient(15)).data; //todo replace when login is implemented
+      const appointmentsData = (
+        await getAppointmentsOfPatient(getUserData().data.user.id)
+      ).data;
+      console.log(appointmentsData);
       let translatedAppointments = [];
       appointmentsData.forEach((appointment) => {
         let translatedAppointment = {

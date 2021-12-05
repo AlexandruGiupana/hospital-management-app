@@ -13,13 +13,24 @@ import {
   generateRows,
   defaultColumnValues,
 } from "../../../demo-data/generator";
-import { createRoom, deleteRoom, getRooms, updateRoom } from "../../../services/rooms-services";
+import {
+  createRoom,
+  deleteRoom,
+  getRooms,
+  updateRoom,
+} from "../../../services/rooms-services";
 import { toast, ToastContainer } from "react-toastify";
 import {
-  SUCCESSFUL_DELETION, SUCCESSFUL_DELETION_ROOM,
-  SUCCESSFUL_EDIT, SUCCESSFUL_EDIT_ROOM,
-  SUCCESSFUL_ROOM_CREATION, UNSUCCESSFUL_DELETION, UNSUCCESSFUL_DELETION_ROOM, UNSUCCESSFUL_EDIT_ROOM,
-  UNSUCCESSFUL_ROOM_CREATION, UNSUCCESSFUL_SERVICE_CREATION
+  SUCCESSFUL_DELETION,
+  SUCCESSFUL_DELETION_ROOM,
+  SUCCESSFUL_EDIT,
+  SUCCESSFUL_EDIT_ROOM,
+  SUCCESSFUL_ROOM_CREATION,
+  UNSUCCESSFUL_DELETION,
+  UNSUCCESSFUL_DELETION_ROOM,
+  UNSUCCESSFUL_EDIT_ROOM,
+  UNSUCCESSFUL_ROOM_CREATION,
+  UNSUCCESSFUL_SERVICE_CREATION,
 } from "../../../notification-messages/notifications";
 import { deleteMedicalService } from "../../../services/health-services-services";
 
@@ -38,11 +49,11 @@ const RoomsManagementComponent = () => {
     const getAllRooms = async () => {
       const roomsData = (await getRooms()).data;
       setRows(roomsData);
-      console.log(roomsData)
+      console.log(roomsData);
       setLoadingRooms(false);
-    }
+    };
     getAllRooms();
-  }, [])
+  }, []);
 
   const commitChanges = ({ added, changed, deleted }) => {
     let changedRows;
@@ -63,7 +74,7 @@ const RoomsManagementComponent = () => {
         })
         .catch((err) => {
           toast(UNSUCCESSFUL_ROOM_CREATION);
-        })
+        });
     }
     if (changed) {
       updateRoom(changed)
@@ -75,7 +86,7 @@ const RoomsManagementComponent = () => {
           setRows(changedRows);
         })
         .catch((err) => {
-          console.log(err.msg)
+          console.log(err.msg);
           toast(UNSUCCESSFUL_EDIT_ROOM);
         });
     }
@@ -93,12 +104,8 @@ const RoomsManagementComponent = () => {
     }
   };
 
-  if(loadingRooms) {
-    return (
-      <>
-        Loading...
-      </>
-    )
+  if (loadingRooms) {
+    return <>Loading...</>;
   }
 
   return (
