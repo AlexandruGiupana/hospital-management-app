@@ -24,15 +24,17 @@ const SideBar = ({ accountType }) => {
         >
           <SideBarOption>Profile</SideBarOption>
         </StyledNavLink>
-        <StyledNavLink
-          activeStyle={{
-            color: "green",
-          }}
-          exact
-          to={"/appointments"}
-        >
-          <SideBarOption>Programari</SideBarOption>
-        </StyledNavLink>
+        {accountType !== MANAGER_ACCOUNT && (
+          <StyledNavLink
+            activeStyle={{
+              color: "green",
+            }}
+            exact
+            to={"/appointments"}
+          >
+            <SideBarOption>Programari</SideBarOption>
+          </StyledNavLink>
+        )}
         {accountType === "doctor" && (
           <StyledNavLink
             activeStyle={{

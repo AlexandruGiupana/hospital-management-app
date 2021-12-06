@@ -14,6 +14,6 @@ router.get("/", auth, getAllRepartitions);
 router.get("/id/:doctor_id/:health_service_id", auth, getIdOfRepartition);
 router.get("/:doctor_id", auth, getRepartitionsOfDoctor);
 router.post("/assign", auth, assignMedicalServiceToDoctor);
-router.delete("/delete", auth, deleteRepartition);
+router.delete("/delete/:id", auth, deleteRepartition);
 
 export default router;

@@ -20,11 +20,14 @@ export const getAllRepartitions = async () => {
   }
 };
 
-export const deleteRepartition = async (data) => {
+export const deleteRepartition = async (id) => {
   try {
-    return await axios.delete("http://localhost:8080/repartition/delete", {
-      data: data,
-    });
+    return await axios.delete(
+      `http://localhost:8080/repartition/delete/${id}`,
+      {
+        withCredentials: true,
+      }
+    );
   } catch (err) {
     throw err;
   }

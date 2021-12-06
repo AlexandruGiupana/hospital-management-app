@@ -1,141 +1,168 @@
 import React from "react";
 import "./styles/register_page.css";
-import { Form } from "react-bootstrap";
-import { FormGroup } from "react-bootstrap";
-import { Button } from "react-bootstrap";
-import { Row } from "react-bootstrap";
-import { Col } from "react-bootstrap";
+import styled from "styled-components";
+import { useForm } from "react-hook-form";
+import { Button, CloseButton } from "react-bootstrap";
+import { registerNewUser } from "../../services/register-services";
+import { PATIENT_ACCOUNT } from "../../demo-data/account-types";
 
-const RegisterForm = () => {
+const RegisterForm = ({ toggleModalRegister }) => {
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    data["accountType"] = PATIENT_ACCOUNT;
+    registerNewUser(data)
+      .then((res) => {
+        toggleModalRegister();
+      })
+      .catch((err) => {
+        setError("invalidCredentialError", { message: "Invalid Credentials" });
+      });
+  };
+
   return (
-    <div className="">
-      <h3 className="text-center display-4">Inregistrare</h3>
-      <form>
-        <div className="form-group row registerFormItemContainer">
-          <label
-            htmlFor="inputEmail3"
-            className="col-sm-1 col-form-label registerLabel"
-          >
-            Nume:
-          </label>
-          <div className="col-sm-11">
-            <input
+    <FormContainer>
+      <CloseButtonContainer>
+        <CloseButton onClick={toggleModalRegister} />
+      </CloseButtonContainer>
+      <TitleForm>Sign up</TitleForm>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <InputContainer>
+          <FieldContainer>
+            <Label>First name: </Label>
+            <InputField
               type="text"
-              className="form-control inputField"
-              placeholder="Nume"
+              {...register("firstName", {
+                required: true,
+                message: "Field is required",
+              })}
             />
-          </div>
-        </div>
-
-        <div className="form-group row">
-          <label
-            htmlFor="inputPassword3"
-            className="col-sm-1 col-form-label registerLabel"
-          >
-            Prenume:
-          </label>
-          <div className="col-sm-11">
-            <input
+            {errors.firstName && (
+              <ErrorMessage>First name is required</ErrorMessage>
+            )}
+          </FieldContainer>
+          <FieldContainer>
+            <Label>Last name: </Label>
+            <InputField
               type="text"
-              className="form-control inputField"
-              placeholder="Prenume"
+              {...register("lastName", {
+                required: true,
+                message: "Field is required",
+              })}
             />
-          </div>
-        </div>
-
-        <div className="form-group row">
-          <label
-            htmlFor="inputPassword3"
-            className="col-sm-1 col-form-label registerLabel"
-          >
-            Telefon:
-          </label>
-          <div className="col-sm-11">
-            <input
+            {errors.lastName && (
+              <ErrorMessage>Last name is required</ErrorMessage>
+            )}
+          </FieldContainer>
+          <FieldContainer>
+            <Label>CNP: </Label>
+            <InputField
               type="text"
-              className="form-control inputField"
-              placeholder="Nr de telefon"
+              {...register("cnp", {
+                required: true,
+                message: "Field is required",
+              })}
             />
-          </div>
-        </div>
-
-        <div className="form-group row">
-          <label
-            htmlFor="inputPassword3"
-            className="col-sm-1 col-form-label registerLabel"
-          >
-            Adresa:
-          </label>
-          <div className="col-sm-11">
-            <input
+            {errors.cnp && <ErrorMessage>CNP is required</ErrorMessage>}
+          </FieldContainer>
+          <FieldContainer>
+            <Label>Email: </Label>
+            <InputField
               type="text"
-              className="form-control inputField"
-              placeholder="Adresa"
+              {...register("email", {
+                required: true,
+                message: "Field is required",
+              })}
             />
-          </div>
-        </div>
-
-        <div className="form-group row">
-          <label
-            htmlFor="inputPassword3"
-            className="col-sm-1 col-form-label registerLabel"
-          >
-            CNP:
-          </label>
-          <div className="col-sm-11">
-            <input
-              type="text"
-              className="form-control inputField"
-              placeholder="CNP"
-            />
-          </div>
-        </div>
-
-        <div className="form-group row">
-          <label
-            htmlFor="inputPassword3"
-            className="col-sm-1 col-form-label registerLabel"
-          >
-            Email:
-          </label>
-          <div className="col-sm-11">
-            <input
-              type="email"
-              className="form-control inputField"
-              placeholder="Email"
-            />
-          </div>
-        </div>
-
-        <div className="form-group row">
-          <label
-            htmlFor="inputPassword3"
-            className="col-sm-1 col-form-label registerLabel"
-          >
-            Parola:
-          </label>
-          <div className="col-sm-11">
-            <input
+            {errors.email && <ErrorMessage>Email is required</ErrorMessage>}
+          </FieldContainer>
+          <FieldContainer>
+            <Label>Password: </Label>
+            <InputField
               type="password"
-              className="form-control inputField"
-              placeholder="Parola"
+              {...register("password", {
+                required: true,
+                message: "Field is required",
+              })}
             />
-          </div>
-        </div>
-
-        <div className="form-group row">
-          <div className="col-sm-12">
-            <button
-              type="submit"
-              className="btn btn-primary registerFormSubmitBtn"
-            >
-              Trimite
-            </button>
-          </div>
-        </div>
+            {errors.password && (
+              <ErrorMessage>Password is required</ErrorMessage>
+            )}
+          </FieldContainer>
+        </InputContainer>
+        <SubmitButton
+          className="btn btn-primary registerFormSubmitBtn"
+          type="submit"
+        >
+          Register
+        </SubmitButton>
       </form>
-    </div>
+    </FormContainer>
   );
 };
+
+const FormContainer = styled.div`
+  padding-top: 80px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const FieldContainer = styled.div`
+  justify-content: center;
+  align-items: center;
+`;
+
+const Label = styled.div`
+  width: 100px;
+`;
+
+const InputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const InputField = styled.input`
+  width: 100%;
+  border: solid 1px #ccc;
+  border-radius: 7px;
+  padding-left: 7px;
+`;
+
+const TitleForm = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  top: 25px;
+`;
+
+const CloseButtonContainer = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+`;
+
+const ErrorMessage = styled.div`
+  color: red;
+  padding: 0;
+`;
+
+const SubmitButton = styled.button`
+  font-family: "Poppins";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+`;
 
 export default RegisterForm;

@@ -18,7 +18,8 @@ const DeleteRepartitionForm = ({ notify, repartitions, setRepartitons }) => {
         (repartition) => parseInt(repartition.id) !== parseInt(data.id)
       )
     );
-    deleteRepartition(data);
+    console.log(data.id);
+    deleteRepartition(data.id);
   };
 
   return (

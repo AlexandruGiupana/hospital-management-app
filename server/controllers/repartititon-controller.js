@@ -125,7 +125,8 @@ export const getRepartitionsOfDoctor = (req, res) => {
 };
 
 export const deleteRepartition = async (req, res) => {
-  const { id } = req.body;
+  const id = req.params.id;
+  console.log(id);
   if (!validateNumberField(id)) {
     return res.status(400).json({ msg: "Invalid value for id" });
   }

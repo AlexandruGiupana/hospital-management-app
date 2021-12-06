@@ -18,11 +18,7 @@ const RoomsManagement = () => {
     <Container>
       <SideBar accountType={connectedUser.data.user.account_type} />
       <ContentContainer>
-        <PageTitle>
-          <div>
-            <h6 className="text-black display-6">Sali spital</h6>
-          </div>
-        </PageTitle>
+        <PageTitle>Sali spital</PageTitle>
         <hr />
         <RoomsManagementComponent />
       </ContentContainer>

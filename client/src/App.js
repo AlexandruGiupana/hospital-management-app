@@ -58,9 +58,10 @@ const App = () => {
   };
   const customStyles2 = {
     content: {
+      width: "480px",
+      overflow: "hidden",
+      height: "70%",
       top: "50%",
-      width: "70%",
-      height: "80%",
       left: "50%",
       right: "auto",
       bottom: "auto",
@@ -76,24 +77,12 @@ const App = () => {
     saveUserData(data);
   };
 
-  const getCSRFToken = async () => {
-    const { data } = await axios
-      .get("http://localhost:8080/users/csrfToken")
-      .catch((err) => console.log(err));
-    axios.defaults.headers.post["csrf-token"] = data.csrfToken;
-    axios.defaults.headers.delete["csrf-token"] = data.csrfToken;
-    axios.defaults.headers.put["csrf-token"] = data.csrfToken;
-  };
-
   useEffect(() => {
-    getCSRFToken();
     if (isUserData()) {
       const userData = getUserData();
       setConnectedUser(userData);
     }
   }, []);
-
-  console.log(getUserData());
 
   return (
     <>
@@ -109,11 +98,7 @@ const App = () => {
           ariaHideApp={false}
           style={customStyles}
         >
-          <LoginForm
-            setData={setData}
-            getCSRFToken={getCSRFToken}
-            toggleModalLogIn={toggleModalLogIn}
-          />
+          <LoginForm setData={setData} toggleModalLogIn={toggleModalLogIn} />
         </Modal>
         <Modal
           isOpen={modalRegisterOpen}
@@ -121,8 +106,7 @@ const App = () => {
           ariaHideApp={false}
           style={customStyles2}
         >
-          <button onClick={toggleModalRegister}>close</button>
-          <RegisterForm />
+          <RegisterForm toggleModalRegister={toggleModalRegister} />
         </Modal>
         <Routes>
           <Route path="/" exact element={<HomePage />} />

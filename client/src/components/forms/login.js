@@ -5,8 +5,9 @@ import { useForm } from "react-hook-form";
 import { login } from "../../services/auth-services";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { PATIENT_ACCOUNT } from "../../demo-data/account-types";
 
-const LoginForm = ({ setData, getCSRFToken, toggleModalLogIn }) => {
+const LoginForm = ({ setData, toggleModalLogIn }) => {
   const {
     register,
     handleSubmit,
@@ -50,9 +51,12 @@ const LoginForm = ({ setData, getCSRFToken, toggleModalLogIn }) => {
             )}
           </FieldContainer>
         </InputContainer>
-        <Button className="btn btn-primary registerFormSubmitBtn" type="submit">
+        <SubmitButton
+          className="btn btn-primary registerFormSubmitBtn"
+          type="submit"
+        >
           Log in
-        </Button>
+        </SubmitButton>
       </form>
     </FormContainer>
   );
@@ -106,6 +110,14 @@ const CloseButtonContainer = styled.div`
 
 const ErrorMessage = styled.p`
   color: red;
+`;
+
+const SubmitButton = styled.button`
+  font-family: "Poppins";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
 `;
 
 export default LoginForm;

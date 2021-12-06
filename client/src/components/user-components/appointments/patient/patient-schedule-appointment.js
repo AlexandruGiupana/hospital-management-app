@@ -136,7 +136,7 @@ const PatientScheduleAppointment = ({
       }
       setIsAppointmentBeingCreated(false);
     },
-    [setData, setIsAppointmentBeingCreated, data]
+    [setData, setIsAppointmentBeingCreated, data, repartitonId]
   );
 
   const onAddedAppointmentChange = useCallback((appointment) => {

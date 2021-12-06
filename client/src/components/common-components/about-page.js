@@ -16,6 +16,7 @@ import louis_turcanu from "../media_resources/about_page_images/louis-turcan-tim
 import pelican_oradea from "../media_resources/about_page_images/pelican-oradea.png";
 import sf_maria from "../media_resources/about_page_images/sf-maria.png";
 import AboutPageCarousel from "./about-page-carousel";
+import styled from "styled-components";
 
 const AboutPage = () => {
   useEffect(() => {
@@ -48,7 +49,7 @@ const AboutPage = () => {
           <h5 className="fs-2 mt-2" id="aboutPageHeader">
             Scurt istoric
           </h5>
-          <p>
+          <DescriptionComponent>
             Serviciul Mediplus a fost lansata initial in anul 2015 cu scopul de
             a gestiona mai usor procesele interne din cadrul Spitalului Clinic
             de Urgenta pentru copii Louis Turcanu din Timisoara. Datorita
@@ -63,7 +64,7 @@ const AboutPage = () => {
             spitale din Romania, majoritatea fiind spitale mari in care se
             desfasoara zilnic un numar mare de procese - operatii, consultatii,
             internari si externari din saloane, precum si altele.{" "}
-          </p>
+          </DescriptionComponent>
         </Col>
         <Col>
           <img
@@ -76,9 +77,9 @@ const AboutPage = () => {
       </Row>
       <br />
       <div className="container">
-        <h5 className="text-center display-6 mb-lg-3 mt-lg-3">
+        <SectionTitle className="text-center display-6 mb-lg-3 mt-lg-3">
           Mediplus in cifre:
-        </h5>
+        </SectionTitle>
         <Row>
           <Col>
             <h3 data-target="4" className="count text-center">
@@ -109,9 +110,9 @@ const AboutPage = () => {
       <br />
       <br />
       <br />
-      <h5 className="text-black text-center display-6">
+      <SectionTitle className="text-black text-center display-6">
         Recomandat cu incredere de partenerii nostri:
-      </h5>
+      </SectionTitle>
       <br />
       <Row>
         <Col>
@@ -166,5 +167,14 @@ const AboutPage = () => {
     </Container>
   );
 };
+
+const DescriptionComponent = styled.div`
+  text-align: justify;
+  text-justify: inter-word;
+`;
+
+const SectionTitle = styled.h5`
+  padding-bottom: 20px;
+`;
 
 export default AboutPage;

@@ -88,10 +88,4 @@ const NavBar = ({ toggleModalLogIn, toggleModalRegister }) => {
   );
 };
 
-const StyledNavBar = styled.div`
-  display: flex;
-  justify-content: space-between;
-  background: pink;
-`;
-
 export default NavBar;

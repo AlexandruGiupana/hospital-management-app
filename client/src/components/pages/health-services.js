@@ -34,11 +34,7 @@ const HealthServices = () => {
       />
       <SideBar accountType={connectedUser.data.user.account_type} />
       <ContentContainer>
-        <PageTitle>
-          <div>
-            <h6 className="text-black display-6">Servicii medicale</h6>
-          </div>
-        </PageTitle>
+        <PageTitle>Servicii medicale</PageTitle>
         <hr />
         <HealthServicesRepartitions notify={notify} />
         &nbsp; &nbsp;
