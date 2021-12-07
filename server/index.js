@@ -5,6 +5,7 @@ import hospitalRoomsRoutes from "./routes/hospital-rooms-routes.js";
 import servicesRoutes from "./routes/services-routes.js";
 import doctorRoutes from "./routes/user-routes/doctor-routes.js";
 import repartitionRoutes from "./routes/repartition-routes.js";
+import newsRoutes from "./routes/news-routes.js"
 import cors from "cors";
 import { con } from "./db_connection.js";
 import config from "config";
@@ -32,6 +33,7 @@ app.use(
   })
 );
 app.use("/users", userRoutes);
+app.use("/news", newsRoutes);
 app.use("/appointments", appointmentsRoutes);
 app.use("/rooms", hospitalRoomsRoutes);
 app.use("/services", servicesRoutes);
