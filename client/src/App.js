@@ -58,7 +58,7 @@ const App = () => {
   };
   const customStyles2 = {
     content: {
-      width: "480px",
+      width: "4/80px",
       overflow: "hidden",
       height: "70%",
       top: "50%",

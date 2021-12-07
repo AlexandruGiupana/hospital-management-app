@@ -1,50 +1,114 @@
 import React from "react";
 import styled from "styled-components";
-const ChangeInformationForm = ({ user }) => {
+import { useForm } from "react-hook-form";
+import { updateUserInformation } from "../../services/user-services";
+import {
+  SUCCESSFUL_EDIT_PROFILE,
+  UNSUCCESSFUL_EDIT_PROFILE,
+} from "../../notification-messages/notifications";
+
+const ChangeInformationForm = ({ user, toast }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    updateUserInformation(user.id, data)
+      .then(() => {
+        toast(SUCCESSFUL_EDIT_PROFILE);
+      })
+      .catch(() => {
+        toast(UNSUCCESSFUL_EDIT_PROFILE);
+      });
+  };
+
   return (
-    <Form>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <LabeledInput>
         <label>Email</label>
-        <BigInput type="email" value={user.email} />
+        <BigInput type="email" value={user.email} disabled={true} />
       </LabeledInput>
       <RowContainer>
         <LabeledInput>
-          <label>Nume</label>
-          <SmallInput type="text" value={user.firstName} />
+          <label>First name</label>
+          <SmallInput
+            type="text"
+            defaultValue={user.first_name}
+            {...register("first_name", {
+              required: true,
+              message: "Field is required",
+            })}
+          />
         </LabeledInput>
         <LabeledInput>
-          <label>Prenume</label>
-          <SmallInput type="text" value={user.lastName} />
+          <label>Last name</label>
+          <SmallInput
+            type="text"
+            defaultValue={user.last_name}
+            {...register("last_name", {
+              required: true,
+              message: "Field is required",
+            })}
+          />
         </LabeledInput>
       </RowContainer>
       <LabeledInput>
-        <label>Adresa</label>
-        <BigInput type="text" value={user.address} />
+        <label>Address</label>
+        <BigInput
+          type="text"
+          defaultValue={user.address}
+          {...register("address")}
+        />
       </LabeledInput>
       <RowContainer>
         <LabeledInput>
-          <label>Localitate</label>
-          <SmallInput type="text" value={user.city} />
+          <label>City</label>
+          <SmallInput
+            type="text"
+            defaultValue={user.city}
+            {...register("city")}
+          />
         </LabeledInput>
         <LabeledInput>
-          <label>Judet</label>
-          <SmallInput type="text" value={user.county} />
+          <label>County</label>
+          <SmallInput
+            type="text"
+            defaultValue={user.county}
+            {...register("county")}
+          />
         </LabeledInput>
         <LabeledInput>
-          <label>Cod Postal</label>
-          <SmallInput type="text" value={user.postCode} />
+          <label>ZIP Code</label>
+          <SmallInput
+            type="text"
+            defaultValue={user.postal_code}
+            {...register("postal_code")}
+          />
         </LabeledInput>
       </RowContainer>
       <LabeledInput>
-        <label>Numar telefon</label>
-        <BigInput type="phone" value={user.phoneNumber} />
+        <label>Phone number</label>
+        <BigInput
+          type="phone"
+          defaultValue={user.phone_number}
+          {...register("phone_number", {
+            required: true,
+            message: "Field is required",
+          })}
+        />
       </LabeledInput>
       <LabeledInput>
-        <label>Informatii aditionale</label>
-        <InformationAreaInput type="text" value={user.additionalInformation} />
+        <label>Additional information</label>
+        <InformationAreaInput
+          type="text"
+          defaultValue={user.additional_information}
+          {...register("additional_information")}
+        />
       </LabeledInput>
       <ButtonContainer>
-        <SubmitButton type="submit">Salveaza</SubmitButton>
+        <SubmitButton type="submit">Save</SubmitButton>
       </ButtonContainer>
     </Form>
   );

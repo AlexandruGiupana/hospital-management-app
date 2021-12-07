@@ -1,20 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ChangeInformationForm from "../../forms/change-information";
+import { getUserInformation } from "../../../services/user-services";
+import { ToastContainer, toast } from "react-toastify";
 
-const ProfilePageComponent = ({ user }) => {
+const ProfilePageComponent = ({ userId }) => {
+  const [userDetails, setUserDetails] = useState([]);
+  const [userDetailsLoading, setUserDetailsLoading] = useState(true);
+
+  useEffect(() => {
+    const getUserDetails = async () => {
+      const data = (await getUserInformation(userId)).data;
+      setUserDetails(data);
+      setUserDetailsLoading(false);
+    };
+    getUserDetails();
+  }, []);
+
+  if (userDetailsLoading) {
+    return <>Loading...</>;
+  }
+
   return (
     <ProfileContainer>
+      <ToastContainer
+        position="top-right"
+        autoClose={3500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <UserInformationContainer>
         <UserContainer>
           <CoverImage />
           <ProfileImage />
-          <NameContainer>{`${user.firstName} ${user.lastName}`}</NameContainer>
-          <IdContainer>ID cont {user.id}</IdContainer>
+          <NameContainer>{`${userDetails[0].first_name} ${userDetails[0].last_name}`}</NameContainer>
+          <IdContainer>ID cont {userDetails[0].id}</IdContainer>
         </UserContainer>
       </UserInformationContainer>
       <ChangeInformationContainer>
-        <ChangeInformationForm user={user}></ChangeInformationForm>
+        <ChangeInformationForm user={userDetails[0]} toast={toast} />
       </ChangeInformationContainer>
     </ProfileContainer>
   );

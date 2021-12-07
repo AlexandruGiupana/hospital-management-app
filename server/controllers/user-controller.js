@@ -3,6 +3,12 @@ import bcrypt from "bcryptjs";
 import jsonWebToken from "jsonwebtoken";
 import config from "config";
 import { User } from "../models/user.js";
+import { validateNumberField } from "../validation/general-validation.js";
+import {
+  SELECT_USER_ID_QUERY,
+  SELECT_USER_INFORMATION_QUERY,
+  UPDATE_USER_INFORMATION_QUERY,
+} from "../sql_queries/user-queries.js";
 
 export const logIn = (req, res) => {
   const { email, password } = req.body;
@@ -104,4 +110,69 @@ export const logout = async (req, res) => {
 
 export const getCsrf = async (req, res) => {
   res.status(200).json({ csrfToken: req.csrfToken() });
+};
+
+export const getUserInformation = (req, res) => {
+  const id = req.params.id;
+  if (!validateNumberField(id)) {
+    return res.status(400).json({ msg: "Invalid value for user id" });
+  }
+  con.query(SELECT_USER_INFORMATION_QUERY, [id], (err, result) => {
+    if (err) {
+      return res
+        .status(500)
+        .json({ msg: "There was something wrong with your request" });
+    }
+    return res
+      .status(200)
+      .json(Object.values(JSON.parse(JSON.stringify(result))));
+  });
+};
+
+export const editUserInformation = (req, res) => {
+  const id = req.params.id;
+  const {
+    first_name,
+    last_name,
+    address,
+    city,
+    county,
+    postal_code,
+    phone_number,
+    additional_information,
+  } = req.body;
+
+  if (!validateNumberField(id)) {
+    return res.status(400).json({ msg: "Invalid value for user id" });
+  }
+  //todo validate
+
+  con.query(SELECT_USER_ID_QUERY, [id], (err, result) => {
+    if (result.length !== 1) {
+      return res.status(404).json({ msg: "User not found" });
+    } else {
+      con.query(
+        UPDATE_USER_INFORMATION_QUERY,
+        [
+          first_name,
+          last_name,
+          address,
+          city,
+          county,
+          postal_code,
+          phone_number,
+          additional_information,
+          id,
+        ],
+        (err, result) => {
+          if (err) {
+            return res
+              .status(500)
+              .json({ msg: "There was something wrong with your request" });
+          }
+          return res.json("user information was updated");
+        }
+      );
+    }
+  });
 };

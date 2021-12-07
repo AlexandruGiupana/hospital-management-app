@@ -30,3 +30,7 @@ export const UNSUCCESSFUL_EDIT_APPOINTMENT =
 export const SUCCESSFUL_DELETE_APPOINTMENT =
   "🙌 Appointment was deleted successfully.";
 export const UNSUCCESSFUL_DELETE_APPOINTMENT = "⚠ Appointment was not deleted.";
+export const SUCCESSFUL_EDIT_PROFILE =
+  "🙌 Information was updated successfully.";
+export const UNSUCCESSFUL_EDIT_PROFILE =
+  "⚠ There was an error with your input.";

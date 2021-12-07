@@ -18,7 +18,7 @@ const ProfilePage = ({ user }) => {
       <ContentContainer>
         <PageTitle>Profile</PageTitle>
         <hr />
-        <ProfilePageComponent user={user} />
+        <ProfilePageComponent userId={connectedUser?.data?.user?.id} />
       </ContentContainer>
     </Container>
   );
