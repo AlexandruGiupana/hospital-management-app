@@ -44,7 +44,7 @@ const AboutPageCarousel = () => {
         </h5>
         <p className="text-center text-black mb-lg-5 fs-4 font-italic lead">
           <i>
-            „Mediplus ofera solutii foarte bune pentru planificarea si
+            „Mediplus ofera solutii bune pentru planificarea si
             desfasurarea eficienta a activitatilor interne din spital.“
           </i>
         </p>

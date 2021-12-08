@@ -36,7 +36,7 @@ const NavBar = ({ toggleModalLogIn, toggleModalRegister }) => {
               <Nav.Link href="/services_page" id="navBarItem">
                 Services & Prices
               </Nav.Link>
-              <Nav.Link href="/news" id="navBarItem">
+              <Nav.Link href="/news-page" id="navBarItem">
                 News
               </Nav.Link>
               <Nav.Link href="/about-page" id="navBarItem">

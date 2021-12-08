@@ -30,6 +30,8 @@ import {
   isUserData,
   saveUserData,
 } from "./services/local-storage-services";
+import NewsPageComponent from "./components/common-components/news-page-component";
+import NewsPage from "./components/common-components/news-page";
 
 const App = () => {
   const [modalLogInOpen, setLoginModalOpen] = useState(false);
@@ -129,6 +131,7 @@ const App = () => {
           <Route path="/health-services" exact element={<HealthServices />} />
           <Route path="/services_page" exact element={<PricesPage />} />
           <Route path="/about-page" exact element={<AboutPage />} />
+          <Route path="/news-page" exact element={<NewsPage />} />
           <Route path="/wards-management" exact element={<WardsManagement />} />
           <Route path="/departments" exact element={<Departments />} />
           <Route path="/rooms-management" exact element={<RoomsManagement />} />
