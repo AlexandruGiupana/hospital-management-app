@@ -2,7 +2,7 @@ import React from "react";
 import {
   assignServiceToDoctor,
   getAllRepartitions,
-} from "../../../../services/repartition-services";
+} from "../../../../services/health-services-services/repartition-services";
 import {
   SUCCESSFUL_REPARTITION,
   UNSUCCESSFUL_REPARTITION,

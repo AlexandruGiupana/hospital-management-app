@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
-import { updateUserInformation } from "../../services/user-services";
+import { updateUserInformation } from "../../services/user-services/user-services";
 import {
   SUCCESSFUL_EDIT_PROFILE,
   UNSUCCESSFUL_EDIT_PROFILE,

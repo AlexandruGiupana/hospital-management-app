@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ChangeInformationForm from "../../forms/change-information";
-import { getUserInformation } from "../../../services/user-services";
+import { getUserInformation } from "../../../services/user-services/user-services";
 import { ToastContainer, toast } from "react-toastify";
 
 const ProfilePageComponent = ({ userId }) => {

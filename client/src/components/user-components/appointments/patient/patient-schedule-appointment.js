@@ -27,7 +27,7 @@ import {
   createAppointment,
   deleteAppointment,
   updateAppointment,
-} from "../../../../services/appointments-services";
+} from "../../../../services/user-services/appointments-services";
 import {
   SUCCESSFUL_CREATION_APPOINTMENT,
   SUCCESSFUL_DELETE_APPOINTMENT,
@@ -38,6 +38,7 @@ import {
 } from "../../../../notification-messages/notifications";
 import PatientChooseServiceAndDoctor from "./patient-choose-service-and-doctor";
 import { getUserData } from "../../../../services/local-storage-services";
+import { Col, Form, Row } from "react-bootstrap";
 
 const PatientScheduleAppointment = ({
   rooms,
@@ -46,7 +47,14 @@ const PatientScheduleAppointment = ({
   repartitions,
 }) => {
   const [currentDate, setCurrentDate] = useState(Date.now());
-  const [repartitonId, setRepartitonId] = useState(repartitions[0].id);
+  const [repartitonId, setRepartitonId] = useState(repartitions[0]?.id);
+  const [operation, setOperation] = useState(
+    repartitions[0]?.service_name +
+      "-" +
+      repartitions[0]?.first_name +
+      " " +
+      repartitions[0]?.last_name
+  );
   const [data, setData] = React.useState(appointments);
   const [resources, setResources] = useState([
     {
@@ -77,6 +85,9 @@ const PatientScheduleAppointment = ({
   const onCommitChanges = useCallback(
     ({ added, changed, deleted }) => {
       if (added) {
+        if (added["title"] === undefined) {
+          added["title"] = operation;
+        }
         const startingAddedId =
           data.length > 0 ? data[data.length - 1].id + 1 : 0;
         setData([...data, { id: startingAddedId, ...added }]);
@@ -183,12 +194,37 @@ const PatientScheduleAppointment = ({
     setCurrentDate(newDate);
   };
 
+  const handleServiceChange = (e) => {
+    setOperation(e.target.value.split("  ")[1]);
+    setRepartitonId(e.target.value.split("  ")[0]);
+  };
+
   return (
     <>
-      <PatientChooseServiceAndDoctor
-        repartitions={repartitions}
-        setRepartitonId={setRepartitonId}
-      />
+      <>
+        <Row>
+          <Col>
+            <Form.Select className="Select" onChange={handleServiceChange}>
+              {repartitions.map((repartition) => (
+                <option
+                  key={repartition.id}
+                  value={
+                    repartition.id +
+                    "  " +
+                    repartition.service_name +
+                    "-" +
+                    repartition.first_name +
+                    " " +
+                    repartition.last_name
+                  }
+                >
+                  {`${repartition.service_name} | ${repartition.first_name} ${repartition.last_name}`}
+                </option>
+              ))}
+            </Form.Select>
+          </Col>
+        </Row>
+      </>
       <br />
       <Paper>
         <Scheduler data={data} height={600}>

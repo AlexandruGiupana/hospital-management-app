@@ -11,7 +11,7 @@ import {
 import {
   deleteAppointment,
   getAppointmentsOfPatient,
-} from "../../../../services/appointments-services";
+} from "../../../../services/user-services/appointments-services";
 import { toast, ToastContainer } from "react-toastify";
 import {
   SUCCESSFUL_DELETE_APPOINTMENT,

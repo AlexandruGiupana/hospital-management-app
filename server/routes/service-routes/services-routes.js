@@ -5,8 +5,8 @@ import {
   editMedicalService,
   getMedicalServices,
   getMedicalServicesOfDoctor,
-} from "../controllers/services-controller.js";
-import { auth } from "./middleware/auth.js";
+} from "../../controllers/service-controller/services-controller.js";
+import { auth } from "../middleware/auth.js";
 
 const router = express.Router();
 

@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import DoctorScheduleAppointment from "./doctor-schedule-appointment";
-import { getMedicalServicesOfDoctor } from "../../../../services/health-services-services";
+import { getMedicalServicesOfDoctor } from "../../../../services/health-services-services/health-services-services";
 import DoctorChooseService from "./doctor-choose-service";
-import { getRooms } from "../../../../services/rooms-services";
-import { getAppointmentsOfDoctor } from "../../../../services/appointments-services";
+import { getRooms } from "../../../../services/rooms-services/rooms-services";
+import { getAppointmentsOfDoctor } from "../../../../services/user-services/appointments-services";
 import { toast, ToastContainer } from "react-toastify";
 import {
   getAllRepartitions,
   getRepartitionOfDoctor,
-} from "../../../../services/repartition-services";
+} from "../../../../services/health-services-services/repartition-services";
 import { getUserData } from "../../../../services/local-storage-services";
+import { CSVLink } from "react-csv";
 
 const DoctorScheduleAppointmentComponents = () => {
   const [repartitions, setRepartitons] = useState([]);
@@ -40,7 +41,6 @@ const DoctorScheduleAppointmentComponents = () => {
       const appointments = (
         await getAppointmentsOfDoctor(getUserData().data.user.id)
       ).data;
-      console.log(appointments);
       let translatedAppointments = [];
       appointments.forEach((appointment) => {
         let translatedAppointment = {};

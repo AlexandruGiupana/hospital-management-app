@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Form, Col, Row, Button } from "react-bootstrap";
 import "./health-services-style.css";
-import { getMedicalServices } from "../../../services/health-services-services";
-import { getAllRepartitions } from "../../../services/repartition-services";
-import { getAllDoctors } from "../../../services/doctors-services";
+import { getMedicalServices } from "../../../services/health-services-services/health-services-services";
+import { getAllRepartitions } from "../../../services/health-services-services/repartition-services";
+import { getAllDoctors } from "../../../services/user-services/doctors-services";
 import AddRepartitonForm from "./forms/add-repartion-form";
 import DeleteRepartitionForm from "./forms/delete-repartition-form";
 
-const HealthServicesRepartitions = ({ user, notify }) => {
+const HealthServicesRepartitions = ({ notify }) => {
   const [medicalServices, setMedicalServices] = useState([]);
   const [doctors, setDoctors] = useState([]);
   const [repartitions, setRepartitons] = useState([]);

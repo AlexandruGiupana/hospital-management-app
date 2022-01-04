@@ -5,8 +5,8 @@ import {
   editRoom,
   getHospitalRooms,
   deleteRoom,
-} from "../controllers/room-controller/hospital-rooms-controller.js";
-import { auth } from "./middleware/auth.js";
+} from "../../controllers/room-controller/hospital-rooms-controller.js";
+import { auth } from "../middleware/auth.js";
 const router = express.Router();
 
 router.get("/", auth, getHospitalRooms);

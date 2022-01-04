@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
-import { getIdOfRepartiotion } from "../../../../services/repartition-services";
+import { getIdOfRepartiotion } from "../../../../services/health-services-services/repartition-services";
 
 const PatientChooseServiceAndDoctor = ({ repartitions, setRepartitonId }) => {
   const handleServiceChange = (e) => {

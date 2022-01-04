@@ -23,6 +23,8 @@ export const SUCCESSFUL_CREATION_APPOINTMENT =
   "🙌 Appointment was created successfully.";
 export const UNSUCCESSFUL_CREATION_APPOINTMENT =
   "⚠ There was an error with your input.";
+export const UNSUCCESSFUL_CREATION_APPOINTMENT_PAST =
+  "⚠ You can't book an appointment in the past.";
 export const SUCCESSFUL_EDIT_APPOINTMENT =
   "🙌 Appointment was edited successfully.";
 export const UNSUCCESSFUL_EDIT_APPOINTMENT =
@@ -30,6 +32,8 @@ export const UNSUCCESSFUL_EDIT_APPOINTMENT =
 export const SUCCESSFUL_DELETE_APPOINTMENT =
   "🙌 Appointment was deleted successfully.";
 export const UNSUCCESSFUL_DELETE_APPOINTMENT = "⚠ Appointment was not deleted.";
+export const UNSUCCESSFUL_DELETE_APPOINTMENT_PAST =
+  "⚠ You can't delete an appointment from the past.";
 export const SUCCESSFUL_EDIT_PROFILE =
   "🙌 Information was updated successfully.";
 export const UNSUCCESSFUL_EDIT_PROFILE =

@@ -5,11 +5,9 @@ import {
   ContentContainer,
   PageTitle,
 } from "../user-components/common-styled-components";
-import HealthServicesComponent from "../user-components/health-services/health-services-component";
-import styled from "styled-components";
-import HealthServicesRepartitions from "../user-components/health-services/health-services-repartitions";
 import RoomsManagementComponent from "../user-components/wards-rooms/rooms-management-component";
 import { getUserData } from "../../services/local-storage-services";
+import { CSVLink } from "react-csv";
 
 const RoomsManagement = () => {
   const connectedUser = getUserData();

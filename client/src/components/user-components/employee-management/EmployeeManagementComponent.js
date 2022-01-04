@@ -8,15 +8,9 @@ import {
   TableEditRow,
   TableEditColumn,
 } from "@devexpress/dx-react-grid-material-ui";
-
-import {
-  generateRows,
-  defaultColumnValues,
-} from "../../../demo-data/generator";
 import {
   createRoom,
   deleteRoom,
-  getRooms,
   updateRoom,
 } from "../../../services/rooms-services/rooms-services";
 import { toast, ToastContainer } from "react-toastify";
@@ -33,64 +27,35 @@ import {
   UNSUCCESSFUL_SERVICE_CREATION,
 } from "../../../notification-messages/notifications";
 import { deleteMedicalService } from "../../../services/health-services-services/health-services-services";
-import { CSVLink } from "react-csv";
+import { getAllDoctors } from "../../../services/user-services/doctors-services";
+import AddDoctorComponent from "./add-doctor-component";
 
 const getRowId = (row) => row.id;
 
-const RoomsManagementComponent = () => {
+const EmployeeManagementComponent = () => {
   const [columns] = useState([
-    { name: "room_number", title: "Cod sala" },
-    { name: "type", title: "Tip (C / O)" },
+    { name: "id", title: "ID" },
+    { name: "first_name", title: "First name" },
+    { name: "last_name", title: "Last name" },
+    { name: "job_title", title: "Job title" },
+    { name: "email", title: "Email" },
+    { name: "cnp", title: "CNP" },
   ]);
 
   const [rows, setRows] = useState([]);
   const [loadingRooms, setLoadingRooms] = useState(true);
 
   useEffect(() => {
-    const getAllRooms = async () => {
-      const roomsData = (await getRooms()).data;
-      setRows(roomsData);
-      console.log(roomsData);
+    const getDoctors = async () => {
+      const doctorsData = (await getAllDoctors()).data;
+      setRows(doctorsData);
       setLoadingRooms(false);
     };
-    getAllRooms();
+    getDoctors();
   }, []);
 
   const commitChanges = ({ added, changed, deleted }) => {
     let changedRows;
-    if (added) {
-      createRoom(added[0])
-        .then((data) => {
-          const startingAddedId =
-            rows.length > 0 ? rows[rows.length - 1].id + 1 : 0;
-          changedRows = [
-            ...rows,
-            ...added.map((row, index) => ({
-              id: startingAddedId + index,
-              ...row,
-            })),
-          ];
-          setRows(changedRows);
-          toast(SUCCESSFUL_ROOM_CREATION);
-        })
-        .catch((err) => {
-          toast(UNSUCCESSFUL_ROOM_CREATION);
-        });
-    }
-    if (changed) {
-      updateRoom(changed)
-        .then((data) => {
-          toast(SUCCESSFUL_EDIT_ROOM);
-          changedRows = rows.map((row) =>
-            changed[row.id] ? { ...row, ...changed[row.id] } : row
-          );
-          setRows(changedRows);
-        })
-        .catch((err) => {
-          console.log(err.msg);
-          toast(UNSUCCESSFUL_EDIT_ROOM);
-        });
-    }
     if (deleted) {
       deleteRoom(deleted[0])
         .then((data) => {
@@ -113,20 +78,19 @@ const RoomsManagementComponent = () => {
     <>
       <Paper>
         <ToastContainer />
-        <p className="text-black fs-4 ms-sm-3 pt-sm-1">
-          Gestionare sali si cabinete
-        </p>
+        <p className="text-black fs-4 ms-sm-3 pt-sm-1">Lista doctori</p>
         <Grid rows={rows} columns={columns} getRowId={getRowId}>
           <EditingState onCommitChanges={commitChanges} />
           <Table />
           <TableHeaderRow />
           <TableEditRow />
-          <TableEditColumn showAddCommand showEditCommand showDeleteCommand />
+          <TableEditColumn showDeleteCommand />
         </Grid>
       </Paper>
-      <CSVLink data={rows}>Export rooms data to CSV file</CSVLink>
+      &nbsp; &nbsp;
+      <AddDoctorComponent />
     </>
   );
 };
 
-export default RoomsManagementComponent;
+export default EmployeeManagementComponent;

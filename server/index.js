@@ -1,11 +1,11 @@
 import express from "express";
 import userRoutes from "./routes/user-routes/user-routes.js";
-import appointmentsRoutes from "./routes/appointments-routes.js";
-import hospitalRoomsRoutes from "./routes/hospital-rooms-routes.js";
-import servicesRoutes from "./routes/services-routes.js";
+import appointmentsRoutes from "./routes/user-routes/appointments-routes.js";
+import hospitalRoomsRoutes from "./routes/room-routes/hospital-rooms-routes.js";
+import servicesRoutes from "./routes/service-routes/services-routes.js";
 import doctorRoutes from "./routes/user-routes/doctor-routes.js";
-import repartitionRoutes from "./routes/repartition-routes.js";
-import newsRoutes from "./routes/news-routes.js"
+import repartitionRoutes from "./routes/service-routes/repartition-routes.js";
+import newsRoutes from "./routes/news-routes.js";
 import cors from "cors";
 import { con } from "./db_connection.js";
 import config from "config";
@@ -21,7 +21,7 @@ con.connect((err) => {
 
 let corsOptions = {
   origin: "*",
-  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  optionsSuccessStatus: 200,
 };
 
 app.use(express.json());

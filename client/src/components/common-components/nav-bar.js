@@ -1,16 +1,50 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Navbar } from "react-bootstrap";
 import { Container } from "react-bootstrap";
 import { NavDropdown } from "react-bootstrap";
 import { Nav } from "react-bootstrap";
 import { Button } from "react-bootstrap";
-import { logout } from "../../services/auth-services";
+import { logout } from "../../services/user-services/auth-services";
 import { useNavigate } from "react-router-dom";
 
 import "../home-page-components/styles/home_page_style.css";
-import { clearUser, isUserData } from "../../services/local-storage-services";
-const NavBar = ({ toggleModalLogIn, toggleModalRegister }) => {
+import {
+  clearUser,
+  getUserData,
+  isUserData,
+  saveUserData,
+} from "../../services/local-storage-services";
+import Modal from "react-modal";
+import { loginModal, registerModal } from "./styles/modalStyles";
+import LoginForm from "../forms/login";
+import RegisterForm from "../forms/register";
+const NavBar = () => {
+  const [modalLogInOpen, setLoginModalOpen] = useState(false);
+  const [modalRegisterOpen, setRegisterModalOpen] = useState(false);
+
+  const toggleModalLogIn = () => {
+    setLoginModalOpen(!modalLogInOpen);
+  };
+
+  const toggleModalRegister = () => {
+    setRegisterModalOpen(!modalRegisterOpen);
+  };
+
+  const [connectedUser, setConnectedUser] = useState(null);
+
+  const setData = (data) => {
+    setConnectedUser(data.data.user);
+    saveUserData(data);
+  };
+
+  useEffect(() => {
+    if (isUserData()) {
+      const userData = getUserData();
+      setConnectedUser(userData);
+    }
+  }, []);
+
   let navigate = useNavigate();
   const handleLogOut = () => {
     logout().then((res) => {
@@ -20,6 +54,22 @@ const NavBar = ({ toggleModalLogIn, toggleModalRegister }) => {
   };
   return (
     <div>
+      <Modal
+        isOpen={modalLogInOpen}
+        onRequestClose={toggleModalLogIn}
+        ariaHideApp={false}
+        style={loginModal}
+      >
+        <LoginForm setData={setData} toggleModalLogIn={toggleModalLogIn} />
+      </Modal>
+      <Modal
+        isOpen={modalRegisterOpen}
+        onRequestClose={toggleModalRegister}
+        ariaHideApp={false}
+        style={registerModal}
+      >
+        <RegisterForm toggleModalRegister={toggleModalRegister} />
+      </Modal>
       <Navbar
         collapseOnSelect
         expand="lg"
@@ -67,7 +117,7 @@ const NavBar = ({ toggleModalLogIn, toggleModalRegister }) => {
                   id="navBarButton"
                   onClick={toggleModalLogIn}
                 >
-                  Login
+                  Log in
                 </Button>
               </Nav>
             ) : (

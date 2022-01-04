@@ -1,32 +1,58 @@
-import { con } from "../db_connection.js";
+import { con } from "../../db_connection.js";
 import bcrypt from "bcryptjs";
 import jsonWebToken from "jsonwebtoken";
 import config from "config";
-import { User } from "../models/user.js";
-import { validateNumberField } from "../validation/general-validation.js";
+import { validateNumberField } from "../../validation/general-validation.js";
 import {
+  INSERT_USER,
   SELECT_USER_ID_QUERY,
   SELECT_USER_INFORMATION_QUERY,
+  SELECT_USER_WITH_CNP,
+  SELECT_USER_WITH_EMAIL,
   UPDATE_USER_INFORMATION_QUERY,
-} from "../sql_queries/user-queries.js";
+} from "../../sql_queries/user-queries/user-queries.js";
+import {
+  validateCNP,
+  validateEmail,
+  validateName,
+  validatePhoneNumber,
+} from "../../validation/user-validation.js";
+import {
+  CNP_ALREADY_ASSIGNED,
+  EMAIL_ALREADY_ASSIGNED,
+  INVALID_CITY_NAME,
+  INVALID_CNP_NAME,
+  INVALID_COUNTY_NAME,
+  INVALID_CREDENTIALS,
+  INVALID_EMAIL_NAME,
+  INVALID_FIRST_NAME,
+  INVALID_ID_VALUE,
+  INVALID_INFORMATION_NAME,
+  INVALID_LAST_NAME,
+  INVALID_PHONE_NUMBER_NAME,
+  INVALID_POSTAL_CODE_NAME,
+  LOG_OUT_MESSAGE,
+  NOT_ALL_FIELDS_WERE_FILLED,
+  SERVER_ERROR,
+  USER_DOES_NOT_EXIST,
+} from "../../error-messages/error-messages.js";
 
 export const logIn = (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
-    return res.status(400).json({ msg: "Please enter all fields" });
+    return res.status(400).json({ msg: NOT_ALL_FIELDS_WERE_FILLED });
   }
-  let sql = "SELECT * FROM users WHERE email = ? ";
-  con.query(sql, [email], (err, result) => {
+  con.query(SELECT_USER_WITH_EMAIL, [email], (err, result) => {
     if (err) {
       throw err;
     }
     if (result.length === 0) {
-      return res.status(400).json({ msg: "User does not exist" });
+      return res.status(400).json({ msg: USER_DOES_NOT_EXIST });
     }
     const user = result[0];
     bcrypt.compare(password, user.password).then((isMatch) => {
       if (!isMatch) {
-        return res.status(400).json({ msg: "Credentials are invalid" });
+        return res.status(400).json({ msg: INVALID_CREDENTIALS });
       }
       jsonWebToken.sign(
         { id: user.id },
@@ -53,24 +79,40 @@ export const logIn = (req, res) => {
 
 export const registerNewUser = (req, res) => {
   const { email, password, accountType, firstName, lastName, cnp } = req.body;
+
   if (!accountType || !email || !password || !firstName || !lastName || !cnp) {
-    return res.status(400).json({ msg: "Please enter all fields" });
+    return res.status(400).json({ msg: NOT_ALL_FIELDS_WERE_FILLED });
   }
-  let sql = "SELECT * FROM users WHERE email = ? ";
-  con.query(sql, [email], (err, result) => {
+  if (!validateName(firstName)) {
+    console.log("fn");
+    return res.status(400).json({ msg: INVALID_FIRST_NAME });
+  }
+  if (!validateName(lastName)) {
+    console.log("ln");
+    return res.status(400).json({ msg: INVALID_LAST_NAME });
+  }
+  if (!validateCNP(cnp)) {
+    console.log("cn");
+    return res.status(400).json({ msg: INVALID_CNP_NAME });
+  }
+  if (!validateEmail(email)) {
+    console.log("em");
+    return res.status(400).json({ msg: INVALID_EMAIL_NAME });
+  }
+
+  con.query(SELECT_USER_WITH_EMAIL, [email], (err, result) => {
     if (err) {
       throw err;
     }
     if (result.length !== 0) {
-      return res.status(400).json({ msg: "Email already assigned to a user" });
+      return res.status(400).json({ msg: EMAIL_ALREADY_ASSIGNED });
     }
-    let sql_3 = "SELECT * FROM users WHERE cnp = ? ";
-    con.query(sql_3, [cnp], (err, result) => {
+    con.query(SELECT_USER_WITH_CNP, [cnp], (err, result) => {
       if (err) {
         throw err;
       }
       if (result.length !== 0) {
-        return res.status(400).json({ msg: "CNP already assigned to a user" });
+        return res.status(400).json({ msg: CNP_ALREADY_ASSIGNED });
       }
     });
     bcrypt.genSalt(10, (err, salt) => {
@@ -78,12 +120,9 @@ export const registerNewUser = (req, res) => {
         if (err) {
           throw err;
         } else {
-          const hashedPassword = hash;
-          let sql =
-            "INSERT INTO users (email, password, account_type, first_name, last_name, cnp) VALUES (?, ?, ?, ?, ?, ?)";
           con.query(
-            sql,
-            [email, hashedPassword, accountType, firstName, lastName, cnp],
+            INSERT_USER,
+            [email, hash, accountType, firstName, lastName, cnp],
             (err, result) => {
               if (err) {
                 throw err;
@@ -100,9 +139,7 @@ export const registerNewUser = (req, res) => {
 export const logout = async (req, res) => {
   try {
     res.clearCookie("token", { httpOnly: true });
-    res
-      .status(200)
-      .json({ success: true, message: "User logged out successfully" });
+    res.status(200).json({ success: true, message: LOG_OUT_MESSAGE });
   } catch (err) {
     console.log(err.message);
   }
@@ -115,7 +152,7 @@ export const getCsrf = async (req, res) => {
 export const getUserInformation = (req, res) => {
   const id = req.params.id;
   if (!validateNumberField(id)) {
-    return res.status(400).json({ msg: "Invalid value for user id" });
+    return res.status(400).json({ msg: INVALID_ID_VALUE });
   }
   con.query(SELECT_USER_INFORMATION_QUERY, [id], (err, result) => {
     if (err) {
@@ -143,13 +180,33 @@ export const editUserInformation = (req, res) => {
   } = req.body;
 
   if (!validateNumberField(id)) {
-    return res.status(400).json({ msg: "Invalid value for user id" });
+    return res.status(400).json({ msg: INVALID_ID_VALUE });
   }
-  //todo validate
+  if (!validateName(first_name)) {
+    return res.status(400).json({ msg: INVALID_FIRST_NAME });
+  }
+  if (!validateName(last_name)) {
+    return res.status(400).json({ msg: INVALID_LAST_NAME });
+  }
+  if (!validateName(county)) {
+    return res.status(400).json({ msg: INVALID_COUNTY_NAME });
+  }
+  if (!validateName(city)) {
+    return res.status(400).json({ msg: INVALID_CITY_NAME });
+  }
+  if (!validateName(additional_information)) {
+    return res.status(400).json({ msg: INVALID_INFORMATION_NAME });
+  }
+  if (!validatePhoneNumber(phone_number)) {
+    return res.status(400).json({ msg: INVALID_PHONE_NUMBER_NAME });
+  }
+  if (!validatePhoneNumber(postal_code)) {
+    return res.status(400).json({ msg: INVALID_POSTAL_CODE_NAME });
+  }
 
   con.query(SELECT_USER_ID_QUERY, [id], (err, result) => {
     if (result.length !== 1) {
-      return res.status(404).json({ msg: "User not found" });
+      return res.status(404).json({ msg: USER_DOES_NOT_EXIST });
     } else {
       con.query(
         UPDATE_USER_INFORMATION_QUERY,
@@ -166,9 +223,7 @@ export const editUserInformation = (req, res) => {
         ],
         (err, result) => {
           if (err) {
-            return res
-              .status(500)
-              .json({ msg: "There was something wrong with your request" });
+            return res.status(500).json({ msg: SERVER_ERROR });
           }
           return res.json("user information was updated");
         }

@@ -5,9 +5,6 @@ import {
   ContentContainer,
   PageTitle,
 } from "../user-components/common-styled-components";
-import HealthServicesComponent from "../user-components/health-services/health-services-component";
-import styled from "styled-components";
-import HealthServicesRepartitions from "../user-components/health-services/health-services-repartitions";
 import DepartmentsComponent from "../user-components/departments/DepartmentsComponent";
 import DepartmentsRepartitionsComponent from "../user-components/departments/DepartmentsRepartitionsComponent";
 import { getUserData } from "../../services/local-storage-services";

@@ -9,7 +9,7 @@ import {
   GET_ROOM_BY_ROOMNUMBER_OR_TYPE,
   GET_ROOMS_WITH_APPOINTMENTS,
   SELECT_ALL_ROOMS_QUERY,
-} from "../../sql_queries/room-queries.js";
+} from "../../sql_queries/room-queries/room-queries.js";
 import { validateNumberField } from "../../validation/general-validation.js";
 import { validateRoomType } from "../../validation/rooms-validation.js";
 

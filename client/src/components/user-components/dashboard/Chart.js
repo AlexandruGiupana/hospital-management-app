@@ -11,48 +11,47 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const Chart = () => {
+const Chart = ({
+  yesterdayAppointmentsCount,
+  yesterday,
+  twoDaysAgoAppointmentsCount,
+  twoDaysAgo,
+  today,
+  todayCount,
+  tomorrowAgoAppointmentsCount,
+  tomorrow,
+  dayAfterTomorrow,
+  dayAfterTomorrowAppointmentsCount,
+}) => {
   const data = [
     {
-      name: "14.11",
-      "numar consultatii": 20,
+      name: twoDaysAgo,
+      "numar consultatii": twoDaysAgoAppointmentsCount,
       pv: 2400,
       amt: 2400,
     },
     {
-      name: "15.11",
-      "numar consultatii": 15,
+      name: yesterday,
+      "numar consultatii": yesterdayAppointmentsCount,
       amt: 2210,
     },
     {
-      name: "16.11",
-      "numar consultatii": 22,
+      name: "azi, " + today,
+      "numar consultatii": todayCount,
       pv: 9800,
       amt: 2290,
     },
     {
-      name: "17.11",
-      "numar consultatii": 4,
+      name: tomorrow,
+      "numar consultatii": tomorrowAgoAppointmentsCount,
       pv: 3908,
       amt: 2000,
     },
     {
-      name: "18.11",
-      "numar consultatii": 25,
+      name: dayAfterTomorrow,
+      "numar consultatii": dayAfterTomorrowAppointmentsCount,
       pv: 4800,
       amt: 2181,
-    },
-    {
-      name: "19.11",
-      "numar consultatii": 11,
-      pv: 3800,
-      amt: 2500,
-    },
-    {
-      name: "20.11",
-      "numar consultatii": 6,
-      pv: 4300,
-      amt: 2100,
     },
   ];
   return (

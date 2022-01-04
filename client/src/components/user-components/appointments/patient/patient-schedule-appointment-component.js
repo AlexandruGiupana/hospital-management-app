@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import PatientScheduleAppointment from "./patient-schedule-appointment";
 import PatientChooseServiceAndDoctor from "./patient-choose-service-and-doctor";
-import { getAppointmentsOfPatient } from "../../../../services/appointments-services";
-import { getAllRepartitions } from "../../../../services/repartition-services";
-import { getRooms } from "../../../../services/rooms-services";
+import { getAppointmentsOfPatient } from "../../../../services/user-services/appointments-services";
+import { getAllRepartitions } from "../../../../services/health-services-services/repartition-services";
+import { getRooms } from "../../../../services/rooms-services/rooms-services";
 import { toast, ToastContainer } from "react-toastify";
 import { getUserData } from "../../../../services/local-storage-services";
 

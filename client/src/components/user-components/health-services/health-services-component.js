@@ -13,7 +13,7 @@ import {
   deleteMedicalService,
   getMedicalServices,
   updateMedicalService,
-} from "../../../services/health-services-services";
+} from "../../../services/health-services-services/health-services-services";
 import { TableColumnVisibility } from "@devexpress/dx-react-grid";
 import {
   SUCCESSFUL_DELETION,
@@ -22,6 +22,7 @@ import {
   UNSUCCESSFUL_DELETION,
   UNSUCCESSFUL_SERVICE_CREATION,
 } from "../../../notification-messages/notifications";
+import { CSVLink } from "react-csv";
 
 const getRowId = (row) => row.id;
 
@@ -60,6 +61,9 @@ const HealthServicesComponent = ({ notify }) => {
             })),
           ];
           setRows(changedRows);
+          setTimeout(function () {
+            window.location.reload();
+          }, 1500);
         })
         .catch((err) => {
           notify(UNSUCCESSFUL_SERVICE_CREATION);
@@ -73,6 +77,9 @@ const HealthServicesComponent = ({ notify }) => {
             changed[row.id] ? { ...row, ...changed[row.id] } : row
           );
           setRows(changedRows);
+          setTimeout(function () {
+            window.location.reload();
+          }, 1500);
         })
         .catch((err) => {
           notify(UNSUCCESSFUL_SERVICE_CREATION);
@@ -85,6 +92,9 @@ const HealthServicesComponent = ({ notify }) => {
           const deletedSet = new Set(deleted);
           changedRows = rows.filter((row) => !deletedSet.has(row.id));
           setRows(changedRows);
+          setTimeout(function () {
+            window.location.reload();
+          }, 1500);
         })
         .catch((err) => {
           notify(UNSUCCESSFUL_DELETION);
@@ -96,19 +106,22 @@ const HealthServicesComponent = ({ notify }) => {
     return <>Data is loading</>;
   }
   return (
-    <Paper>
-      <p className="text-black fs-4 ms-sm-3 pt-sm-1">
-        Adaugare servicii medicale
-      </p>
-      <Grid rows={rows} columns={columns} getRowId={getRowId}>
-        <EditingState onCommitChanges={commitChanges} />
-        <Table />
-        <TableHeaderRow />
-        <TableColumnVisibility defaultHiddenColumnNames={"id"} />
-        <TableEditRow />
-        <TableEditColumn showAddCommand showEditCommand showDeleteCommand />
-      </Grid>
-    </Paper>
+    <>
+      <Paper>
+        <p className="text-black fs-4 ms-sm-3 pt-sm-1">
+          Adaugare servicii medicale
+        </p>
+        <Grid rows={rows} columns={columns} getRowId={getRowId}>
+          <EditingState onCommitChanges={commitChanges} />
+          <Table />
+          <TableHeaderRow />
+          <TableColumnVisibility defaultHiddenColumnNames={"id"} />
+          <TableEditRow />
+          <TableEditColumn showAddCommand showEditCommand showDeleteCommand />
+        </Grid>
+      </Paper>
+      <CSVLink data={rows}>Export services data to CSV file</CSVLink>
+    </>
   );
 };
 

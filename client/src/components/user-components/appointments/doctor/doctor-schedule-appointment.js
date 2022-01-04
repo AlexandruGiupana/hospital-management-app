@@ -22,16 +22,20 @@ import {
   createAppointmentDoctor,
   deleteAppointment,
   updateAppointment,
-} from "../../../../services/appointments-services";
+} from "../../../../services/user-services/appointments-services";
 import DoctorChooseService from "./doctor-choose-service";
 import {
   SUCCESSFUL_CREATION_APPOINTMENT,
   SUCCESSFUL_DELETE_APPOINTMENT,
   SUCCESSFUL_EDIT_APPOINTMENT,
   UNSUCCESSFUL_CREATION_APPOINTMENT,
+  UNSUCCESSFUL_CREATION_APPOINTMENT_PAST,
   UNSUCCESSFUL_DELETE_APPOINTMENT,
+  UNSUCCESSFUL_DELETE_APPOINTMENT_PAST,
   UNSUCCESSFUL_EDIT_APPOINTMENT,
 } from "../../../../notification-messages/notifications";
+import { Col, Form, Row } from "react-bootstrap";
+import { CSVLink } from "react-csv";
 
 const DoctorScheduleAppointment = ({
   repartitions,
@@ -39,17 +43,19 @@ const DoctorScheduleAppointment = ({
   appointments,
   notify,
 }) => {
-  const [repartitonId, setRepartitonId] = useState(repartitions[0].id);
+  console.log(repartitions);
+  const [operation, setOperation] = useState(repartitions[0]?.service_name);
+  const [repartitonId, setRepartitonId] = useState(repartitions[0]?.id);
   const [currentDate, setCurrentDate] = useState(Date.now());
 
   const [data, setData] = useState(appointments);
-  const [resources, setResources] = useState([
+  const resources = [
     {
       fieldName: "roomId",
       title: "Room",
       instances: rooms,
     },
-  ]);
+  ];
 
   const editingOptions = {
     allowAdding: true,
@@ -78,6 +84,9 @@ const DoctorScheduleAppointment = ({
   const onCommitChanges = useCallback(
     ({ added, changed, deleted }) => {
       if (added) {
+        if (added["title"] === undefined) {
+          added["title"] = operation;
+        }
         const startingAddedId =
           data.length > 0 ? data[data.length - 1].id + 1 : 0;
         const appointmentData = {
@@ -87,6 +96,13 @@ const DoctorScheduleAppointment = ({
           start_date: added.startDate,
           end_date: added.endDate,
         };
+        if (
+          new Date().valueOf().toString() >
+          Date.parse(added.startDate).toString()
+        ) {
+          notify(UNSUCCESSFUL_CREATION_APPOINTMENT_PAST);
+          return;
+        }
         createAppointmentDoctor(appointmentData)
           .then((data) => {
             notify(SUCCESSFUL_CREATION_APPOINTMENT);
@@ -98,6 +114,7 @@ const DoctorScheduleAppointment = ({
         setData([...data, { id: startingAddedId, ...added }]);
       }
       if (changed) {
+        console.log(changed);
         const newAppointments = data.map((appointment) =>
           changed[appointment.id]
             ? { ...appointment, ...changed[appointment.id] }
@@ -112,6 +129,13 @@ const DoctorScheduleAppointment = ({
               start_date: appointment.startDate,
               end_date: appointment.endDate,
             };
+            if (
+              new Date().valueOf().toString() >
+              Date.parse(appointment.startDate).toString()
+            ) {
+              notify(UNSUCCESSFUL_CREATION_APPOINTMENT_PAST);
+              return;
+            }
             updateAppointment(translatedAppointment)
               .then((data) => {
                 notify(SUCCESSFUL_EDIT_APPOINTMENT);
@@ -124,6 +148,21 @@ const DoctorScheduleAppointment = ({
         });
       }
       if (deleted !== undefined) {
+        let control = false;
+        data.map((appointment) => {
+          if (appointment.id === deleted) {
+            if (
+              new Date().valueOf().toString() >
+              Date.parse(appointment.startDate).toString()
+            ) {
+              notify(UNSUCCESSFUL_DELETE_APPOINTMENT_PAST);
+              control = true;
+            }
+          }
+        });
+        if (control) {
+          return;
+        }
         setData(data.filter((appointment) => appointment.id !== deleted));
         deleteAppointment(deleted)
           .then((data) => {
@@ -177,45 +216,84 @@ const DoctorScheduleAppointment = ({
     () => allowResizing && allowUpdating,
     [allowResizing, allowUpdating]
   );
-  return (
-    <>
-      <DoctorChooseService
-        repartitions={repartitions}
-        setRepartitonId={setRepartitonId}
-      />
-      <br />
-      <Paper>
-        <Scheduler data={data} height={600}>
-          <ViewState
-            currentDate={currentDate}
-            onCurrentDateChange={(date) => handleDataChange(date)}
-          />
-          <EditingState
-            onCommitChanges={onCommitChanges}
-            addedAppointment={addedAppointment}
-            onAddedAppointmentChange={onAddedAppointmentChange}
-          />
-          <IntegratedEditing />
-          <WeekView
-            startDayHour={8}
-            endDayHour={17}
-            timeTableCellComponent={TimeTableCell}
-          />
-          <Appointments />
-          <AppointmentTooltip showOpenButton showDeleteButton={allowDeleting} />
-          <Toolbar />
-          <DateNavigator />
-          <TodayButton />
-          <AppointmentForm
-            commandButtonComponent={CommandButton}
-            readOnly={isAppointmentBeingCreated ? false : !allowUpdating}
-          />
-          <Resources data={resources} mainResourceName="roomId" />
-          <DragDropProvider allowDrag={allowDrag} allowResize={allowResize} />
-        </Scheduler>
-      </Paper>
-    </>
-  );
+
+  const handleServiceChange = (e) => {
+    const operation = e.target.value.split(" ");
+    const operationId = e.target.value.split(" ")[0];
+    let ct = false;
+    let operationName = "";
+    operation.forEach((op) => {
+      if (!ct) {
+        ct = true;
+      } else {
+        operationName += " " + op;
+      }
+    });
+    setOperation(operationName);
+    setRepartitonId(operationId);
+  };
+
+  if (!operation) {
+    return "Nu aveti niciun serviciu asignat!";
+  } else {
+    return (
+      <>
+        <>
+          <Row>
+            <Col>
+              <Form.Select className="Select" onChange={handleServiceChange}>
+                {repartitions.map((repartition) => (
+                  <option
+                    key={repartition.id}
+                    value={repartition.id + " " + repartition.service_name}
+                  >
+                    {`${repartition.service_name}`}
+                  </option>
+                ))}
+              </Form.Select>
+            </Col>
+          </Row>
+        </>
+        <br />
+        <Paper>
+          <Scheduler data={data} height={600}>
+            <ViewState
+              currentDate={currentDate}
+              onCurrentDateChange={(date) => handleDataChange(date)}
+            />
+            <EditingState
+              onCommitChanges={onCommitChanges}
+              addedAppointment={addedAppointment}
+              onAddedAppointmentChange={onAddedAppointmentChange}
+            />
+            <IntegratedEditing />
+            <WeekView
+              startDayHour={8}
+              endDayHour={17}
+              timeTableCellComponent={TimeTableCell}
+            />
+            <Appointments />
+            <AppointmentTooltip
+              showOpenButton
+              showDeleteButton={allowDeleting}
+            />
+            <Toolbar />
+            <DateNavigator />
+            <TodayButton />
+            <AppointmentForm
+              commandButtonComponent={CommandButton}
+              readOnly={isAppointmentBeingCreated ? false : !allowUpdating}
+            />
+            <Resources data={resources} mainResourceName="roomId" />
+            <DragDropProvider allowDrag={allowDrag} allowResize={allowResize} />
+          </Scheduler>
+        </Paper>
+        <CSVLink data={appointments}>
+          Export appointments data to CSV file
+        </CSVLink>
+      </>
+    );
+  }
 };
 
 export default DoctorScheduleAppointment;

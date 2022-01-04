@@ -77,6 +77,15 @@ const SideBar = ({ accountType }) => {
             >
               <SideBarOption>Optiuni camere</SideBarOption>
             </StyledNavLink>
+            <StyledNavLink
+              activeStyle={{
+                color: "green",
+              }}
+              exact
+              to={"/employee-management"}
+            >
+              <SideBarOption>Optiuni doctori</SideBarOption>
+            </StyledNavLink>
           </>
         )}
       </SideBarOptionsContainer>

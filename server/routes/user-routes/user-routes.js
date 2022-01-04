@@ -6,7 +6,7 @@ import {
   logIn,
   logout,
   registerNewUser,
-} from "../../controllers/user-controller.js";
+} from "../../controllers/user-controllers/user-controller.js";
 import csrfProtection from "../middleware/csrfProtection.js";
 import { auth } from "../middleware/auth.js";
 

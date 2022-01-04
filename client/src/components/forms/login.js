@@ -1,17 +1,17 @@
 import React from "react";
 import "./styles/register_page.css";
-import { Button, CloseButton } from "react-bootstrap";
+import { CloseButton } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { login } from "../../services/auth-services";
+import { login } from "../../services/user-services/auth-services";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { PATIENT_ACCOUNT } from "../../demo-data/account-types";
 
 const LoginForm = ({ setData, toggleModalLogIn }) => {
   const {
     register,
     handleSubmit,
     setError,
+    clearErrors,
     formState: { errors },
   } = useForm();
 
@@ -54,6 +54,7 @@ const LoginForm = ({ setData, toggleModalLogIn }) => {
         <SubmitButton
           className="btn btn-primary registerFormSubmitBtn"
           type="submit"
+          onClick={() => clearErrors("invalidCredentialError")}
         >
           Log in
         </SubmitButton>
@@ -78,7 +79,10 @@ const FieldContainer = styled.div`
 `;
 
 const Label = styled.div`
-  width: 100px;
+  width: 350px;
+  @media (max-width: 650px) {
+    width: 100px;
+  }
 `;
 
 const InputContainer = styled.div`

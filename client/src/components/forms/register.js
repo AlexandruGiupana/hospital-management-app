@@ -3,7 +3,7 @@ import "./styles/register_page.css";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { Button, CloseButton } from "react-bootstrap";
-import { registerNewUser } from "../../services/register-services";
+import { registerNewUser } from "../../services/user-services/register-services";
 import { PATIENT_ACCOUNT } from "../../demo-data/account-types";
 
 const RegisterForm = ({ toggleModalRegister }) => {
@@ -107,7 +107,7 @@ const RegisterForm = ({ toggleModalRegister }) => {
 };
 
 const FormContainer = styled.div`
-  padding-top: 80px;
+  padding-top: 60px;
   width: 100%;
   height: 100%;
   display: flex;
@@ -122,7 +122,10 @@ const FieldContainer = styled.div`
 `;
 
 const Label = styled.div`
-  width: 100px;
+  width: 350px;
+  @media (max-width: 650px) {
+    width: 100px;
+  }
 `;
 
 const InputContainer = styled.div`

@@ -21,6 +21,17 @@ export const getAppointmentsOfDoctor = async (idDoctor) => {
   }
 };
 
+export const getAppointmentsOfDoctorFromDate = async (idDoctor, date) => {
+  try {
+    return await axios.get(
+      `http://localhost:8080/appointments/doctor/${idDoctor}/date/${date}`,
+      { withCredentials: true }
+    );
+  } catch (err) {
+    throw err;
+  }
+};
+
 export const getAppointmentsOfPatient = async (idPatient) => {
   try {
     return await axios.get(

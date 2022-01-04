@@ -2,7 +2,7 @@ import React from "react";
 import { SUCCESSFUL_REPARTITION_DELETION } from "../../../../notification-messages/notifications";
 import { useForm } from "react-hook-form";
 import { Button, Col, Form, Row } from "react-bootstrap";
-import { deleteRepartition } from "../../../../services/repartition-services";
+import { deleteRepartition } from "../../../../services/health-services-services/repartition-services";
 
 const DeleteRepartitionForm = ({ notify, repartitions, setRepartitons }) => {
   const {
@@ -20,6 +20,9 @@ const DeleteRepartitionForm = ({ notify, repartitions, setRepartitons }) => {
     );
     console.log(data.id);
     deleteRepartition(data.id);
+    setTimeout(function () {
+      window.location.reload();
+    }, 1500);
   };
 
   return (

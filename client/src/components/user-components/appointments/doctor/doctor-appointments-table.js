@@ -11,13 +11,14 @@ import {
 import {
   deleteAppointment,
   getAppointmentsOfDoctor,
-} from "../../../../services/appointments-services";
+} from "../../../../services/user-services/appointments-services";
 import { toast, ToastContainer } from "react-toastify";
 import {
   SUCCESSFUL_DELETE_APPOINTMENT,
   UNSUCCESSFUL_DELETE_APPOINTMENT,
 } from "../../../../notification-messages/notifications";
 import { getUserData } from "../../../../services/local-storage-services";
+import { CSVLink } from "react-csv";
 
 const getRowId = (row) => row.appointment_id;
 
@@ -66,16 +67,19 @@ const DoctorAppointmentsTable = () => {
     return <>Loading...</>;
   } else {
     return (
-      <Paper>
-        <ToastContainer />
-        <Grid rows={rows} columns={columns} getRowId={getRowId}>
-          <EditingState onCommitChanges={commitChanges} />
-          <Table />
-          <TableHeaderRow />
-          <TableEditRow />
-          <TableEditColumn showDeleteCommand />
-        </Grid>
-      </Paper>
+      <>
+        <Paper>
+          <ToastContainer />
+          <Grid rows={rows} columns={columns} getRowId={getRowId}>
+            <EditingState onCommitChanges={commitChanges} />
+            <Table />
+            <TableHeaderRow />
+            <TableEditRow />
+            <TableEditColumn showDeleteCommand />
+          </Grid>
+        </Paper>
+        <CSVLink data={rows}>Export appointments data to CSV file</CSVLink>
+      </>
     );
   }
 };
