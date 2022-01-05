@@ -49,7 +49,7 @@ const PricesPage = () => {
           </h6>
           <p className="fs-5" id="servicesPageP">
             Serviciile oferite, precum si pretul acestora se regasesc in tabelul
-            de mai jos. Preturile sunt afisate in <b>lei</b> si includ TVA.
+            de mai jos. Preturile sunt afisate in diferite valute si includ TVA.
             <br />
             Pentru mai multe detalii va rugam sa adresati intrebari prin
             trimiterea acestora la adresa <i>contact@mediplus.com</i>.
