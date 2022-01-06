@@ -18,6 +18,7 @@ import {
   UNSUCCESSFUL_DELETE_APPOINTMENT,
 } from "../../../../notification-messages/notifications";
 import { getUserData } from "../../../../services/local-storage-services";
+import {CSVLink} from "react-csv";
 
 const getRowId = (row) => row.appointment_id;
 
@@ -66,6 +67,7 @@ const PatientAppointmentComponent = () => {
     return <>Loading...</>;
   } else {
     return (
+        <>
       <Paper>
         <ToastContainer />
         <Grid rows={rows} columns={columns} getRowId={getRowId}>
@@ -76,6 +78,8 @@ const PatientAppointmentComponent = () => {
           <TableEditColumn showDeleteCommand />
         </Grid>
       </Paper>
+          <CSVLink data={rows}>Export appointments data to CSV file</CSVLink>
+        </>
     );
   }
 };
