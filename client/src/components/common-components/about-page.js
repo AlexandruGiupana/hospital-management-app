@@ -1,13 +1,6 @@
 import React, { useEffect } from "react";
 import "./styles/services_prices_style.css";
 import Container from "react-bootstrap/Container";
-import TableContainer from "@mui/material/TableContainer";
-import Table from "@mui/material/Table";
-import TableRow from "@mui/material/TableRow";
-import TableHead from "@mui/material/TableHead";
-import { TableCell } from "@material-ui/core";
-import TableBody from "@mui/material/TableBody";
-import Paper from "@material-ui/core/Paper";
 import "./styles/about_page_style.css";
 import hospital_image from "../media_resources/about_page_images/about-hospital-img.png";
 import { Col, Row } from "react-bootstrap";

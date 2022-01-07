@@ -1,6 +1,5 @@
 import React from "react";
-import HomeCarousel from "../home-page-components/home_carousel";
-import Home4Cols from "../home-page-components/home_4cols";
+
 import AboutPageCarousel from "../common-components/about-page-carousel";
 import Home4ColsNew from "../home-page-components/styles/home_4cols_new";
 import styled from "styled-components";

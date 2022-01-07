@@ -1,16 +1,14 @@
 import React from "react";
 import { Carousel } from "react-bootstrap";
-import { Card } from "react-bootstrap";
 import poza_medic1 from "../media_resources/about_page_images/poza-medic1.png";
 import poza_medic2 from "../media_resources/about_page_images/poza-medic2.png";
 import poza_medic3 from "../media_resources/about_page_images/poza-medic3.png";
 import "./styles/about_page_style.css";
-import { faQuoteLeft, faQuoteRight } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 const AboutPageCarousel = () => {
   return (
     <Carousel variant="dark" id="aboutPageCarousel">
-      <Carousel.Item interval={1900}>
+      <Carousel.Item interval={1600}>
         <img
           style={{
             maxWidth: "15rem",
@@ -27,7 +25,7 @@ const AboutPageCarousel = () => {
           <i>„Mediplus inseamna pur si simplu profesionalism.“</i>
         </p>
       </Carousel.Item>
-      <Carousel.Item interval={1900}>
+      <Carousel.Item interval={1600}>
         <img
           style={{
             maxWidth: "15rem",
@@ -49,7 +47,7 @@ const AboutPageCarousel = () => {
           </i>
         </p>
       </Carousel.Item>
-      <Carousel.Item interval={1900}>
+      <Carousel.Item interval={1600}>
         <img
           style={{
             maxWidth: "15rem",

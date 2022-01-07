@@ -1,6 +1,5 @@
 import {Col, Container, Row} from "react-bootstrap";
 import React from "react";
-import hospital_image from "../../media_resources/about_page_images/about-hospital-img.png";
 import styled from "styled-components";
 import management_spital from "../../media_resources/home-page-icons/management_spital.jpg";
 import doctor from "../../media_resources/home-page-icons/doctor.jpg";

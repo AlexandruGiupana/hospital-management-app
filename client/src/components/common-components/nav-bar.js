@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
 import { Navbar } from "react-bootstrap";
 import { Container } from "react-bootstrap";
-import { NavDropdown } from "react-bootstrap";
 import { Nav } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { logout } from "../../services/user-services/auth-services";
