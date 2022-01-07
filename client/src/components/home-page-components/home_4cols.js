@@ -26,8 +26,7 @@ const Home4Cols = () => {
           </h3>
           <p>
             Crearea și gestiunea programărilor pentru operații, consultații și
-            alte servicii medicale. Scrierea și expedierea digitală a
-            documentelor medicale pentru pacienți. Aplicația include și alte
+            alte servicii medicale. Vizualizarea unui panou cu statistici referitoare situatia consultarilor. Aplicația include și alte
             servicii auxiliare pentru a facilita activitatea cadrelor medicale.
           </p>
         </Col>
@@ -37,9 +36,9 @@ const Home4Cols = () => {
             Transparență
           </h3>
           <p>
-            Acces transparent la datele tale din aplicație. Aplicația include
+            Acces transparent la datele tale din aplicație. Datele personale pot fi vizualizate si editate. Aplicația include
             opțiuni pentru exportul datelor referitoare la programările tale și
-            multe altele în fișiere de diferite formate.
+            multe altele în fișiere cu format CSV.
           </p>
         </Col>
 
@@ -50,8 +49,7 @@ const Home4Cols = () => {
           <p>
             Verificare situației medicale poate fi realizată în orice moment. Ai
             acces la informații despre viitoarele consultații, precum și despre
-            consultațiile efectuate în trecut. Acces la vizualizarea și
-            descărcarea documentelor medicale în format PDF.
+            consultațiile efectuate în trecut.
           </p>
         </Col>
       </Row>
