@@ -19,6 +19,7 @@ import {
 } from "../../../../notification-messages/notifications";
 import { getUserData } from "../../../../services/local-storage-services";
 import { CSVLink } from "react-csv";
+import { convertDateToNormalFormatString } from "../../../../services/date-converters/date-converter";
 
 const getRowId = (row) => row.appointment_id;
 
@@ -28,11 +29,31 @@ const PatientAppointmentComponent = () => {
 
   useEffect(() => {
     const getAppointments = async () => {
-      const appointments = await getAppointmentsOfPatient(
+      const appointments = (await getAppointmentsOfPatient(
         getUserData().data.user.id
-      );
-      //todo format date
-      setRows(appointments.data);
+      )).data;
+      const translatedAppointments = [];
+      appointments.forEach((appointment) => {
+        let translatedAppointment = {};
+        translatedAppointment.doctor_first_name =
+          appointment?.doctor_first_name
+            ? appointment?.doctor_first_name
+            : "No account";
+        translatedAppointment.doctor_last_name = appointment?.doctor_last_name
+          ? appointment?.doctor_last_name
+          : "No account";
+        translatedAppointment.service_name = appointment?.service_name;
+        translatedAppointment.additional_information =
+          appointment?.additional_information;
+        translatedAppointment.start_date = convertDateToNormalFormatString(
+          appointment?.start_date
+        );
+        translatedAppointment.end_date = convertDateToNormalFormatString(
+          appointment?.end_date
+        );
+        translatedAppointments.push(translatedAppointment);
+      });
+      setRows(translatedAppointments);
       setLoading(false);
     };
     getAppointments();
