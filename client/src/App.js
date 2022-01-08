@@ -15,6 +15,7 @@ import PricesPage from "./components/pages/services-page";
 import AboutPage from "./components/common-components/about-page";
 import NewsPage from "./components/common-components/news-page";
 import DoctorManagement from "./components/pages/doctor-management";
+import AccommodationPage from "./components/pages/accomodation-page";
 
 const App = () => {
   return (
@@ -42,6 +43,7 @@ const App = () => {
           <Route path="/wards-management" exact element={<WardsManagement />} />
           <Route path="/departments" exact element={<Departments />} />
           <Route path="/rooms-management" exact element={<RoomsManagement />} />
+          <Route path="/accommodation" exact element={<AccommodationPage />} />
           <Route
             path="/employee-management"
             exact

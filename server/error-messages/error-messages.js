@@ -32,6 +32,7 @@ export const INVALID_EMAIL_NAME = "Invalid value for email";
 export const EMAIL_ALREADY_ASSIGNED = "Email already assigned to a user";
 export const CNP_ALREADY_ASSIGNED = "CNP already assigned to a user";
 export const LOG_OUT_MESSAGE = "User logged out successfully";
+export const USER_ALREADY_ACCOMMODATED = "User is already accomomdated";
 
 //appointments
 export const INVALID_START_DATE = "Invalid value for start date";

@@ -1,4 +1,6 @@
 export const SELECT_USER_WITH_EMAIL = "SELECT * FROM users WHERE email = ? ";
+export const SELECT_ID_USER_WITH_EMAIL =
+  "SELECT id FROM users WHERE email = ? ";
 export const SELECT_USER_WITH_CNP = "SELECT * FROM users WHERE cnp = ? ";
 export const INSERT_USER =
   "INSERT INTO users (email, password, account_type, first_name, last_name, cnp) VALUES (?, ?, ?, ?, ?, ?)";

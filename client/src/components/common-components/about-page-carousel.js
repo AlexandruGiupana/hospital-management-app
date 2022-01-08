@@ -42,8 +42,8 @@ const AboutPageCarousel = () => {
         </h5>
         <p className="text-center text-black mb-lg-5 fs-4 font-italic lead">
           <i>
-            „Mediplus ofera solutii bune pentru planificarea si
-            desfasurarea eficienta a activitatilor interne din spital.“
+            „Mediplus ofera solutii bune pentru planificarea si desfasurarea
+            eficienta a activitatilor interne din spital.“
           </i>
         </p>
       </Carousel.Item>

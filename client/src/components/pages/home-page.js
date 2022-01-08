@@ -7,16 +7,16 @@ import styled from "styled-components";
 const HomePage = () => {
   return (
     <>
-        <h1 className="text-center mt-lg-3 mb-lg-3">Prezentare generală</h1>
-        <Home4ColsNew />
-        <br />
-        <br />
-        <br />
-        <SectionTitle className="text-black text-center display-6">
-            Recomandat cu incredere de partenerii nostri:
-        </SectionTitle>
-        <br />
-        <AboutPageCarousel/>
+      <h1 className="text-center mt-lg-3 mb-lg-3">Prezentare generală</h1>
+      <Home4ColsNew />
+      <br />
+      <br />
+      <br />
+      <SectionTitle className="text-black text-center display-6">
+        Recomandat cu incredere de partenerii nostri:
+      </SectionTitle>
+      <br />
+      <AboutPageCarousel />
     </>
   );
 };

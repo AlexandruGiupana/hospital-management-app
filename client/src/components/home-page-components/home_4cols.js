@@ -26,7 +26,8 @@ const Home4Cols = () => {
           </h3>
           <p>
             Crearea și gestiunea programărilor pentru operații, consultații și
-            alte servicii medicale. Vizualizarea unui panou cu statistici referitoare situatia consultarilor. Aplicația include și alte
+            alte servicii medicale. Vizualizarea unui panou cu statistici
+            referitoare situatia consultarilor. Aplicația include și alte
             servicii auxiliare pentru a facilita activitatea cadrelor medicale.
           </p>
         </Col>
@@ -36,9 +37,10 @@ const Home4Cols = () => {
             Transparență
           </h3>
           <p>
-            Acces transparent la datele tale din aplicație. Datele personale pot fi vizualizate si editate. Aplicația include
-            opțiuni pentru exportul datelor referitoare la programările tale și
-            multe altele în fișiere cu format CSV.
+            Acces transparent la datele tale din aplicație. Datele personale pot
+            fi vizualizate si editate. Aplicația include opțiuni pentru exportul
+            datelor referitoare la programările tale și multe altele în fișiere
+            cu format CSV.
           </p>
         </Col>
 

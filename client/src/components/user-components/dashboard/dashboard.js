@@ -8,6 +8,16 @@ import {
   getAppointmentsOfDoctorFromDate,
 } from "../../../services/user-services/appointments-services";
 import { getUserData } from "../../../services/local-storage-services";
+import {
+  convertDatabaseDateFormat,
+  convertDateToNormalFormatDate,
+} from "../../../services/date-converters/date-converter";
+import {
+  getDayAfterTomorrowDate,
+  getTomorrowDate,
+  getTwoDaysAgoDate,
+  getYesterdayDay,
+} from "../../../services/date-converters/get-past-future-dates";
 
 const Dashboard = ({ accountType }) => {
   const [appointments, setAppointments] = useState([]);
@@ -40,33 +50,35 @@ const Dashboard = ({ accountType }) => {
       const min = today.getMinutes();
       today = yyyy + "-" + mm + "-" + dd;
       setToday(today);
-      const currentTime =
-        yyyy + "-" + mm + "-" + dd + "T" + hh + ":" + min + ":00.000Z";
-      const appointments = (
+
+      let appointmentsFromDb = (
         await getAppointmentsOfDoctorFromDate(getUserData().data.user.id, today)
       ).data;
+
+      let appointments = [];
+      appointmentsFromDb.forEach((appointment) => {
+        const date = convertDatabaseDateFormat(appointment);
+        const object = { start_date: date };
+        appointments.push(object);
+      });
+
       let remAppointments = [];
       let finAppointments = [];
       appointments.forEach((appointment) => {
-        if (currentTime.localeCompare(appointment.startDate) === 1) {
+        const date = convertDateToNormalFormatDate(appointment?.start_date);
+        if (new Date() <= date) {
           remAppointments.push(appointment);
         } else {
           finAppointments.push(appointment);
         }
       });
+
       setRemainingAppointments(remAppointments);
       setFinishedAppointments(finAppointments);
       setAppointments(appointments);
 
       const currentTimeStamp = new Date().getTime();
-      const yesterdayTimeStamp = currentTimeStamp - 24 * 60 * 60 * 1000;
-      let yesterdayDate = new Date(yesterdayTimeStamp);
-      yesterdayDate =
-        yesterdayDate.getFullYear() +
-        "-" +
-        String(yesterdayDate.getMonth() + 1).padStart(2, "0") +
-        "-" +
-        String(yesterdayDate.getDate()).padStart(2, "0");
+      const yesterdayDate = getYesterdayDay();
       let appointmentsCount = (
         await getAppointmentsOfDoctorFromDate(
           getUserData().data.user.id,
@@ -76,14 +88,7 @@ const Dashboard = ({ accountType }) => {
       setYesterdayAppointmentsCount(appointmentsCount.length);
       setYesterday(yesterdayDate);
 
-      const twoDaysAgoTimeStamp = currentTimeStamp - 2 * 24 * 60 * 60 * 1000;
-      let twoDaysAgoDate = new Date(twoDaysAgoTimeStamp);
-      twoDaysAgoDate =
-        twoDaysAgoDate.getFullYear() +
-        "-" +
-        String(twoDaysAgoDate.getMonth() + 1).padStart(2, "0") +
-        "-" +
-        String(twoDaysAgoDate.getDate()).padStart(2, "0");
+      const twoDaysAgoDate = getTwoDaysAgoDate();
       appointmentsCount = (
         await getAppointmentsOfDoctorFromDate(
           getUserData().data.user.id,
@@ -93,14 +98,7 @@ const Dashboard = ({ accountType }) => {
       setTwoDaysAgoAppointmentsCount(appointmentsCount.length);
       setTwoDaysAgo(twoDaysAgoDate);
 
-      const tomorrowTimeStamp = currentTimeStamp + 24 * 60 * 60 * 1000;
-      let tomorrowDate = new Date(tomorrowTimeStamp);
-      tomorrowDate =
-        tomorrowDate.getFullYear() +
-        "-" +
-        String(tomorrowDate.getMonth() + 1).padStart(2, "0") +
-        "-" +
-        String(tomorrowDate.getDate()).padStart(2, "0");
+      const tomorrowDate = getTomorrowDate();
       appointmentsCount = (
         await getAppointmentsOfDoctorFromDate(
           getUserData().data.user.id,
@@ -110,15 +108,7 @@ const Dashboard = ({ accountType }) => {
       setTomorrowAppointmentsCount(appointmentsCount.length);
       setTomorrow(tomorrowDate);
 
-      const dayAfterTomorrowTimeStamp =
-        currentTimeStamp + 2 * 24 * 60 * 60 * 1000;
-      let dayAfterTomorrowDate = new Date(dayAfterTomorrowTimeStamp);
-      dayAfterTomorrowDate =
-        dayAfterTomorrowDate.getFullYear() +
-        "-" +
-        String(dayAfterTomorrowDate.getMonth() + 1).padStart(2, "0") +
-        "-" +
-        String(dayAfterTomorrowDate.getDate()).padStart(2, "0");
+      const dayAfterTomorrowDate = getDayAfterTomorrowDate();
       appointmentsCount = (
         await getAppointmentsOfDoctorFromDate(
           getUserData().data.user.id,
@@ -139,6 +129,8 @@ const Dashboard = ({ accountType }) => {
     tomorrowAgoAppointmentsCount,
     tomorrow,
   ]);
+
+  console.log(twoDaysAgo);
 
   if (loading) {
     <>Loading...</>;

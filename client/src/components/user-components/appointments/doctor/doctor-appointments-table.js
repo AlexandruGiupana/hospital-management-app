@@ -19,6 +19,7 @@ import {
 } from "../../../../notification-messages/notifications";
 import { getUserData } from "../../../../services/local-storage-services";
 import { CSVLink } from "react-csv";
+import { convertDateToNormalFormatString } from "../../../../services/date-converters/date-converter";
 
 const getRowId = (row) => row.appointment_id;
 
@@ -28,11 +29,31 @@ const DoctorAppointmentsTable = () => {
 
   useEffect(() => {
     const getAppointments = async () => {
-      const appointments = await getAppointmentsOfDoctor(
-        getUserData().data.user.id
-      );
-      //todo format date
-      setRows(appointments.data);
+      const appointments = (
+        await getAppointmentsOfDoctor(getUserData().data.user.id)
+      ).data;
+      const translatedAppointments = [];
+      appointments.forEach((appointment) => {
+        let translatedAppointment = {};
+        translatedAppointment.patient_first_name =
+          appointment?.patient_first_name
+            ? appointment?.patient_first_name
+            : "No account";
+        translatedAppointment.patient_last_name = appointment?.patient_last_name
+          ? appointment?.patient_last_name
+          : "No account";
+        translatedAppointment.service_name = appointment?.service_name;
+        translatedAppointment.additional_information =
+          appointment?.additional_information;
+        translatedAppointment.start_date = convertDateToNormalFormatString(
+          appointment?.start_date
+        );
+        translatedAppointment.end_date = convertDateToNormalFormatString(
+          appointment?.end_date
+        );
+        translatedAppointments.push(translatedAppointment);
+      });
+      setRows(translatedAppointments);
       setLoading(false);
     };
     getAppointments();
@@ -74,8 +95,6 @@ const DoctorAppointmentsTable = () => {
             <EditingState onCommitChanges={commitChanges} />
             <Table />
             <TableHeaderRow />
-            <TableEditRow />
-            <TableEditColumn showDeleteCommand />
           </Grid>
         </Paper>
         <CSVLink data={rows}>Export appointments data to CSV file</CSVLink>

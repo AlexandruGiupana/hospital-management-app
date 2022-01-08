@@ -82,6 +82,8 @@ const DoctorScheduleAppointmentComponents = () => {
     toast(notificationText);
   };
 
+  console.log(appointments);
+
   return (
     <>
       <ToastContainer />

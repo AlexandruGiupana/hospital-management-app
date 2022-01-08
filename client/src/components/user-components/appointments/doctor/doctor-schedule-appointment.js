@@ -43,7 +43,7 @@ const DoctorScheduleAppointment = ({
   appointments,
   notify,
 }) => {
-  console.log(repartitions);
+  console.log(appointments);
   const [operation, setOperation] = useState(repartitions[0]?.service_name);
   const [repartitonId, setRepartitonId] = useState(repartitions[0]?.id);
   const [currentDate, setCurrentDate] = useState(Date.now());

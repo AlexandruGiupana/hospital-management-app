@@ -36,15 +36,26 @@ const SideBar = ({ accountType }) => {
           </StyledNavLink>
         )}
         {accountType === "doctor" && (
-          <StyledNavLink
-            activeStyle={{
-              color: "green",
-            }}
-            exact
-            to={"/create-appointment"}
-          >
-            <SideBarOption>Programeaza</SideBarOption>
-          </StyledNavLink>
+          <>
+            <StyledNavLink
+              activeStyle={{
+                color: "green",
+              }}
+              exact
+              to={"/create-appointment"}
+            >
+              <SideBarOption>Programeaza</SideBarOption>
+            </StyledNavLink>
+            <StyledNavLink
+              activeStyle={{
+                color: "green",
+              }}
+              exact
+              to={"/accommodation"}
+            >
+              <SideBarOption>Internare</SideBarOption>
+            </StyledNavLink>
+          </>
         )}
         {accountType === "patient" && (
           <StyledNavLink
