@@ -12,7 +12,8 @@ export const SELECT_APPOINTMENTS_DATA_OF_DOCTOR_QUERY =
   " ON health_services.id = health_services_repartition.health_service_id" +
   " INNER JOIN hospital_rooms" +
   " ON hospital_rooms.id = appointments.hospital_room_id" +
-  " WHERE doct.id = ?";
+  " WHERE doct.id = ?" +
+  " ORDER BY appointments.start_date DESC";
 export const INSERT_APPOINTMENT_QUERY =
   "INSERT INTO appointments (patient_id, service_rep_id, hospital_room_id, additional_information, start_date, end_date) VALUES (?, ?, ?, ?, ?, ?)";
 export const INSERT_APPOINTMENT_DOCTOR_QUERY =
@@ -49,4 +50,5 @@ export const SELECT_APPOINTMENTS_FROM_DATE =
   " ON health_services.id = health_services_repartition.health_service_id" +
   " INNER JOIN hospital_rooms" +
   " ON hospital_rooms.id = appointments.hospital_room_id" +
-  " WHERE doct.id = ? AND appointments.start_date LIKE ?";
+  " WHERE doct.id = ? AND appointments.start_date LIKE ?" +
+  " ORDER BY appointments.start_date";

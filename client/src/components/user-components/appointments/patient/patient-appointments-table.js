@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from "react";
 import Paper from "@material-ui/core/Paper";
-import { EditingState } from "@devexpress/dx-react-grid";
+import {
+  EditingState,
+  IntegratedPaging,
+  PagingState,
+} from "@devexpress/dx-react-grid";
 import {
   Grid,
   Table,
   TableHeaderRow,
   TableEditRow,
   TableEditColumn,
+  PagingPanel,
 } from "@devexpress/dx-react-grid-material-ui";
 import {
   deleteAppointment,
@@ -29,16 +34,15 @@ const PatientAppointmentComponent = () => {
 
   useEffect(() => {
     const getAppointments = async () => {
-      const appointments = (await getAppointmentsOfPatient(
-        getUserData().data.user.id
-      )).data;
+      const appointments = (
+        await getAppointmentsOfPatient(getUserData().data.user.id)
+      ).data;
       const translatedAppointments = [];
       appointments.forEach((appointment) => {
         let translatedAppointment = {};
-        translatedAppointment.doctor_first_name =
-          appointment?.doctor_first_name
-            ? appointment?.doctor_first_name
-            : "No account";
+        translatedAppointment.doctor_first_name = appointment?.doctor_first_name
+          ? appointment?.doctor_first_name
+          : "No account";
         translatedAppointment.doctor_last_name = appointment?.doctor_last_name
           ? appointment?.doctor_last_name
           : "No account";
@@ -92,11 +96,14 @@ const PatientAppointmentComponent = () => {
         <Paper>
           <ToastContainer />
           <Grid rows={rows} columns={columns} getRowId={getRowId}>
+            <PagingState defaultCurrentPage={0} pageSize={5} />
+            <IntegratedPaging />
             <EditingState onCommitChanges={commitChanges} />
             <Table />
             <TableHeaderRow />
             <TableEditRow />
             <TableEditColumn showDeleteCommand />
+            <PagingPanel />
           </Grid>
         </Paper>
         <CSVLink data={rows}>Export appointments data to CSV file</CSVLink>

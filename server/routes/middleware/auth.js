@@ -3,7 +3,6 @@ import jsonWebToken from "jsonwebtoken";
 
 export const auth = (req, res, next) => {
   const token = req.cookies.token;
-  console.log(token);
   if (!token) {
     return res.status(401).json({ msg: "Authorization is denied (no token)" });
   }

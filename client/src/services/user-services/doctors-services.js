@@ -1,8 +1,9 @@
 import axios from "axios";
+import { hostAddress } from "../../address";
 
 export const getAllDoctors = async () => {
   try {
-    return await axios.get("http://localhost:8080/doctors", {
+    return await axios.get(`${hostAddress}/doctors`, {
       withCredentials: true,
     });
   } catch (err) {
@@ -12,7 +13,7 @@ export const getAllDoctors = async () => {
 
 export const createDoctor = async (data) => {
   try {
-    return await axios.post("http://localhost:8080/doctors/create", data, {
+    return await axios.post(`${hostAddress}/doctors/create`, data, {
       withCredentials: true,
     });
   } catch (err) {

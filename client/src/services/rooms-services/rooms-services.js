@@ -1,4 +1,5 @@
 import axios from "axios";
+import { hostAddress } from "../../address";
 
 export const getRooms = async () => {
   try {
@@ -12,7 +13,7 @@ export const getRooms = async () => {
 
 export const createRoom = async (data) => {
   try {
-    return await axios.post("http://localhost:8080/rooms/create", data, {
+    return await axios.post(`${hostAddress}/rooms/create`, data, {
       withCredentials: true,
     });
   } catch (err) {
@@ -22,7 +23,7 @@ export const createRoom = async (data) => {
 
 export const updateRoom = async (data) => {
   try {
-    return await axios.put("http://localhost:8080/rooms/update", data, {
+    return await axios.put(`${hostAddress}/rooms/update`, data, {
       withCredentials: true,
     });
   } catch (err) {
@@ -32,7 +33,7 @@ export const updateRoom = async (data) => {
 
 export const deleteRoom = async (id) => {
   try {
-    await axios.delete(`http://localhost:8080/rooms/delete/${id}`, {
+    await axios.delete(`${hostAddress}/rooms/delete/${id}`, {
       withCredentials: true,
     });
   } catch (err) {

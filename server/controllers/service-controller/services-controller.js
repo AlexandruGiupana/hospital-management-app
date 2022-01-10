@@ -77,7 +77,7 @@ export const createMedicalService = async (req, res) => {
 export const deleteMedicalService = async (req, res) => {
   const id = req.params.id;
   if (!validateNumberField(id)) {
-    return res.status(400).json({ msg: "Invalid value for id" });
+    return res.status(400).json({ msg: INVALID_ID_VALUE });
   }
   con.query(SELECT_DOCTORS_THAT_OFFER_SERVICE_QUERY, [id], (err, result) => {
     if (result.length > 0) {

@@ -1,8 +1,9 @@
 import axios from "axios";
+import { hostAddress } from "../../address";
 
 export const login = async (data) => {
   try {
-    const res = await axios.post("http://localhost:8080/users/login", data, {
+    const res = await axios.post(`${hostAddress}/users/login`, data, {
       withCredentials: true,
     });
     return res;
@@ -13,7 +14,7 @@ export const login = async (data) => {
 
 export const logout = async () => {
   try {
-    return await axios.get("http://localhost:8080/users/logout", {
+    return await axios.get(`${hostAddress}/users/logout`, {
       withCredentials: true,
     });
   } catch (err) {
@@ -24,7 +25,7 @@ export const logout = async () => {
 export const register = async (data) => {
   try {
     await axios
-      .post("http://localhost:8080/users/register", data, {
+      .post(`${hostAddress}/users/register`, data, {
         withCredentials: true,
       })
       .then((res) => {

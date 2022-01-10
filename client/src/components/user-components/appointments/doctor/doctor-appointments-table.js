@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Paper from "@material-ui/core/Paper";
-import { EditingState } from "@devexpress/dx-react-grid";
+import {
+  EditingState,
+  IntegratedPaging,
+  PagingState,
+} from "@devexpress/dx-react-grid";
 import {
   Grid,
   Table,
   TableHeaderRow,
-  TableEditRow,
-  TableEditColumn,
+  PagingPanel,
 } from "@devexpress/dx-react-grid-material-ui";
 import {
   deleteAppointment,
@@ -93,8 +96,11 @@ const DoctorAppointmentsTable = () => {
           <ToastContainer />
           <Grid rows={rows} columns={columns} getRowId={getRowId}>
             <EditingState onCommitChanges={commitChanges} />
+            <PagingState defaultCurrentPage={0} pageSize={7} />
+            <IntegratedPaging />
             <Table />
             <TableHeaderRow />
+            <PagingPanel />
           </Grid>
         </Paper>
         <CSVLink data={rows}>Export appointments data to CSV file</CSVLink>

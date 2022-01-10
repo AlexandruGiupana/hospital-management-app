@@ -174,7 +174,7 @@ export const createAppointment = async (req, res) => {
                       start_date,
                       end_date,
                     ],
-                    (err, result) => {
+                    (err) => {
                       if (err) {
                         throw err;
                       }

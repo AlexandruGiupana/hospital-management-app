@@ -43,3 +43,10 @@ export const ROOM_DOES_NOT_EXIST = "Room does not exist";
 export const APPOINTMENT_DOES_NOT_EXIST = "Room does not exist";
 export const SERVICE_REPARTITION_DOES_NOT_EXIST =
   "Health service repartition does not exist";
+
+//rooms
+export const INVALID_ROOM_TYPE = "Invalid value for room type";
+export const ROOM_STILL_IN_USE =
+  "Selected rooms still have scheduled appointments";
+export const ROOM_ALREADY_EXISTS =
+  "Error! Already exists a room with given number";

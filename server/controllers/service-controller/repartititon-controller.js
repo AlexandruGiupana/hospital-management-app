@@ -51,7 +51,7 @@ export const assignMedicalServiceToDoctor = async (req, res) => {
                   con.query(
                     ADD_NEW_REPARTITION_QUERY,
                     [service_id, doctor_id],
-                    (err, result) => {
+                    (err) => {
                       if (err) {
                         return res.send({
                           success: false,

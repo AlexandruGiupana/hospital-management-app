@@ -1,8 +1,9 @@
 import axios from "axios";
+import { hostAddress } from "../../address";
 
 export const getUserInformation = async (id) => {
   try {
-    return await axios.get(`http://localhost:8080/users/${id}`, {
+    return await axios.get(`${hostAddress}/users/${id}`, {
       withCredentials: true,
     });
   } catch (err) {
@@ -12,7 +13,7 @@ export const getUserInformation = async (id) => {
 
 export const updateUserInformation = async (id, data) => {
   try {
-    return await axios.put(`http://localhost:8080/users/update/${id}`, data, {
+    return await axios.put(`${hostAddress}/users/update/${id}`, data, {
       withCredentials: true,
     });
   } catch (err) {
